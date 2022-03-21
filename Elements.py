@@ -2,7 +2,6 @@ class Ressource():
     def __init__(self):
         self.type = ""
 
-    
 class Colonie():
     def __init__(self):
         self.joueur = ""

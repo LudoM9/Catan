@@ -9,4 +9,6 @@ class Joueur():
         self.colonies = []
         self.villes = []
         self.routes = []
+        self.ports = []
 
+    
