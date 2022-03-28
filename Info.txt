@@ -1,0 +1,12 @@
+Nombre carte ressource : 19
+
+  -- Carte Développement --
+Monopole : 2
+Construction de routes : 2
+Invention : 2
+1 PV : 5 (Eglise, Place du Marché, Parlement, Université, Bibliothèque)
+Chevaliers : 14
+
+Max colonies : 5
+Max villes : 4
+Max routes : 16
