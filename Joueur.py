@@ -10,5 +10,7 @@ class Joueur():
         self.villes = []
         self.routes = []
         self.ports = []
+        self.longueurPlusGrandeRoute = 0
+        self.tailleArmee = 0
 
     

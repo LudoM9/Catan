@@ -1,4 +1,7 @@
 import Plateau
 import Joueur
-import Elements
+#import Elements
 
+class Catan():
+    def __init__(self, joueurs, rdPlateau = False):
+        self.joueurs = joueurs
