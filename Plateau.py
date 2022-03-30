@@ -5,20 +5,40 @@ import random as rd
 
 class Plateau():
     def __init__(self, rdPlateau = False):
-        self.tiles = [WoodTile(self, 1, 6), WoolTile(self, 2, 3), WoolTile(self, 3, 8), WheatTile(self, 4, 2), StoneTile(self, 5, 4), WheatTile(self, 6, 5), WoodTile(self, 7, 10), WoodTile(self, 8, 5), ClayTile(self, 9, 9), DesertTile(self, 10, 7), StoneTile(self, 11, 6), WheatTile(self, 12, 9), WheatTile(self, 13, 10), StoneTile(self, 14, 11), WoodTile(self, 15, 3), WoolTile(self, 16, 12), ClayTile(self, 17, 8), WoolTile(self, 18, 4), ClayTile(self, 19, 11)]
+        self.tiles = [WoodTile(self, (-2,-1), 6), WoolTile(self, (-1,-1), 3), WoolTile(self, (0,-2), 8), WheatTile(self, (-2,0), 2), StoneTile(self, (-1,0), 4), WheatTile(self, (0,-1), 5), WoodTile(self, (1,-1), 10), WoodTile(self, (-2,1), 5), ClayTile(self, (-1,1), 9), DesertTile(self, (0,0), 7), StoneTile(self, (1,0), 6), WheatTile(self, (2,-1), 9), WheatTile(self, (-1,2), 10), StoneTile(self, (0,1), 11), WoodTile(self, (1,1), 3), WoolTile(self, (2,0), 12), ClayTile(self, (0,2), 8), WoolTile(self, (1,2), 4), ClayTile(self, (2,1), 11)]
         self.intersections = []
         self.routes = []
+        self.ports = []
         if rdPlateau:
-            Lindices = [i for i in range(1,7)] + [i for i in range(8,20)]
-            rd.shuffle(Lindices)
-            Lindices += [7]
-            Lindices[18],Lindices[9] = Lindices[9], 7
+            Lcoords = [(i,j) for i in range(-2,3) for j in range (-2,3) if abs(i+j)<=3 and abs(i)+abs(j)<=3 and not(abs(i)>0 and j==-2)]
             Lvalues = [2, 3, 3, 4, 4, 5, 5, 6, 6, 8, 8, 9, 9, 10, 10, 11, 11, 12]
             rd.shuffle(Lvalues)
             Lvalues += [7]
             Lvalues[18],Lvalues[9] = Lvalues[9], 7
             Ltiles = []
+            for i in range (4):
+                Ltiles.append("Wood")
+                Ltiles.append("Wheat")
+                Ltiles.append("Wool")
+                if i < 3:
+                    Ltiles.append("Stone")
+                    Ltiles.append("Clay") 
+            rd.shuffle(Ltiles)
+            Ltiles += ["Desert"]
+            Lvalues[18],Lvalues[9] = Lvalues[9], Ltiles[18]           
             self.tiles = []
+            for i in range(19):
+                if Ltiles[i] == "Wood":
+                    self.tiles.append(WoodTile(self, Lcoords[i], Lvalues[i]))
+                elif Ltiles[i] == "Wheat":
+                    self.tiles.append(WheatTile(self, Lcoords[i], Lvalues[i]))
+                elif Ltiles[i] == "Wool":
+                    self.tiles.append(WoolTile(self, Lcoords[i], Lvalues[i]))
+                elif Ltiles[i] == "Stone":
+                    self.tiles.append(StoneTile(self, Lcoords[i], Lvalues[i]))
+                elif Ltiles[i] == "Clay":
+                    self.tiles.append(ClayTile(self, Lcoords[i], Lvalues[i]))
+    
 
 class Tile(metaclass = ABCMeta):
     def __init__(self, plateau, coords, value):
@@ -78,19 +98,21 @@ class Colonie():
         self.coords = []
         self.adjacent = []
         self.multiplicateur = 1
-        self.coût = []
+        self.__coût = [1,1,1,1,0]
 
 class Ville(Colonie):
     def __init__(self):
         super.__init__(self)
         self.multiplicateur = 2
-        self.coût = []
+        self.__coût = [0,0,0,2,3]
 
 class Route():
     def __init__(self):
         self.joueur = ""
         self.coords = []
-        self.coût = []
+        self.__coût = [1,1,0,0,0]
+    
+    #Check if player has now the longest road
 
 class Voleur():
     def __init__(self):
@@ -105,10 +127,12 @@ class Port():
 class CarteDeveloppement():
     def __init__(self, joueur):
         self.joueur = joueur
-        self.coût = []
+        self.__coût = [0,0,1,1,1]
 
     def effet():
         print("No Effect")
+
+    #Check if player has the greatest army    
 
 class DevConstructionDeRoutes(CarteDeveloppement):
     def __init__(self, joueur):

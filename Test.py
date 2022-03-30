@@ -45,3 +45,7 @@ class Pioche():
 
 P = Pioche()
 #print(P.devCards)
+Lcoords = [(i,j) for i in range(-2,3) for j in range (-2,3) if abs(i+j)<3]
+Lcoords = [(i,j) for i in range(-2,3) for j in range (-2,3) if abs(i+j)<=3 and abs(i)+abs(j)<=3 and not(abs(i)>0 and j==-2)]
+print(Lcoords)
+print(len(Lcoords))
