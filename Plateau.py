@@ -8,7 +8,7 @@ class Plateau():
         self.tiles = [WoodTile(self, (-2,-1), 6), WoolTile(self, (-1,-1), 3), WoolTile(self, (0,-2), 8), WheatTile(self, (-2,0), 2), StoneTile(self, (-1,0), 4), WheatTile(self, (0,-1), 5), WoodTile(self, (1,-1), 10), WoodTile(self, (-2,1), 5), ClayTile(self, (-1,1), 9), DesertTile(self, (0,0), 7), StoneTile(self, (1,0), 6), WheatTile(self, (2,-1), 9), WheatTile(self, (-1,2), 10), StoneTile(self, (0,1), 11), WoodTile(self, (1,1), 3), WoolTile(self, (2,0), 12), ClayTile(self, (0,2), 8), WoolTile(self, (1,2), 4), ClayTile(self, (2,1), 11)]
         self.intersections = []
         self.routes = []
-        self.ports = []
+        self.ports = [Port((-2,-2), [3,3,3,3,3]), Port((-2,-1), [3,3,3,3,3]), Port((-1,-3), [4,4,2,4,4]), Port((0,-3), [4,4,2,4,4]), Port((1,-3), [3,3,3,3,3]), Port((2,-3), [3,3,3,3,3]), Port((3,-2), [3,3,3,3,3]), Port((3,-1), [3,3,3,3,3]), Port((3,1), [4,2,4,4,4]), Port((3,2), [4,2,4,4,4]), Port((2,4), [2,4,4,4,4]), Port((2,5), [2,4,4,4,4]), Port((0,4), [3,3,3,3,3]), Port((1,4), [3,3,3,3,3]), Port((-1,4), [4,4,4,2,4]), Port((-1,5), [4,4,4,2,4]), Port((-2,1), [4,4,4,4,2]), Port((-2,2), [4,4,4,4,2])]
         if rdPlateau:
             Lcoords = [(i,j) for i in range(-2,3) for j in range (-2,3) if abs(i+j)<=3 and abs(i)+abs(j)<=3 and not(abs(i)>0 and j==-2)]
             Lvalues = [2, 3, 3, 4, 4, 5, 5, 6, 6, 8, 8, 9, 9, 10, 10, 11, 11, 12]
@@ -39,6 +39,104 @@ class Plateau():
                 elif Ltiles[i] == "Clay":
                     self.tiles.append(ClayTile(self, Lcoords[i], Lvalues[i]))
     
+    def getAdjacentTilesFromVertice(self, vertice):
+        adjTiles = []
+        x = vertice[0]
+        y = vertice[1]
+        xOffset = x % 2
+        yOffset = y % 2
+
+        if abs(x+y//2)<=3 and abs(x)+abs(y//2)<=3 and not(abs(x)>0 and y//2==-2):
+            adjTiles.append((x,y//2))
+
+        weirdX = x
+        if (xOffset+yOffset) == 1: 
+            weirdX = x-1
+
+        weirdY = y//2 
+        if yOffset == 1: 
+            weirdY += 1
+        else: 
+            weirdY -= 1
+
+        if abs(weirdX+weirdY)<=3 and abs(weirdX)+abs(weirdY)<=3 and not(abs(weirdX)>0 and weirdY==-2):
+            adjTiles.append((weirdX, weirdY))
+        if x >= 0 and abs(x-1+y//2)<=3 and abs(x-1)+abs(y//2)<=3 and not(abs(x)>=0 and y//2==-2):
+            adjTiles.append((x-1, y//2))
+        return adjTiles
+
+    def getVerticesFromTile(self, tile):
+        vertices = []
+        x = tile[0]
+        y = tile[1]
+        offset = x % 2
+        offset = 0-offset
+        vertices.append((x, 2*y+offset))
+        vertices.append((x, 2*y+1+offset))
+        vertices.append((x, 2*y+2+offset))
+        vertices.append((x+1, 2*y+offset))
+        vertices.append((x+1, 2*y+1+offset))
+        vertices.append((x+1, 2*y+2+offset))
+        return vertices
+
+    def getEdgesFromTile(self, tile):
+        edges = []
+        x = tile[0]
+        y = tile[1]
+        offset = x % 2
+        offset = 0-offset
+        edges.append((2*x,2*y+offset))
+        edges.append((2*x,2*y+1+offset))
+        edges.append((2*x+1,2*y+offset))
+        edges.append((2*x+1,2*y+2+offset))
+        edges.append((2*x+2,2*y+offset))
+        edges.append((2*x+2,2*y+1+offset))
+        return edges
+
+    def getAdjacentVerticesFromVertice(self, vertice):
+        adjVertices = []
+        adjTiles = self.getAdjacentTilesFromVertice(vertice)
+        allVertices = []
+        for tile in adjTiles:
+            allVertices.append(self.getVerticesFromTile(tile))
+        for i in range(len(allVertices)):
+            j = i + 1
+            while j<len(allVertices):
+                adjVertices += [element for element in allVertices[i] if element in allVertices[j] and element!=vertice]
+                j += 1
+        return list(set(adjVertices))
+    
+    def getAdjacentEdgesFromVertice(self, vertice):
+        adjEdges = []
+        adjTiles = self.getAdjacentTilesFromVertice(vertice)
+        allEdges = []
+        for tile in adjTiles:
+            allEdges.append(self.getEdgesFromTile(tile))
+        for i in range(len(allEdges)):
+            j = i + 1
+            while j<len(allEdges):
+                adjEdges += [element for element in allEdges[i] if element in allEdges[j]]
+                j += 1
+        return adjEdges
+
+    def getVerticesOfEdge(self, edge):
+        x = edge[0]
+        y = edge[1]
+        vertice1 = ((x-1)/2, y)
+        vertice2 = ((x+1)/2, y)
+        if x%2 == 0:
+          vertice1 = (x/2, y)
+          vertice2 = (x/2, y+1)
+        return [vertice1, vertice2]
+
+    def getAdjacentEdgesFromEdge(self, edge):
+        adjEdges = []
+        vertices = self.getVerticesOfEdge(edge)
+        for vertice in vertices:
+            adjEdges += self.getAdjacentEdgesFromVertice(vertice)
+            adjEdges.remove(edge)
+            adjEdges = list(set(adjEdges))
+        return adjEdges
 
 class Tile(metaclass = ABCMeta):
     def __init__(self, plateau, coords, value):
@@ -119,9 +217,8 @@ class Voleur():
         self.coords = []
 
 class Port():
-    def __init__(self):
-        self.coords = []
-        self.joueur = ""
+    def __init__(self, coords, echange):
+        self.coords = 0
         self.echange = []
 
 class CarteDeveloppement():
