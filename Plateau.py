@@ -39,6 +39,37 @@ class Plateau():
                 elif Ltiles[i] == "Clay":
                     self.tiles.append(ClayTile(self, Lcoords[i], Lvalues[i]))
     
+    # NE PAS TOUCHER ABSOLUMENT (FONCTIONNE PARFAITEMENT)
+    def getAdjacentTilesFromTile(self, tile):
+        adjTiles = []
+        x = tile[0]
+        y = tile[1]
+        offset = 1
+        if x % 2 != 0:
+            offset = -1
+
+        if y+1 < 3 and (abs(x)+abs(y+1)) <= 3:
+          adjTiles.append((x,y+1))
+        if (y >= -1 and abs(x+y-1) <= 3 and y-1!=-2) or (x==0 and y-1==-2):
+          adjTiles.append((x,y-1))
+        if x+1 < 3 and (abs(x+1)+abs(y)) <= 3:
+            if x+1 == 1 and y == -2: 
+                ...
+            else:
+                adjTiles.append((x+1,y))
+        if abs(x-1+y) <= 3 and abs(x-1)!=3 and (abs(x-1)+abs(y)) <= 3:
+            if x-1 == -1 and y == -2: 
+                ...
+            else:
+                adjTiles.append((x-1,y))
+        if abs(y+offset) < 3:
+            if (x+1) < 3 and (abs(x+1)+abs(y+offset)) <= 3:
+                adjTiles.append((x+1,y+offset)) 
+            if x >= -1 and abs(x-1 + y+offset) <= 3:
+                adjTiles.append((x-1,y+offset))
+        return adjTiles
+
+    # NE PAS TOUCHER ABSOLUMENT (FONCTIONNE PARFAITEMENT)
     def getAdjacentTilesFromVertice(self, vertice):
         adjTiles = []
         x = vertice[0]
@@ -46,7 +77,7 @@ class Plateau():
         xOffset = x % 2
         yOffset = y % 2
 
-        if abs(x+y//2)<=3 and abs(x)+abs(y//2)<=3 and not(abs(x)>0 and y//2==-2):
+        if abs(x+y//2)<=3 and abs(x)+abs(y//2)<=3 and not(abs(x)>0 and y//2==-2) and abs(x)<3 and abs(y//2)<3:
             adjTiles.append((x,y//2))
 
         weirdX = x
@@ -59,12 +90,13 @@ class Plateau():
         else: 
             weirdY -= 1
 
-        if abs(weirdX+weirdY)<=3 and abs(weirdX)+abs(weirdY)<=3 and not(abs(weirdX)>0 and weirdY==-2):
+        if abs(weirdX+weirdY)<=3 and abs(weirdX)+abs(weirdY)<=3 and not(abs(weirdX)>0 and weirdY==-2) and abs(weirdX)<=2 and abs(weirdY)<=2:
             adjTiles.append((weirdX, weirdY))
-        if x >= 0 and abs(x-1+y//2)<=3 and abs(x-1)+abs(y//2)<=3 and not(abs(x)>=0 and y//2==-2):
+        if x >= -1 and abs(x-1+y//2)<=3 and abs(x-1)+abs(y//2)<=3 and abs(x-1)<3 and abs(y//2)<3 and not(abs(x-1)==1 and y//2==-2):
             adjTiles.append((x-1, y//2))
         return adjTiles
 
+    # NE PAS TOUCHER ABSOLUMENT (FONCTIONNE PARFAITEMENT)
     def getVerticesFromTile(self, tile):
         vertices = []
         x = tile[0]
@@ -79,6 +111,7 @@ class Plateau():
         vertices.append((x+1, 2*y+2+offset))
         return vertices
 
+    # NE PAS TOUCHER ABSOLUMENT (FONCTIONNE PARFAITEMENT)
     def getEdgesFromTile(self, tile):
         edges = []
         x = tile[0]
@@ -93,49 +126,112 @@ class Plateau():
         edges.append((2*x+2,2*y+1+offset))
         return edges
 
+    # NE PAS TOUCHER ABSOLUMENT (FONCTIONNE PARFAITEMENT)
     def getAdjacentVerticesFromVertice(self, vertice):
         adjVertices = []
         adjTiles = self.getAdjacentTilesFromVertice(vertice)
         allVertices = []
-        for tile in adjTiles:
-            allVertices.append(self.getVerticesFromTile(tile))
-        for i in range(len(allVertices)):
-            j = i + 1
-            while j<len(allVertices):
-                adjVertices += [element for element in allVertices[i] if element in allVertices[j] and element!=vertice]
-                j += 1
+        if len(adjTiles) == 1:
+            x = vertice[0]
+            y = vertice[1]
+
+            #Nord
+            if abs(x)+abs(y) == 4:
+                adjVertices.append((x,y+1))
+                adjVertices.append((x+1,y))
+            #Sud
+            elif abs(x)+abs(y) == 7:
+                adjVertices.append((x-1,y))
+                adjVertices.append((x,y-1))
+            #SW
+            elif abs(x)+abs(y) == 6:
+                adjVertices.append((x+1,y))
+                adjVertices.append((x,y-1))
+            #NE
+            elif abs(x)+abs(y) == 5:
+                adjVertices.append((x-1,y))
+                adjVertices.append((x,y+1))
+            #NW or SE
+            elif x==-2 or x==3:
+                adjVertices.append((x,y+1))
+                adjVertices.append((x,y-1))
+        else:
+            for tile in adjTiles:
+                allVertices.append(self.getVerticesFromTile(tile))
+            for i in range(len(allVertices)):
+                j = i + 1
+                while j<len(allVertices):
+                    print(j)
+                    adjVertices += [element for element in allVertices[i] if element in allVertices[j] and element!=vertice]
+                    j += 1
         return list(set(adjVertices))
     
+
+    # NE PAS TOUCHER ABSOLUMENT (FONCTIONNE PARFAITEMENT)
     def getAdjacentEdgesFromVertice(self, vertice):
         adjEdges = []
         adjTiles = self.getAdjacentTilesFromVertice(vertice)
         allEdges = []
-        for tile in adjTiles:
-            allEdges.append(self.getEdgesFromTile(tile))
-        for i in range(len(allEdges)):
-            j = i + 1
-            while j<len(allEdges):
-                adjEdges += [element for element in allEdges[i] if element in allEdges[j]]
-                j += 1
+        x = vertice[0]
+        y = vertice[1]
+        offset = 1
+        if x%2 != y%2:
+            offset = -1
+        if len(adjTiles) == 1:
+            adjTilesFromTile = self.getAdjacentTilesFromTile(adjTiles[0])
+            edgeOfTile = self.getEdgesFromTile(adjTiles[0])
+            for tile in adjTilesFromTile:
+                allEdges.append(self.getEdgesFromTile(tile))
+            for edges in allEdges:
+                for edge in edges:
+                    if edge in edgeOfTile:
+                        edgeOfTile.remove(edge)
+            if len(edgeOfTile)>=3:
+                #Nord
+                if abs(x)+abs(y) == 4:
+                    adjEdges.append((x*2,y))
+                    adjEdges.append((x*2+1,y))
+                #Sud
+                elif abs(x)+abs(y) == 7:
+                    adjEdges.append((x*2-1,y))
+                    adjEdges.append((x*2,y-1))
+                #SW
+                elif abs(x)+abs(y) == 6:
+                    adjEdges.append((x*2,y-1))
+                    adjEdges.append((x*2+1,y))
+                #NE
+                elif abs(x)+abs(y) == 5:
+                    adjEdges.append((x*2-1,y))
+                    adjEdges.append((x*2,y))
+                #NW or SE
+                elif x==-2 or x==3:
+                    adjEdges.append((x*2,y-1))
+                    adjEdges.append((x*2,y))
+            else:
+                adjEdges = edgeOfTile
+        else:
+                adjEdges += [(x*2,y), (x*2,y-1), (x*2+offset,y)]
         return adjEdges
 
+    # NE PAS TOUCHER ABSOLUMENT (FONCTIONNE PARFAITEMENT)
     def getVerticesOfEdge(self, edge):
         x = edge[0]
         y = edge[1]
-        vertice1 = ((x-1)/2, y)
-        vertice2 = ((x+1)/2, y)
+        vertice1 = (int((x-1)/2), y)
+        vertice2 = (int((x+1)/2), y)
         if x%2 == 0:
-          vertice1 = (x/2, y)
-          vertice2 = (x/2, y+1)
+          vertice1 = (int(x/2), y)
+          vertice2 = (int(x/2), y+1)
         return [vertice1, vertice2]
 
+    # NE PAS TOUCHER ABSOLUMENT (FONCTIONNE PARFAITEMENT)
     def getAdjacentEdgesFromEdge(self, edge):
         adjEdges = []
         vertices = self.getVerticesOfEdge(edge)
         for vertice in vertices:
             adjEdges += self.getAdjacentEdgesFromVertice(vertice)
-            adjEdges.remove(edge)
             adjEdges = list(set(adjEdges))
+        adjEdges.remove(edge)
         return adjEdges
 
 class Tile(metaclass = ABCMeta):
