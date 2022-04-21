@@ -10,7 +10,8 @@ ecranJeu = False
 pygame.init()
 
 # Création de la fenêtre
-cst.fenetre = pygame.display.set_mode((cst.w, cst.h), RESIZABLE)
+flags = pygame.RESIZABLE
+cst.fenetre = pygame.display.set_mode((cst.w, cst.h), flags)
 
 # Icône
 pygame.display.set_icon(cst.ICONE)

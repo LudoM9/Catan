@@ -13,8 +13,8 @@ class Joueur():
         self.villes = []
         self.routes = []
         self.ports = []
-        self.longueurPlusGrandeRoute = 0
-        self.tailleArmee = 0
+        self.plusGrandeRoute = False
+        self.plusGrandeArmee = False
         self.__plateau = plateau
 
     def turn(self):
@@ -42,4 +42,26 @@ class Joueur():
             if np.all(self.ressource-self.__plateau.CarteDeveloppement.coût>=0):
                 self.ressource-=self.__plateau.CarteDeveloppement.coût
                 self.carteDev.append(self.__plateau.pioche.carteDev.pop())
+
+    def calculPV(self):
+        n = 0
+        for cartes in self.carteDev:
+            if type==DevPV:
+                n+=1
+        for colonie in self.colonies:
+            n+=1
+        for ville in self.villes:
+            n+=2
+        if self.plusGrandeArmee:
+            n+=3
+        if self.plusGrandeRoute:
+            n+=3
+        return n
+
+    def victoire(self):
+        if self.calculPV()>=10:
+            return True
+        else:
+            return False
+
     

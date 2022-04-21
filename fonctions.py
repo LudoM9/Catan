@@ -37,8 +37,18 @@ def drawImageBotRight(bot_right_coord, image, percentage = 1):
     rect = image.get_rect(bottomright = bot_right_coord)
     cst.fenetre.blit(image, rect)
 
+def rectDrawImageBotRight(bot_right_coord, image, percentage = 1):
+    image_size = image.get_size()
+    image = pygame.transform.scale(image, (int(percentage * cst.w * image_size[0] / image_size[1]), int(percentage * cst.w)))
+    return image.get_rect(bottomright = bot_right_coord)
+
 def drawImageTopLeft(top_left_coord, image, percentage = 1):
     image_size = image.get_size()
     image = pygame.transform.scale(image, (int(percentage * cst.w * image_size[0] / image_size[1]), int(percentage * cst.w)))
     rect = image.get_rect(topleft = top_left_coord)
     cst.fenetre.blit(image, rect)
+
+def rectDrawImageTopLeft(top_left_coord, image, percentage = 1):
+    image_size = image.get_size()
+    image = pygame.transform.scale(image, (int(percentage * cst.w * image_size[0] / image_size[1]), int(percentage * cst.w)))
+    return image.get_rect(topleft = top_left_coord)
