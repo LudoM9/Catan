@@ -1,5 +1,6 @@
 from abc import abstractmethod, ABCMeta
 from numpy.random import randint
+import numpy as np
 import random as rd
 
 
@@ -424,3 +425,10 @@ print(P.getAdjacentTilesFromVertice((3,2)))
 print(P.getAdjacentTilesFromVertice((3,3)))
 print(P.getAdjacentTilesFromVertice((3,4)))
 """
+B = np.array([1,2,4,1,0])
+A = np.array([0,0,1,1,1])
+print(A)
+print(B-A)
+if np.all(B-A>=0):
+    print("A")
+print(B-A>=0)

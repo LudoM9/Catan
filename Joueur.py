@@ -2,7 +2,6 @@ import pygame
 import random as rd
 import numpy as np
 
-
 class Joueur():
     def __init__(self, nom, num, plateau):
         self.nom = nom
@@ -33,7 +32,7 @@ class Joueur():
     @ressource.setter
     def ressource(self,x):
         self.ressource=x
-
+        
     def turn(self):
         #Jouer un tour
         ...
