@@ -9,6 +9,7 @@ class Plateau():
         self.intersections = []
         self.routes = []
         self.ports = [Port((-2,-2), [3,3,3,3,3]), Port((-2,-1), [3,3,3,3,3]), Port((-1,-3), [4,4,2,4,4]), Port((0,-3), [4,4,2,4,4]), Port((1,-3), [3,3,3,3,3]), Port((2,-3), [3,3,3,3,3]), Port((3,-2), [3,3,3,3,3]), Port((3,-1), [3,3,3,3,3]), Port((3,1), [4,2,4,4,4]), Port((3,2), [4,2,4,4,4]), Port((2,4), [2,4,4,4,4]), Port((2,5), [2,4,4,4,4]), Port((0,4), [3,3,3,3,3]), Port((1,4), [3,3,3,3,3]), Port((-1,4), [4,4,4,2,4]), Port((-1,5), [4,4,4,2,4]), Port((-2,1), [4,4,4,4,2]), Port((-2,2), [4,4,4,4,2])]
+        self.pioche = Pioche()
         if rdPlateau:
             Lcoords = [(i,j) for i in range(-2,3) for j in range (-2,3) if abs(i+j)<=3 and abs(i)+abs(j)<=3 and not(abs(i)>0 and j==-2)]
             Lvalues = [2, 3, 3, 4, 4, 5, 5, 6, 6, 8, 8, 9, 9, 10, 10, 11, 11, 12]
@@ -287,24 +288,24 @@ class Ressource():
         self.type = ""
 
 class Colonie():
-    def __init__(self):
-        self.joueur = ""
-        self.coords = []
+    def __init__(self, joueur, coords):
+        self.joueur = joueur
+        self.coords = coords
         self.adjacent = []
         self.multiplicateur = 1
-        self.__coût = [1,1,1,1,0]
+        self.coût = [1,1,1,1,0]
 
 class Ville(Colonie):
-    def __init__(self):
-        super.__init__(self)
+    def __init__(self, joueur, coords):
+        super().__init__(self, joueur, coords)
         self.multiplicateur = 2
-        self.__coût = [0,0,0,2,3]
+        self.coût = [0,0,0,2,3]
 
 class Route():
     def __init__(self):
         self.joueur = ""
         self.coords = []
-        self.__coût = [1,1,0,0,0]
+        self.coût = [1,1,0,0,0]
     
     #Check if player has now the longest road
 
@@ -320,7 +321,7 @@ class Port():
 class CarteDeveloppement():
     def __init__(self, joueur):
         self.joueur = joueur
-        self.__coût = [0,0,1,1,1]
+        self.coût = np.array([0,0,1,1,1])
 
     def effet():
         print("No Effect")
