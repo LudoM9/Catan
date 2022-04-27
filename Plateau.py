@@ -1,6 +1,7 @@
 from abc import abstractmethod, ABCMeta
 from numpy.random import randint
 import random as rd
+import numpy as np
 
 
 class Plateau():
@@ -9,6 +10,7 @@ class Plateau():
         self.intersections = []
         self.routes = []
         self.ports = [Port((-2,-2), [3,3,3,3,3]), Port((-2,-1), [3,3,3,3,3]), Port((-1,-3), [4,4,2,4,4]), Port((0,-3), [4,4,2,4,4]), Port((1,-3), [3,3,3,3,3]), Port((2,-3), [3,3,3,3,3]), Port((3,-2), [3,3,3,3,3]), Port((3,-1), [3,3,3,3,3]), Port((3,1), [4,2,4,4,4]), Port((3,2), [4,2,4,4,4]), Port((2,4), [2,4,4,4,4]), Port((2,5), [2,4,4,4,4]), Port((0,4), [3,3,3,3,3]), Port((1,4), [3,3,3,3,3]), Port((-1,4), [4,4,4,2,4]), Port((-1,5), [4,4,4,2,4]), Port((-2,1), [4,4,4,4,2]), Port((-2,2), [4,4,4,4,2])]
+        self.voleur = Voleur((0,0))
         self.pioche = Pioche()
         if rdPlateau:
             Lcoords = [(i,j) for i in range(-2,3) for j in range (-2,3) if abs(i+j)<=3 and abs(i)+abs(j)<=3 and not(abs(i)>0 and j==-2)]
@@ -235,57 +237,92 @@ class Plateau():
         adjEdges.remove(edge)
         return adjEdges
 
+
+    def intersectionDispoConstruction(self, coords):
+        for elem in self.intersections:             #elem = Villes et colonies
+            if coords == elem.coords:
+                return False
+            elif elem.coords in self.getAdjacentVerticesFromVertice(self, coords):
+                return False
+        return True
+
+    def routeDispoConstruction(self, coords):
+        for route in self.routes:
+            if coords == route.coords:
+                return False
+        return True
+
+    def routeAdjacenteRouteExiste(self, joueur, coords):
+        for route in self.routes:
+            if route.joueur == joueur:
+                if route.coords in self.getAdjacentEdgesFromEdge(coords):
+                    return True
+        return False
+
+    def colonieAdjacenteRouteExiste(self, joueur, coords):
+        for elem in self.intersections:
+            if elem.joueur == joueur:
+                if elem.coords in self.getVerticesOfEdge(coords):
+                    return True
+        return False
+
+    def routeAdjacenteColonieExiste(self, joueur, coords):
+        for elem in self.intersections:
+            if elem.joueur == joueur:
+                if elem.coords in self.getAdjacentEdgesFromVertice(coords):
+                    return True
+        return False
+
+    def colonieAdjacenteTile(self, coords):
+        elems = []
+        for elem in self.intersections:
+            if elem.coords in self.getVerticesFromTile(coords):
+                elems.append(elem)
+        return elems
+
 class Tile(metaclass = ABCMeta):
     def __init__(self, plateau, coords, value):
         self.plateau = plateau
         self.coords = coords
         self.value = value
-        self.type = ""
+        self.ressource = np.array([0,0,0,0,0])
         self.color = ""
 
 class WoodTile(Tile):
     def __init__(self, plateau, coords, value):
         super.__init__(plateau, coords, value)
-        self.type = "Wood"
+        self.ressource = np.array([1,0,0,0,0])
         self.color = 0x33855d
 
 class WheatTile(Tile):
     def __init__(self, plateau, coords, value):
         super.__init__(plateau, coords, value)
-        self.type = "Wheat"
+        self.ressource = np.array([0,0,0,1,0])
         self.color = 0xffff00
 
 class WoolTile(Tile):
     def __init__(self, plateau, coords, value):
         super.__init__(plateau, coords, value)
-        self.type = "Wool"
+        self.ressource = np.array([0,0,1,0,0])
         self.color = 0xf5f5f5
 
 class ClayTile(Tile):
     def __init__(self, plateau, coords, value):
         super.__init__(plateau, coords, value)
-        self.type = "Clay"
+        self.ressource = np.array([0,1,0,0,0])
         self.color = 0xd2691e
 
 class StoneTile(Tile):
     def __init__(self, plateau, coords, value):
         super.__init__(plateau, coords, value)
-        self.type = "Stone"
+        self.ressource = np.array([0,0,0,0,1])
         self.color = 0xa9a9a9
 
 class DesertTile(Tile):
     def __init__(self, plateau, coords, value):
         super.__init__(plateau, coords, value)
-        self.type = "Desert"
+        self.ressource = np.array([0,0,0,0,0])
         self.color = 0xf0e68c
-
-class Dices():
-    def __init__(self):
-        self.value = 0
-
-class Ressource():
-    def __init__(self):
-        self.type = ""
 
 class Colonie():
     def __init__(self, joueur, coords):
@@ -293,30 +330,30 @@ class Colonie():
         self.coords = coords
         self.adjacent = []
         self.multiplicateur = 1
-        self.coût = [1,1,1,1,0]
+        self.coût = np.array([1,1,1,1,0])
 
 class Ville(Colonie):
     def __init__(self, joueur, coords):
         super().__init__(self, joueur, coords)
         self.multiplicateur = 2
-        self.coût = [0,0,0,2,3]
+        self.coût = np.array([0,0,0,2,3])
 
 class Route():
-    def __init__(self):
-        self.joueur = ""
-        self.coords = []
-        self.coût = [1,1,0,0,0]
+    def __init__(self, joueur, coords):
+        self.joueur = joueur
+        self.coords = coords
+        self.coût = np.array([1,1,0,0,0])
     
     #Check if player has now the longest road
 
 class Voleur():
-    def __init__(self):
-        self.coords = []
+    def __init__(self, coords):
+        self.coords = coords
 
 class Port():
     def __init__(self, coords, echange):
         self.coords = 0
-        self.echange = []
+        self.echange = np.array([])
 
 class CarteDeveloppement():
     def __init__(self, joueur):

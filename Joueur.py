@@ -3,7 +3,7 @@ import numpy as np
 import random as rd
 
 class Joueur():
-    def __init__(self, nom, numéro, plateau):
+    def __init__(self, nom, numéro):
         self.nom = ""
         self.numero = 0
         self.ressource = np.array([0,0,0,0,0])
@@ -13,35 +13,40 @@ class Joueur():
         self.villes = []
         self.routes = []
         self.ports = []
+        self.valeurEchange = np.array([4,4,4,4,4])
         self.plusGrandeRoute = False
         self.plusGrandeArmee = False
-        self.__plateau = plateau
 
-    def turn(self):
-        #Jouer un tour
-        ...
-    
-    def echangeBanque(self, ):
-        ...
+    def calculValeurEchange(self):
+        for port in self.ports:
+            for i in range(len(self.valeurEchange)):
+                if port[i]<self.valeurEchange[i]:
+                    self.valeurEchange[i] = port[i]
 
-    def echangeJoueur(self, joueur):
-        ...
+    def ressourceSuffisante(self, valeur):
+        ressourceSuffisante = False
+        if np.all(self.ressource - valeur >= 0):
+            ressourceSuffisante = True
+        return ressourceSuffisante
 
-    def lancerDés(self):
-        return sum(rd.randrange(1,7)+rd.randrange(1,7))
+    def colonieExiste(self, coords):
+        for colonie in self.colonies:
+            if coords == colonie.coords:
+                return True
+        return False
 
-    def construction(self, type):
-        ...
+    def getColonie(self, coords):
+        if self.colonieExiste(coords):
+            for colonie in self.colonies:
+                if coords == colonie.coords:
+                    return colonie
 
-    def constructionGratuite(self, element, coords):
-        if element == "Colonie":
-            ...
-
-    def achatCarteDev(self):
-        if len(self.__plateau.pioche.carteDev)>0:
-            if np.all(self.ressource-self.__plateau.CarteDeveloppement.coût>=0):
-                self.ressource-=self.__plateau.CarteDeveloppement.coût
-                self.carteDev.append(self.__plateau.pioche.carteDev.pop())
+    def nombreChevalier(self):
+        n = 0
+        for carte in self.carteDev:
+            if type == DevChevalier:
+                n += 1
+        return n
 
     def calculPV(self):
         n = 0
