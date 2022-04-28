@@ -1,14 +1,14 @@
 import pygame
-import Plateau.py
+import Plateau
 import Joueur
 
 class Catan():
     def __init__(self, joueurs, rdPlateau = False):
-        self.plateau = Plateau(rdPlateau)
+        self.plateau = Plateau.Plateau(rdPlateau)
         self.joueurs = []
         self.valeurDes = 0
         for i, joueur in enumerate(joueurs):
-            self.joueurs.append(Joueur(joueur, i, self.plateau))
+            self.joueurs.append(Joueur.Joueur(joueur, i, self.plateau))
 
     def lancerDes(self, joueur):
         s = sum(rd.randrange(1,7)+rd.randrange(1,7))

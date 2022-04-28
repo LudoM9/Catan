@@ -22,21 +22,6 @@ class Joueur():
             for i in range(len(self.valeurEchange)):
                 if port[i]<self.valeurEchange[i]:
                     self.valeurEchange[i] = port[i]
-    @property
-    def pointsVictoire(self):
-        return self.pointsVictoire
-
-    @property
-    def ressource(self):
-        return self.ressource
-
-    @pointsVictoire.setter
-    def pointsVictoire(self,x):
-        self.pointsVictoire=x
-
-    @ressource.setter
-    def ressource(self,x):
-        self.ressource=x
 
     def ressourceSuffisante(self, valeur):
         ressourceSuffisante = False
