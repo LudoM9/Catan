@@ -1,11 +1,11 @@
 import pygame
-import numpy as np
 import random as rd
+import numpy as np
 
 class Joueur():
-    def __init__(self, nom, numéro):
-        self.nom = ""
-        self.numero = 0
+    def __init__(self, nom, num, plateau):
+        self.nom = nom
+        self.numero = num
         self.ressource = np.array([0,0,0,0,0])
         self.carteDev = []
         self.pointsVictoire = 0
@@ -22,6 +22,21 @@ class Joueur():
             for i in range(len(self.valeurEchange)):
                 if port[i]<self.valeurEchange[i]:
                     self.valeurEchange[i] = port[i]
+    @property
+    def pointsVictoire(self):
+        return self.pointsVictoire
+
+    @property
+    def ressource(self):
+        return self.ressource
+
+    @pointsVictoire.setter
+    def pointsVictoire(self,x):
+        self.pointsVictoire=x
+
+    @ressource.setter
+    def ressource(self,x):
+        self.ressource=x
 
     def ressourceSuffisante(self, valeur):
         ressourceSuffisante = False
