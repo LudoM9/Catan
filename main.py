@@ -2,6 +2,7 @@ import pygame
 import constantes as cst
 import fonctions as fct
 import accueil
+import Catan
 from pygame.locals import *
 
 ecranAccueil = True
@@ -27,8 +28,9 @@ while True:
         fct.shouldResize(event)
 
     if ecranAccueil:
-        accueil.main()
+        plateau_aleatoire, joueurs = accueil.main()
         ecranAccueil = False
+        catan = Catan.Catan(joueurs, plateau_aleatoire)
         ecranJeu = True
         cst.fenetre.fill(pygame.Color('black'))
 

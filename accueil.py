@@ -199,13 +199,15 @@ def main():
                 cst.fenetre.blit(text_surface_J4, (RECT_J4.x + 5, RECT_J4.y + 5))
 
             if len(textJ1)>0 and len(textJ2)>0 and len(textJ3)>0:
-                if n == 4:
-                    if len(textJ4)>0:
+                if textJ1 != textJ2 and textJ1 != textJ3 and textJ2 != textJ3:
+                    if n == 4:
+                        if len(textJ4)>0:
+                            if textJ1 != textJ4 and textJ2 != textJ4 and textJ3 != textJ4:
+                                fct.drawImage((cst.w//2, 7*cst.h//8), DEMARRER, 0.15)
+                                RECT_DEMARRER = fct.rectDrawImage((cst.w//2, 7*cst.h//8), DEMARRER, 0.15)
+                    else:
                         fct.drawImage((cst.w//2, 7*cst.h//8), DEMARRER, 0.15)
                         RECT_DEMARRER = fct.rectDrawImage((cst.w//2, 7*cst.h//8), DEMARRER, 0.15)
-                else:
-                    fct.drawImage((cst.w//2, 7*cst.h//8), DEMARRER, 0.15)
-                    RECT_DEMARRER = fct.rectDrawImage((cst.w//2, 7*cst.h//8), DEMARRER, 0.15)
 
         pygame.display.update()
 
