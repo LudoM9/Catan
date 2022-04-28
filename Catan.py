@@ -38,6 +38,7 @@ class Catan():
                     colonie = Colonie(joueur, coords)
                     self.plateau.intersections.append(colonie)
                     joueur.colonies.append(colonie)
+                    self.ajoutPort(joueur, coords)
     
     def construireVille(self, joueur, coords):
         if joueur.ressourceSuffisante(np.array([0,0,0,2,3])):
@@ -64,6 +65,7 @@ class Catan():
             colonie = Colonie(joueur, coords)
             self.plateau.intersections.append(colonie)
             joueur.colonies.append(colonie)
+            self.ajoutPort(joueur, coords)
 
     def construireRouteGratuit(self, joueur, coords):
         if self.plateau.routeDispoConstruction(coords):
@@ -72,6 +74,11 @@ class Catan():
                 self.plateau.routes.append(route)
                 joueur.routes.append(route)
 
+    def ajoutPort(self, joueur, coords):
+        for port in self.plateau.ports:
+            if port.coords == coords:
+                joueur.ports.append(port)
+            
     def achatCarteDev(self, joueur):
         if len(self.plateau.pioche.carteDev)>0:
             if joueur.ressourceSuffisante(np.array([0,0,1,1,1])):
