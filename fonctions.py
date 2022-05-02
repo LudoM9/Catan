@@ -1,6 +1,7 @@
 import pygame, sys, os
 from pygame.locals import *
 import constantes as cst
+import numpy as np
 
 ACCUEIL_BACKGROUND = pygame.image.load(os.path.join('images', 'accueil_background_4.png'))
 
@@ -52,3 +53,25 @@ def rectDrawImageTopLeft(top_left_coord, image, percentage = 1):
     image_size = image.get_size()
     image = pygame.transform.scale(image, (int(percentage * cst.w * image_size[0] / image_size[1]), int(percentage * cst.w)))
     return image.get_rect(topleft = top_left_coord)
+
+def drawHexagon(gameDisplay, type, position):
+    x,y = position[0], position[1]
+    l = np.round(cst.h / 3)
+    c = np.round(l * 3 ** (1 * 3))
+    lc=4 #largeur du chemin
+    couleur=(0,0,0)
+    if type=='bois':
+        couleur=(51, 133, 93)
+    if type == 'mouton':
+        couleur = (245, 245, 245)
+    if type == 'ble':
+        couleur = ((255, 255, 0))
+    if type == 'minerai':
+        couleur = (169, 169, 169)
+    if type == 'argile':
+        couleur = (210, 105, 30)
+    if type == 'desert':
+        couleur = (240, 230, 140)
+
+    pygame.draw.polygon(gameDisplay, (0,0,0), ((x, y-l),(x+c,y-np.round(l/2)),(x+c,y+np.round(l/2)),(x,y+l),(x-c,y+np.round(l/2)),(x-c,y-np.round(l/2))))
+    pygame.draw.polygon(gameDisplay, couleur, ((x, y-l+lc),(x+c-lc,y-np.round(l/2)+lc),(x+c-lc,y+np.round(l/2)-lc),(x,y+l-lc),(x-c+lc,y+np.round(l/2)-lc),(x-c+lc,y-np.round(l/2)+lc)))

@@ -2,6 +2,7 @@ import pygame
 import constantes as cst
 import fonctions as fct
 import accueil
+import ecran_jeu
 from pygame.locals import *
 
 ecranAccueil = True
@@ -30,9 +31,8 @@ while True:
         accueil.main()
         ecranAccueil = False
         ecranJeu = True
-        cst.fenetre.fill(pygame.Color('black'))
 
     if ecranJeu:
-        ...
+        ecran_jeu.main()
 
     pygame.display.flip()
