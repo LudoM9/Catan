@@ -3,7 +3,17 @@ import Plateau
 import Joueur
 
 class Catan():
+    """
+    Classe qui représente une partie de jeu
+    """
     def __init__(self, joueurs, rdPlateau = False):
+        """
+        Initialisation de ma classe
+
+        Args:
+            joueurs (list(string)): Liste de nom de joueurs
+            rdPlateau (bool, optional): Booléen pour savoir si le plateau est aléatoire. Defaults to False.
+        """
         self.plateau = Plateau.Plateau(rdPlateau)
         self.joueurs = []
         self.valeurDes = 0
