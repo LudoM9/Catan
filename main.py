@@ -2,6 +2,7 @@ import pygame
 import constantes as cst
 import fonctions as fct
 import accueil
+import ecran_jeu
 import Catan
 from pygame.locals import *
 
@@ -38,6 +39,6 @@ while True:
     cst.fenetre.fill(pygame.Color('black'))
 
     if ecranJeu:
-        ...
+        ecran_jeu.main(catan)
 
     pygame.display.flip()

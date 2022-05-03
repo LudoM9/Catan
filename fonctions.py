@@ -1,6 +1,7 @@
 import pygame, sys, os
 from pygame.locals import *
 import constantes as cst
+import numpy as np
 
 ACCUEIL_BACKGROUND = pygame.image.load(os.path.join('images', 'accueil_background_4.png'))
 

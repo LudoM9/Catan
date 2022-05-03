@@ -19,6 +19,9 @@ class Catan():
         self.valeurDes = 0
         for i, joueur in enumerate(joueurs):
             self.joueurs.append(Joueur.Joueur(joueur, i, self.plateau))
+        self.numeroJoueurActuel = 0
+        self.joueurActuel = self.joueurs[self.numeroJoueurActuel]
+        
 
     def lancerDes(self, joueur):
         s = sum(rd.randrange(1,7)+rd.randrange(1,7))
@@ -108,6 +111,13 @@ class Catan():
         if joueur1.ressourceSuffisante(don) and joueur2.ressourceSuffisante(recu):
             joueur1.ressource = joueur1.ressource - don + recu
             joueur2.ressource = joueur2.ressource + don - recu
+
+    def tourSuivant(self):
+        print("Tour Suivant")
+        self.numeroJoueurActuel += 1
+        if self.numeroJoueurActuel >= len(self.joueurs):
+            self.numeroJoueurActuel = 0   
+        self.joueurActuel = self.joueurs[self.numeroJoueurActuel]
 
     def calculPlusGrandeArmee(self):
         m = 0

@@ -8,15 +8,31 @@ pygame.font.init()
 Broadwfont = pygame.font.Font(os.path.join('fonts', 'BROADW.TTF'), 30)
 basefont = pygame.font.Font(None, 18)
 
+NEXTTURN = pygame.image.load(os.path.join('images', 'NextTurn.png'))
+
 RECT_MAIN = pygame.Rect(0, 0, 0, 0)
 RECT_CONSTRUIRE = pygame.Rect(0, 0, 0, 0)
 RECT_ECHANGER = pygame.Rect(0, 0, 0, 0)
-RECT_1=pygame
+RECT_NEXTTURN = pygame.Rect(0, 0, 0, 0)
 
-def main():
-    global RECT_MAIN, RECT_CONSTRUIRE, RECT_ECHANGER
+def main(catan):
+    global RECT_MAIN, RECT_CONSTRUIRE, RECT_ECHANGER, RECT_NEXTTURN
 
     run=True
+
+    color = pygame.Color('white')
+
+    joueurActuel = catan.joueurActuel
+    if joueurActuel.numero == 0:
+        color = (255, 0, 0)
+    elif joueurActuel.numero == 1:
+        color = (0, 0, 255)
+    elif joueurActuel.numero == 2:
+        color = (0, 255, 0)
+    elif joueurActuel.numero == 3:
+        color = (138,43,226)
+    playerTextsurface = basefont.render(joueurActuel.nom, False, color)
+
     l = np.round(cst.h / 3)
     c = np.round(l * 3 ** (1 * 3))
     positions = [(3*c,l),(5*c,l),(7*c,l),
@@ -30,20 +46,40 @@ def main():
 
     while run:
         pygame.time.Clock().tick(30)
+        
+        joueurActuel = catan.joueurActuel
+        if joueurActuel.numero == 0:
+            color = (255, 0, 0)
+        elif joueurActuel.numero == 1:
+            color = (0, 0, 255)
+        elif joueurActuel.numero == 2:
+            color = (0, 255, 0)
+        elif joueurActuel.numero == 3:
+            color = (138,43,226)
+        playerTextsurface = basefont.render(joueurActuel.nom, False, color)
 
-        cst.fenetre.fill((0,0,255))
+        cst.fenetre.fill((0,191,255))
+
+        fct.drawImageTopLeft((0,0), playerTextsurface, 0.05)
+        fct.drawImageTopLeft((cst.w/2, 0), NEXTTURN, 0.2)
+        RECT_NEXTTURN = fct.rectDrawImageTopLeft((cst.w/2, 0), NEXTTURN, 0.2)
 
         for i in range(19):
-            fct.drawHexagon(cst.fenetre, hexagons[i],positions[i])
+            fct.drawHexagon(hexagons[i],positions[i])
 
         for event in pygame.event.get():
             fct.shouldQuit(event)
+            fct.shouldResize(event)
+            if event.type == MOUSEBUTTONDOWN and event.button == 1:
+                if RECT_NEXTTURN.collidepoint(event.pos):
+                    catan.tourSuivant()
 
         pygame.display.update()
 
 def resetRect():
-    global RECT_MAIN, RECT_CONSTRUIRE, RECT_ECHANGER
+    global RECT_MAIN, RECT_CONSTRUIRE, RECT_ECHANGER, RECT_NEXTTURN
 
     RECT_MAIN = pygame.Rect(0, 0, 0, 0)
     RECT_CONSTRUIRE = pygame.Rect(0, 0, 0, 0)
     RECT_ECHANGER = pygame.Rect(0, 0, 0, 0)
+    RECT_NEXTTURN = pygame.Rect(0, 0, 0, 0)
