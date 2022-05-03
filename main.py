@@ -27,12 +27,15 @@ while True:
         fct.shouldQuit(event)
         fct.shouldResize(event)
 
-    if ecranAccueil:
-        plateau_aleatoire, joueurs = accueil.main()
-        ecranAccueil = False
-        catan = Catan.Catan(joueurs, plateau_aleatoire)
-        ecranJeu = True
-        cst.fenetre.fill(pygame.Color('black'))
+    #if ecranAccueil:
+    #    plateau_aleatoire, joueurs = accueil.main()
+    #    ecranAccueil = False
+    plateau_aleatoire = False
+    joueurs  = ["Jeep", "Nikos", "Dany"]
+    ecranAccueil = False
+    catan = Catan.Catan(joueurs, plateau_aleatoire)
+    ecranJeu = True
+    cst.fenetre.fill(pygame.Color('black'))
 
     if ecranJeu:
         ...
