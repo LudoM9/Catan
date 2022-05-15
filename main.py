@@ -28,7 +28,7 @@ while True:
         fct.shouldResize(event)
 
     if ecranAccueil:
-        accueil.main()
+        #accueil.main()
         ecranAccueil = False
         ecranJeu = True
 
