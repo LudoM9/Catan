@@ -1,3 +1,7 @@
+"""
+Module contenant des fonctions relatives à l'affichage du jeu.
+"""
+
 import pygame, sys, os
 from pygame.locals import *
 import constantes as cst
@@ -5,6 +9,9 @@ import constantes as cst
 ACCUEIL_BACKGROUND = pygame.image.load(os.path.join('images', 'accueil_background_4.png'))
 
 def shouldQuit(event):
+    """
+    Désactive la bibliothèque pygame lorsqu'un événement est terminé.
+    """
     if event.type == QUIT:
         pygame.quit()
         sys.exit()

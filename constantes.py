@@ -1,8 +1,12 @@
+"""
+Module contnant des constantes relatives à l'affichage du jeu.
+"""
+
 import os, pygame
 
 # Fenêtre
-w = 640
-h = 480
+w = 640 #largeur de la fenêtre
+h = 480 # hauteur de la fenêtre
 fenetre = pygame.Surface((0, 0))
 
 # Titre de la fenêtre

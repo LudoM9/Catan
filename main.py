@@ -1,3 +1,7 @@
+"""
+Module principal de l'interface homme-machine, qui réalise l'affichage des différentes phases de jeu.
+"""
+
 import pygame
 import constantes as cst
 import fonctions as fct
