@@ -9,6 +9,13 @@ Broadwfont = pygame.font.Font(os.path.join('fonts', 'BROADW.TTF'), 30)
 basefont = pygame.font.Font(None, 18)
 
 NEXTTURN = pygame.image.load(os.path.join('images', 'TourSuivant.png'))
+CONSTRUCT = pygame.image.load(os.path.join('images', 'Construction.png'))
+BRICK = pygame.image.load(os.path.join('images', 'Brick Image.png'))
+STONE = pygame.image.load(os.path.join('images', 'Stone Image.png'))
+WHEAT = pygame.image.load(os.path.join('images', 'Wheat Image.png'))
+WOOD = pygame.image.load(os.path.join('images', 'Wood Image.png'))
+WOOL = pygame.image.load(os.path.join('images', 'Wool Image.png'))
+BACKGROUNDUI = pygame.image.load(os.path.join('images', 'BackgroundUI.png'))
 
 RECT_MAIN = pygame.Rect(0, 0, 0, 0)
 RECT_CONSTRUIRE = pygame.Rect(0, 0, 0, 0)
@@ -35,7 +42,6 @@ def main(catan):
 
     l = np.round(cst.h / 12)
     c = np.round(l/2 * 3 ** (1 / 3))
-    print(c,l)
     positions = [(3*c,l),(5*c,l),(7*c,l),
                  (2*c,np.round(5*l/2)),(4*c,np.round(5*l/2)),(6*c,np.round(5*l/2)),(8*c,np.round(5*l/2)),
                  (c,4*l),(3*c,4*l),(5*c,4*l),(7*c,4*l),(9*c,4*l),
@@ -60,6 +66,7 @@ def main(catan):
         playerTextsurface = basefont.render(joueurActuel.nom, False, color)
 
         cst.fenetre.fill((0,191,255))
+        pygame.draw.rect(cst.fenetre, (211,211,211), Rect(0, 3*cst.h/4, cst.w, cst.h/4))
 
         fct.drawImageTopLeft((0,0), playerTextsurface, 0.05)
         fct.drawImageTopRight((cst.w, 0), NEXTTURN, 0.05)
