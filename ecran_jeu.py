@@ -8,7 +8,7 @@ pygame.font.init()
 Broadwfont = pygame.font.Font(os.path.join('fonts', 'BROADW.TTF'), 30)
 basefont = pygame.font.Font(None, 18)
 
-NEXTTURN = pygame.image.load(os.path.join('images', 'NextTurn.png'))
+NEXTTURN = pygame.image.load(os.path.join('images', 'TourSuivant.png'))
 
 RECT_MAIN = pygame.Rect(0, 0, 0, 0)
 RECT_CONSTRUIRE = pygame.Rect(0, 0, 0, 0)
@@ -35,6 +35,7 @@ def main(catan):
 
     l = np.round(cst.h / 3)
     c = np.round(l * 3 ** (1 * 3))
+    print(c,l)
     positions = [(3*c,l),(5*c,l),(7*c,l),
                  (2*c,np.round(5*l/2)),(4*c,np.round(5*l/2)),(6*c,np.round(5*l/2)),(8*c,np.round(5*l/2)),
                  (c,4*l),(3*c,4*l),(5*c,4*l),(7*c,4*l),(9*c,4*l),
@@ -61,11 +62,11 @@ def main(catan):
         cst.fenetre.fill((0,191,255))
 
         fct.drawImageTopLeft((0,0), playerTextsurface, 0.05)
-        fct.drawImageTopLeft((cst.w/2, 0), NEXTTURN, 0.2)
-        RECT_NEXTTURN = fct.rectDrawImageTopLeft((cst.w/2, 0), NEXTTURN, 0.2)
+        fct.drawImageTopRight((cst.w, 0), NEXTTURN, 0.05)
+        RECT_NEXTTURN = fct.rectDrawImageTopRight((cst.w, 0), NEXTTURN, 0.05)
 
         for i in range(19):
-            fct.drawHexagon(cst.fenetre, hexagons[i], positions[i],numbers[i])
+            fct.drawHexagon(hexagons[i], positions[i],numbers[i])
 
         for event in pygame.event.get():
             fct.shouldQuit(event)
