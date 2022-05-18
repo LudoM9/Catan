@@ -7,6 +7,7 @@ import constantes as cst
 import fonctions as fct
 import accueil
 import Catan
+import ecran_jeu
 from pygame.locals import *
 
 ecranAccueil = True
@@ -36,9 +37,8 @@ while True:
         ecranAccueil = False
         catan = Catan.Catan(joueurs, plateau_aleatoire)
         ecranJeu = True
-        cst.fenetre.fill(pygame.Color('black'))
 
     if ecranJeu:
-        ...
+        ecran_jeu.main()
 
     pygame.display.flip()
