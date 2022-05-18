@@ -6,7 +6,7 @@ import numpy as np
 
 pygame.font.init()
 Broadwfont = pygame.font.Font(os.path.join('fonts', 'BROADW.TTF'), 30)
-basefont = pygame.font.Font(None, 18)
+basefont = pygame.font.Font(None, 100)
 
 NEXTTURN = pygame.image.load(os.path.join('images', 'TourSuivant.png'))
 CONSTRUCT = pygame.image.load(os.path.join('images', 'Construction.png'))
@@ -15,30 +15,26 @@ STONE = pygame.image.load(os.path.join('images', 'Stone Image.png'))
 WHEAT = pygame.image.load(os.path.join('images', 'Wheat Image.png'))
 WOOD = pygame.image.load(os.path.join('images', 'Wood Image.png'))
 WOOL = pygame.image.load(os.path.join('images', 'Wool Image.png'))
-BACKGROUNDUI = pygame.image.load(os.path.join('images', 'BackgroundUI.png'))
+PV = pygame.image.load(os.path.join('images', 'PV Image.png'))
+BACKGROUNDUI = pygame.image.load(os.path.join('images', 'BackgroundUI.jpg'))
 
 RECT_MAIN = pygame.Rect(0, 0, 0, 0)
 RECT_CONSTRUIRE = pygame.Rect(0, 0, 0, 0)
 RECT_ECHANGER = pygame.Rect(0, 0, 0, 0)
 RECT_NEXTTURN = pygame.Rect(0, 0, 0, 0)
+RECT_BRICKIMAGE = pygame.Rect(0, 0, 0, 0)
+RECT_STONEIMAGE = pygame.Rect(0, 0, 0, 0)
+RECT_WHEATIMAGE = pygame.Rect(0, 0, 0, 0)
+RECT_WOODIMAGE = pygame.Rect(0, 0, 0, 0)
+RECT_WOOLIMAGE = pygame.Rect(0, 0, 0, 0)
+RECT_PVIMAGE = pygame.Rect(0, 0, 0, 0)
 
 def main(catan):
-    global RECT_MAIN, RECT_CONSTRUIRE, RECT_ECHANGER, RECT_NEXTTURN
+    global RECT_MAIN, RECT_CONSTRUIRE, RECT_ECHANGER, RECT_NEXTTURN, RECT_BRICKIMAGE, RECT_STONEIMAGE, RECT_WHEATIMAGE, RECT_WOODIMAGE, RECT_WOOLIMAGE, RECT_PVIMAGE
 
     run=True
-
-    color = pygame.Color('white')
-
-    joueurActuel = catan.joueurActuel
-    if joueurActuel.numero == 0:
-        color = (255, 0, 0)
-    elif joueurActuel.numero == 1:
-        color = (0, 0, 255)
-    elif joueurActuel.numero == 2:
-        color = (0, 255, 0)
-    elif joueurActuel.numero == 3:
-        color = (138,43,226)
-    playerTextsurface = basefont.render(joueurActuel.nom, False, color)
+    xoffset = 5
+    yoffset = 5
 
     l = np.round(cst.h / 12)
     c = np.round(l/2 * 3 ** (1 / 3))
@@ -68,9 +64,36 @@ def main(catan):
         cst.fenetre.fill((0,191,255))
         pygame.draw.rect(cst.fenetre, (211,211,211), Rect(0, 3*cst.h/4, cst.w, cst.h/4))
 
-        fct.drawImageTopLeft((0,0), playerTextsurface, 0.05)
+        fct.drawImageTopLeft((xoffset,0), playerTextsurface, 0.035)
         fct.drawImageTopRight((cst.w, 0), NEXTTURN, 0.05)
         RECT_NEXTTURN = fct.rectDrawImageTopRight((cst.w, 0), NEXTTURN, 0.05)
+
+        fct.drawImageTopLeft((xoffset,3*cst.h/4 + yoffset), BRICK, 0.05)
+        fct.drawImageTopLeft((xoffset,3*cst.h/4+(1/3)*cst.h/4 + yoffset), STONE, 0.05)
+        fct.drawImageTopLeft((xoffset,3*cst.h/4+(2/3)*cst.h/4 + yoffset), WHEAT, 0.05)
+        fct.drawImageTopLeft((80+xoffset,3*cst.h/4 + yoffset), WOOD, 0.05)
+        fct.drawImageTopLeft((80+xoffset,3*cst.h/4+(1/3)*cst.h/4 + yoffset), WOOL, 0.05)
+        fct.drawImageTopLeft((80+xoffset,3*cst.h/4+(2/3)*cst.h/4 + yoffset), PV, 0.05)
+        RECT_BRICKIMAGE = fct.rectDrawImageTopLeft((xoffset,3*cst.h/4 + yoffset), BRICK, 0.05)
+        RECT_STONEIMAGE = fct.rectDrawImageTopLeft((xoffset,3*cst.h/4+(1/3)*cst.h/4 + yoffset), STONE, 0.05)
+        RECT_WHEATIMAGE = fct.rectDrawImageTopLeft((xoffset,3*cst.h/4+(2/3)*cst.h/4 + yoffset), WHEAT, 0.05)
+        RECT_WOODIMAGE = fct.rectDrawImageTopLeft((80+xoffset,3*cst.h/4 + yoffset), WOOD, 0.05)
+        RECT_WOOLIMAGE = fct.rectDrawImageTopLeft((80+xoffset,3*cst.h/4+(1/3)*cst.h/4 + yoffset), WOOL, 0.05)
+        RECT_PVIMAGE = fct.rectDrawImageTopLeft((80+xoffset,3*cst.h/4+(2/3)*cst.h/4 + yoffset), PV, 0.05)
+
+        brickTextsurface = basefont.render(str(joueurActuel.ressource[1]), False, (0,0,0))
+        stoneTextsurface = basefont.render(str(joueurActuel.ressource[4]), False, (0,0,0))
+        wheatTextsurface = basefont.render(str(joueurActuel.ressource[3]), False, (0,0,0))
+        woodTextsurface = basefont.render(str(joueurActuel.ressource[0]), False, (0,0,0))
+        woolTextsurface = basefont.render(str(joueurActuel.ressource[2]), False, (0,0,0))
+        pvTextsurface = basefont.render(str(joueurActuel.pointsVictoire), False, (0,0,0))
+        fct.drawImageMidLeft(RECT_BRICKIMAGE.midright, brickTextsurface, 0.035)
+        fct.drawImageMidLeft(RECT_STONEIMAGE.midright, stoneTextsurface, 0.035)
+        fct.drawImageMidLeft(RECT_WHEATIMAGE.midright, wheatTextsurface, 0.035)
+        fct.drawImageMidLeft(RECT_WOODIMAGE.midright, woodTextsurface, 0.035)
+        fct.drawImageMidLeft(RECT_WOOLIMAGE.midright, woolTextsurface, 0.035)
+        fct.drawImageMidLeft(RECT_PVIMAGE.midright, pvTextsurface, 0.035)
+        
 
         for i in range(19):
             fct.drawHexagon(hexagons[i], positions[i],numbers[i])
@@ -85,9 +108,15 @@ def main(catan):
         pygame.display.update()
 
 def resetRect():
-    global RECT_MAIN, RECT_CONSTRUIRE, RECT_ECHANGER, RECT_NEXTTURN
+    global RECT_MAIN, RECT_CONSTRUIRE, RECT_ECHANGER, RECT_NEXTTURN, RECT_BRICKIMAGE, RECT_STONEIMAGE, RECT_WHEATIMAGE, RECT_WOODIMAGE, RECT_WOOLIMAGE, RECT_PVIMAGE
 
     RECT_MAIN = pygame.Rect(0, 0, 0, 0)
     RECT_CONSTRUIRE = pygame.Rect(0, 0, 0, 0)
     RECT_ECHANGER = pygame.Rect(0, 0, 0, 0)
     RECT_NEXTTURN = pygame.Rect(0, 0, 0, 0)
+    RECT_BRICKIMAGE = pygame.Rect(0, 0, 0, 0)
+    RECT_STONEIMAGE = pygame.Rect(0, 0, 0, 0)
+    RECT_WHEATIMAGE = pygame.Rect(0, 0, 0, 0)
+    RECT_WOODIMAGE = pygame.Rect(0, 0, 0, 0)
+    RECT_WOOLIMAGE = pygame.Rect(0, 0, 0, 0)
+    RECT_PVIMAGE = pygame.Rect(0, 0, 0, 0)
