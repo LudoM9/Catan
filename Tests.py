@@ -1,3 +1,7 @@
+"""
+Module permettant de réaliser des tests unitaires et ainsi vérifier le bon fonctionnement des fonctions, instanciations et méthodes des modules.
+"""
+
 import unittest
 import Joueur
 import Plateau

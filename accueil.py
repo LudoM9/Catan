@@ -1,3 +1,7 @@
+"""
+Module contenant l'affichage de l'écran d'accueil du jeu ainsi que de l'écran de choix du nombre de joueurs et des noms de joueurs.
+"""
+
 import pygame, os
 from pygame.locals import *
 import constantes as cst

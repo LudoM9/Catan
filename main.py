@@ -1,9 +1,14 @@
+"""
+Module principal de l'interface homme-machine, qui réalise l'affichage des différentes phases de jeu.
+"""
+
 import pygame
 import constantes as cst
 import fonctions as fct
 import accueil
 import ecran_jeu
 import Catan
+import ecran_jeu
 from pygame.locals import *
 
 ecranAccueil = True

@@ -40,7 +40,7 @@ def main(catan):
                  (c,4*l),(3*c,4*l),(5*c,4*l),(7*c,4*l),(9*c,4*l),
                  (2*c,np.round(11*l/2)),(4*c,np.round(11*l/2)),(6*c,np.round(11*l/2)),(8*c,np.round(11*l/2)),
                  (3*c,7*l),(5*c,7*l),(7*c,7*l)]
-    hexagons=['bois','mouton','mouton','ble','minerai','ble','bois','bois','argile','desert','minerai','ble','ble','minerai','bois','plaine','argile','mouton','argile']
+    hexagons=['bois','mouton','mouton','ble','minerai','ble','bois','bois','argile','desert','minerai','ble','ble','minerai','bois','mouton','argile','mouton','argile']
     numbers=[6,3,8,2,4,5,10,5,9,0,6,9,10,11,3,12,8,4,11]
 
 
@@ -65,7 +65,7 @@ def main(catan):
         RECT_NEXTTURN = fct.rectDrawImageTopLeft((cst.w/2, 0), NEXTTURN, 0.2)
 
         for i in range(19):
-            fct.drawHexagon(hexagons[i],positions[i])
+            fct.drawHexagon(cst.fenetre, hexagons[i], positions[i],numbers[i])
 
         for event in pygame.event.get():
             fct.shouldQuit(event)
