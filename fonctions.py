@@ -62,7 +62,18 @@ def rectDrawImageTopLeft(top_left_coord, image, percentage = 1):
     image = pygame.transform.scale(image, (int(percentage * cst.w * image_size[0] / image_size[1]), int(percentage * cst.w)))
     return image.get_rect(topleft = top_left_coord)
 
-def drawHexagon(gameDisplay, type, position,number):
+def drawImageTopRight(top_right_coord, image, percentage = 1):
+    image_size = image.get_size()
+    image = pygame.transform.scale(image, (int(percentage * cst.w * image_size[0] / image_size[1]), int(percentage * cst.w)))
+    rect = image.get_rect(topright = top_right_coord)
+    cst.fenetre.blit(image, rect)
+
+def rectDrawImageTopRight(top_right_coord, image, percentage = 1):
+    image_size = image.get_size()
+    image = pygame.transform.scale(image, (int(percentage * cst.w * image_size[0] / image_size[1]), int(percentage * cst.w)))
+    return image.get_rect(topright = top_right_coord)
+
+def drawHexagon(type, position, number):
     xoff,yoff =20,20 #offsets pour placer le plateau
 
     x,y = position[0]+xoff, position[1]+yoff
@@ -84,13 +95,13 @@ def drawHexagon(gameDisplay, type, position,number):
     if type == 'desert':
         couleur = (240, 230, 140)
 
-    pygame.draw.polygon(gameDisplay, (0,0,0), ((x, y-l),(x+c,y-np.round(l/2)),(x+c,y+np.round(l/2)),(x,y+l),(x-c,y+np.round(l/2)),(x-c,y-np.round(l/2))))
-    pygame.draw.polygon(gameDisplay, couleur, ((x, y-lint),(x+cint,y-np.round(lint/2)),(x+cint,y+np.round(lint/2)),(x,y+lint),(x-cint,y+np.round(lint/2)),(x-cint,y-np.round(lint/2))))
+    pygame.draw.polygon(cst.fenetre, (0,0,0), ((x, y-l),(x+c,y-np.round(l/2)),(x+c,y+np.round(l/2)),(x,y+l),(x-c,y+np.round(l/2)),(x-c,y-np.round(l/2))))
+    pygame.draw.polygon(cst.fenetre, couleur, ((x, y-lint),(x+cint,y-np.round(lint/2)),(x+cint,y+np.round(lint/2)),(x,y+lint),(x-cint,y+np.round(lint/2)),(x-cint,y-np.round(lint/2))))
 
     pygame.font.init()
     basefont = pygame.font.Font(None, 20)
     if type!="desert":
 
-        pygame.draw.circle(gameDisplay, (0, 0, 0), (int(x), int(y)), 15)
+        pygame.draw.circle(cst.fenetre, (0, 0, 0), (int(x), int(y)), 15)
         text=basefont.render(str(number), False, pygame.Color('white'))
         cst.fenetre.blit(text,(x-5,y-5))

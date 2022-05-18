@@ -33,8 +33,8 @@ def main(catan):
         color = (138,43,226)
     playerTextsurface = basefont.render(joueurActuel.nom, False, color)
 
-    l = np.round(cst.h / 3)
-    c = np.round(l * 3 ** (1 * 3))
+    l = np.round(cst.h / 12)
+    c = np.round(l/2 * 3 ** (1 / 3))
     print(c,l)
     positions = [(3*c,l),(5*c,l),(7*c,l),
                  (2*c,np.round(5*l/2)),(4*c,np.round(5*l/2)),(6*c,np.round(5*l/2)),(8*c,np.round(5*l/2)),

@@ -41,7 +41,6 @@ while True:
     ecranAccueil = False
     catan = Catan.Catan(joueurs, plateau_aleatoire)
     ecranJeu = True
-    cst.fenetre.fill(pygame.Color('black'))
 
     if ecranJeu:
         ecran_jeu.main(catan)
