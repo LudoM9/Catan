@@ -172,6 +172,8 @@ class Catan():
             self.plateau.intersections.append(colonie)
             joueur.colonies.append(colonie)
             self.ajoutPort(joueur, coords)
+            return True
+        return False
 
     def construireRouteGratuit(self, joueur, coords):
         """
@@ -191,6 +193,9 @@ class Catan():
                 route = Route(joueur, coords)
                 self.plateau.routes.append(route)
                 joueur.routes.append(route)
+                return True
+        return False
+        
 
     def ajoutPort(self, joueur, coords):
         """

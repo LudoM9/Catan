@@ -547,7 +547,7 @@ class WoodTile(Tile):
         """
         super().__init__(plateau, coords, value)
         self.ressource = np.array([1,0,0,0,0])
-        self.color = 0x33855d
+        self.color = 'bois'
 
 class WheatTile(Tile):
     """
@@ -575,7 +575,7 @@ class WheatTile(Tile):
 
         super().__init__(plateau, coords, value)
         self.ressource = np.array([0,0,0,1,0])
-        self.color = 0xffff00
+        self.color = 'ble'
 
 class WoolTile(Tile):
     """
@@ -603,7 +603,7 @@ class WoolTile(Tile):
 
         super().__init__(plateau, coords, value)
         self.ressource = np.array([0,0,1,0,0])
-        self.color = 0xf5f5f5
+        self.color = 'mouton'
 
 class ClayTile(Tile):
     """
@@ -631,7 +631,7 @@ class ClayTile(Tile):
 
         super().__init__(plateau, coords, value)
         self.ressource = np.array([0,1,0,0,0])
-        self.color = 0xd2691e
+        self.color = 'argile'
 
 class StoneTile(Tile):
     """
@@ -659,7 +659,7 @@ class StoneTile(Tile):
 
         super().__init__(plateau, coords, value)
         self.ressource = np.array([0,0,0,0,1])
-        self.color = 0xa9a9a9
+        self.color = 'minerai'
 
 class DesertTile(Tile):
     """
@@ -686,7 +686,7 @@ class DesertTile(Tile):
 
         super().__init__(plateau, coords, value)
         self.ressource = np.array([0,0,0,0,0])
-        self.color = 0xf0e68c
+        self.color = 'desert'
 
 class Colonie():
     """

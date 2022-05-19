@@ -9,7 +9,6 @@ Broadwfont = pygame.font.Font(os.path.join('fonts', 'BROADW.TTF'), 30)
 basefont = pygame.font.Font(None, 100)
 
 NEXTTURN = pygame.image.load(os.path.join('images', 'TourSuivant.png'))
-CONSTRUCTION = pygame.image.load(os.path.join('images', 'Construction.png'))
 BRICK = pygame.image.load(os.path.join('images', 'Brick Image.png'))
 STONE = pygame.image.load(os.path.join('images', 'Stone Image.png'))
 WHEAT = pygame.image.load(os.path.join('images', 'Wheat Image.png'))
@@ -18,8 +17,12 @@ WOOL = pygame.image.load(os.path.join('images', 'Wool Image.png'))
 PV = pygame.image.load(os.path.join('images', 'PV Image.png'))
 BACKGROUNDUI = pygame.image.load(os.path.join('images', 'BackgroundUI.jpg'))
 
+COLONIE = pygame.image.load(os.path.join('images', 'Colonie.png'))
+VILLE = pygame.image.load(os.path.join('images', 'Ville.png'))
+ROUTE = pygame.image.load(os.path.join('images', 'Route.png'))
+CARTEDEV = pygame.image.load(os.path.join('images', 'CarteDev.png'))
+
 RECT_MAIN = pygame.Rect(0, 0, 0, 0)
-RECT_CONSTRUIRE = pygame.Rect(0, 0, 0, 0)
 RECT_ECHANGER = pygame.Rect(0, 0, 0, 0)
 RECT_NEXTTURN = pygame.Rect(0, 0, 0, 0)
 RECT_BRICKIMAGE = pygame.Rect(0, 0, 0, 0)
@@ -29,10 +32,21 @@ RECT_WOODIMAGE = pygame.Rect(0, 0, 0, 0)
 RECT_WOOLIMAGE = pygame.Rect(0, 0, 0, 0)
 RECT_PVIMAGE = pygame.Rect(0, 0, 0, 0)
 
+RECT_COLONIE = pygame.Rect(0, 0, 0, 0)
+RECT_VILLE = pygame.Rect(0, 0, 0, 0)
+RECT_ROUTE = pygame.Rect(0, 0, 0, 0)
+RECT_CARTEDEV = pygame.Rect(0, 0, 0, 0)
+
+
 def main(catan):
-    global RECT_MAIN, RECT_CONSTRUIRE, RECT_ECHANGER, RECT_NEXTTURN, RECT_BRICKIMAGE, RECT_STONEIMAGE, RECT_WHEATIMAGE, RECT_WOODIMAGE, RECT_WOOLIMAGE, RECT_PVIMAGE
+    global RECT_MAIN, RECT_ECHANGER, RECT_NEXTTURN, RECT_BRICKIMAGE, RECT_STONEIMAGE, RECT_WHEATIMAGE, RECT_WOODIMAGE, RECT_WOOLIMAGE, RECT_PVIMAGE, RECT_COLONIE, RECT_VILLE, RECT_ROUTE, RECT_CARTEDEV
 
     run = True
+    startingColonie1 = False
+    startingColonie2 = False
+    startingRoute1 = False
+    startingRoute2 = False
+    game = True
     xoffset = 5
     yoffset = 5
 
@@ -43,12 +57,12 @@ def main(catan):
                  (c,4*l),(3*c,4*l),(5*c,4*l),(7*c,4*l),(9*c,4*l),
                  (2*c,np.round(11*l/2)),(4*c,np.round(11*l/2)),(6*c,np.round(11*l/2)),(8*c,np.round(11*l/2)),
                  (3*c,7*l),(5*c,7*l),(7*c,7*l)]
-    hexagons=['bois','mouton','mouton','ble','minerai','ble','bois','bois','argile','desert','minerai','ble','ble','minerai','bois','mouton','argile','mouton','argile']
-    numbers=[6,3,8,2,4,5,10,5,9,0,6,9,10,11,3,12,8,4,11]
-
+    hexagons = [tile.color for tile in catan.plateau.tiles]
+    numbers = [tile.value for tile in catan.plateau.tiles]
 
     while run:
         pygame.time.Clock().tick(30)
+        resetRect()
         
         joueurActuel = catan.joueurActuel
         if joueurActuel.numero == 0:
@@ -65,8 +79,6 @@ def main(catan):
         pygame.draw.rect(cst.fenetre, (211,211,211), Rect(0, 3*cst.h/4, cst.w, cst.h/4))
 
         fct.drawImageTopLeft((xoffset,0), playerTextsurface, 0.035)
-        fct.drawImageTopRight((cst.w, 0), NEXTTURN, 0.05)
-        RECT_NEXTTURN = fct.rectDrawImageTopRight((cst.w, 0), NEXTTURN, 0.05)
 
         fct.drawImageTopLeft((xoffset,3*cst.h/4 + yoffset), BRICK, 0.05)
         fct.drawImageTopLeft((xoffset,3*cst.h/4+(1/3)*cst.h/4 + yoffset), STONE, 0.05)
@@ -92,14 +104,39 @@ def main(catan):
         fct.drawImageMidLeft(RECT_WHEATIMAGE.midright, wheatTextsurface, 0.035)
         fct.drawImageMidLeft(RECT_WOODIMAGE.midright, woodTextsurface, 0.035)
         fct.drawImageMidLeft(RECT_WOOLIMAGE.midright, woolTextsurface, 0.035)
-        fct.drawImageMidLeft(RECT_PVIMAGE.midright, pvTextsurface, 0.035)
-
-        fct.drawImageMidRight((cst.w-xoffset, 7*cst.h/8), CONSTRUCTION, 0.1)
-        RECT_CONSTRUIRE = fct.rectDrawImageMidRight((cst.w-xoffset, 7*cst.h/8), CONSTRUCTION, 0.1)
-        
+        fct.drawImageMidLeft(RECT_PVIMAGE.midright, pvTextsurface, 0.035)        
 
         for i in range(19):
             fct.drawHexagon(hexagons[i], positions[i],numbers[i])
+
+        if startingColonie1:
+            IndicTextsurface = basefont.render("Première colonie", False, (0,0,0))
+            fct.drawImageTopRight((cst.w-xoffset, yoffset), IndicTextsurface, 0.04)
+
+        if startingColonie2:
+            IndicTextsurface = basefont.render("Deuxième colonie", False, (0,0,0))
+            fct.drawImageTopRight((cst.w-xoffset, yoffset), IndicTextsurface, 0.04)
+
+        if startingRoute1:
+            IndicTextsurface = basefont.render("Première route", False, (0,0,0))
+            fct.drawImageTopRight((cst.w-xoffset, yoffset), IndicTextsurface, 0.04)
+
+        if startingRoute1:
+            IndicTextsurface = basefont.render("Deuxième route", False, (0,0,0))
+            fct.drawImageTopRight((cst.w-xoffset, yoffset), IndicTextsurface, 0.04)
+
+        if game:
+            fct.drawImageTopRight((cst.w-xoffset, 3*cst.h/4+yoffset), VILLE, 0.08)
+            RECT_VILLE = fct.rectDrawImageTopRight((cst.w-xoffset, 3*cst.h/4+yoffset), VILLE, 0.08)
+            fct.drawImageTopRight((RECT_VILLE.left-xoffset, 3*cst.h/4+yoffset), COLONIE, 0.08)
+            RECT_COLONIE = fct.rectDrawImageTopRight((RECT_VILLE.left-xoffset, 3*cst.h/4+yoffset), COLONIE, 0.08)
+            fct.drawImageTopRight((cst.w-xoffset, RECT_VILLE.bottom+yoffset), CARTEDEV, 0.08)
+            RECT_CARTEDEV = fct.rectDrawImageTopRight((cst.w-xoffset, RECT_VILLE.bottom+yoffset), CARTEDEV, 0.08)
+            fct.drawImageTopRight((RECT_VILLE.left-xoffset, RECT_VILLE.bottom+yoffset), ROUTE, 0.08)
+            RECT_ROUTE = fct.rectDrawImageTopRight((RECT_VILLE.left-xoffset, RECT_VILLE.bottom+yoffset), ROUTE, 0.08)
+            fct.drawImageTopRight((cst.w, 0), NEXTTURN, 0.05)
+            RECT_NEXTTURN = fct.rectDrawImageTopRight((cst.w, 0), NEXTTURN, 0.05)
+
 
         for event in pygame.event.get():
             fct.shouldQuit(event)
@@ -107,14 +144,21 @@ def main(catan):
             if event.type == MOUSEBUTTONDOWN and event.button == 1:
                 if RECT_NEXTTURN.collidepoint(event.pos):
                     catan.tourSuivant()
+                elif RECT_COLONIE.collidepoint(event.pos):
+                    print("Colonie")
+                elif RECT_VILLE.collidepoint(event.pos):
+                    print("Ville")
+                elif RECT_ROUTE.collidepoint(event.pos):
+                    print("Route")
+                elif RECT_CARTEDEV.collidepoint(event.pos):
+                    print("CarteDev")  
 
         pygame.display.update()
 
 def resetRect():
-    global RECT_MAIN, RECT_CONSTRUIRE, RECT_ECHANGER, RECT_NEXTTURN, RECT_BRICKIMAGE, RECT_STONEIMAGE, RECT_WHEATIMAGE, RECT_WOODIMAGE, RECT_WOOLIMAGE, RECT_PVIMAGE
+    global RECT_MAIN, RECT_ECHANGER, RECT_NEXTTURN, RECT_BRICKIMAGE, RECT_STONEIMAGE, RECT_WHEATIMAGE, RECT_WOODIMAGE, RECT_WOOLIMAGE, RECT_PVIMAGE, RECT_COLONIE, RECT_VILLE, RECT_ROUTE, RECT_CARTEDEV
 
     RECT_MAIN = pygame.Rect(0, 0, 0, 0)
-    RECT_CONSTRUIRE = pygame.Rect(0, 0, 0, 0)
     RECT_ECHANGER = pygame.Rect(0, 0, 0, 0)
     RECT_NEXTTURN = pygame.Rect(0, 0, 0, 0)
     RECT_BRICKIMAGE = pygame.Rect(0, 0, 0, 0)
@@ -123,3 +167,7 @@ def resetRect():
     RECT_WOODIMAGE = pygame.Rect(0, 0, 0, 0)
     RECT_WOOLIMAGE = pygame.Rect(0, 0, 0, 0)
     RECT_PVIMAGE = pygame.Rect(0, 0, 0, 0)
+    RECT_COLONIE = pygame.Rect(0, 0, 0, 0)
+    RECT_VILLE = pygame.Rect(0, 0, 0, 0)
+    RECT_ROUTE = pygame.Rect(0, 0, 0, 0)
+    RECT_CARTEDEV = pygame.Rect(0, 0, 0, 0)
