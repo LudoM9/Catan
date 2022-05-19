@@ -84,6 +84,17 @@ def rectDrawImageMidLeft(mid_left_coord, image, percentage = 1):
     image = pygame.transform.scale(image, (int(percentage * cst.w * image_size[0] / image_size[1]), int(percentage * cst.w)))
     return image.get_rect(midleft = mid_left_coord)
 
+def drawImageMidRight(mid_right_coord, image, percentage = 1):
+    image_size = image.get_size()
+    image = pygame.transform.scale(image, (int(percentage * cst.w * image_size[0] / image_size[1]), int(percentage * cst.w)))
+    rect = image.get_rect(midright = mid_right_coord)
+    cst.fenetre.blit(image, rect)
+
+def rectDrawImageMidRight(mid_right_coord, image, percentage = 1):
+    image_size = image.get_size()
+    image = pygame.transform.scale(image, (int(percentage * cst.w * image_size[0] / image_size[1]), int(percentage * cst.w)))
+    return image.get_rect(midright = mid_right_coord)
+
 def drawHexagon(type, position, number):
     xoff,yoff =20,20 #offsets pour placer le plateau
 

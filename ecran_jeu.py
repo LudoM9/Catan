@@ -9,7 +9,7 @@ Broadwfont = pygame.font.Font(os.path.join('fonts', 'BROADW.TTF'), 30)
 basefont = pygame.font.Font(None, 100)
 
 NEXTTURN = pygame.image.load(os.path.join('images', 'TourSuivant.png'))
-CONSTRUCT = pygame.image.load(os.path.join('images', 'Construction.png'))
+CONSTRUCTION = pygame.image.load(os.path.join('images', 'Construction.png'))
 BRICK = pygame.image.load(os.path.join('images', 'Brick Image.png'))
 STONE = pygame.image.load(os.path.join('images', 'Stone Image.png'))
 WHEAT = pygame.image.load(os.path.join('images', 'Wheat Image.png'))
@@ -32,7 +32,7 @@ RECT_PVIMAGE = pygame.Rect(0, 0, 0, 0)
 def main(catan):
     global RECT_MAIN, RECT_CONSTRUIRE, RECT_ECHANGER, RECT_NEXTTURN, RECT_BRICKIMAGE, RECT_STONEIMAGE, RECT_WHEATIMAGE, RECT_WOODIMAGE, RECT_WOOLIMAGE, RECT_PVIMAGE
 
-    run=True
+    run = True
     xoffset = 5
     yoffset = 5
 
@@ -93,6 +93,9 @@ def main(catan):
         fct.drawImageMidLeft(RECT_WOODIMAGE.midright, woodTextsurface, 0.035)
         fct.drawImageMidLeft(RECT_WOOLIMAGE.midright, woolTextsurface, 0.035)
         fct.drawImageMidLeft(RECT_PVIMAGE.midright, pvTextsurface, 0.035)
+
+        fct.drawImageMidRight((cst.w-xoffset, 7*cst.h/8), CONSTRUCTION, 0.1)
+        RECT_CONSTRUIRE = fct.rectDrawImageMidRight((cst.w-xoffset, 7*cst.h/8), CONSTRUCTION, 0.1)
         
 
         for i in range(19):
