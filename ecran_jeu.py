@@ -17,6 +17,7 @@ WOOD = pygame.image.load(os.path.join('images', 'Wood Image.png'))
 WOOL = pygame.image.load(os.path.join('images', 'Wool Image.png'))
 PV = pygame.image.load(os.path.join('images', 'PV Image.png'))
 BACKGROUNDUI = pygame.image.load(os.path.join('images', 'BackgroundUI.jpg'))
+CERCLE = pygame.image.load(os.path.join('images','cercle.png'))
 
 RECT_MAIN = pygame.Rect(0, 0, 0, 0)
 RECT_CONSTRUIRE = pygame.Rect(0, 0, 0, 0)
@@ -28,6 +29,15 @@ RECT_WHEATIMAGE = pygame.Rect(0, 0, 0, 0)
 RECT_WOODIMAGE = pygame.Rect(0, 0, 0, 0)
 RECT_WOOLIMAGE = pygame.Rect(0, 0, 0, 0)
 RECT_PVIMAGE = pygame.Rect(0, 0, 0, 0)
+RECT_TILES = []
+for t in range(19):
+    RECT_TILES.append(pygame.Rect(0,0,0,0))
+RECTS_VERTICES = []
+for v in range(54):
+    RECTS_VERTICES.append(pygame.Rect(0,0,0,0))
+RECTS_EDGES = []
+for e in range(74):
+    RECTS_EDGES.append(pygame.Rect(0,0,0,0))
 
 def main(catan):
     global RECT_MAIN, RECT_CONSTRUIRE, RECT_ECHANGER, RECT_NEXTTURN, RECT_BRICKIMAGE, RECT_STONEIMAGE, RECT_WHEATIMAGE, RECT_WOODIMAGE, RECT_WOOLIMAGE, RECT_PVIMAGE
@@ -38,14 +48,33 @@ def main(catan):
 
     l = np.round(cst.h / 12)
     c = np.round(l/2 * 3 ** (1 / 3))
-    positions = [(3*c,l),(5*c,l),(7*c,l),
-                 (2*c,np.round(5*l/2)),(4*c,np.round(5*l/2)),(6*c,np.round(5*l/2)),(8*c,np.round(5*l/2)),
-                 (c,4*l),(3*c,4*l),(5*c,4*l),(7*c,4*l),(9*c,4*l),
-                 (2*c,np.round(11*l/2)),(4*c,np.round(11*l/2)),(6*c,np.round(11*l/2)),(8*c,np.round(11*l/2)),
-                 (3*c,7*l),(5*c,7*l),(7*c,7*l)]
+    positions = np.array([(3*c,l),(5*c,l),(7*c,l),
+                 		(2*c,5*l//2),(4*c,5*l//2),(6*c,5*l//2),(8*c,5*l//2),
+                 		(c,4*l),(3*c,4*l),(5*c,4*l),(7*c,4*l),(9*c,4*l),
+                 		(2*c,11*l//2),(4*c,11*l//2),(6*c,11*l//2),(8*c,11*l//2),
+                 			(3*c,7*l),(5*c,7*l),(7*c,7*l)])
     hexagons=['bois','mouton','mouton','ble','minerai','ble','bois','bois','argile','desert','minerai','ble','ble','minerai','bois','mouton','argile','mouton','argile']
     numbers=[6,3,8,2,4,5,10,5,9,0,6,9,10,11,3,12,8,4,11]
 
+    vertices=[]
+    V=np.array([(0, -l),(c,-l//2),(c,l//2),(0,l),(-c,l//2),(-c,-l//2)])
+    for i,t in enumerate(positions):
+        for j in range(6):
+            v=(positions[i][0] + V[j][0],positions[i][1] + V[j][1])
+            if v not in vertices:
+                vertices.append(v)
+    print(len(vertices))
+    #vertices=np.array([(x, y-l),(x+c,y-l//2),(x+c,y+l//2),(x,y+l),(x-c,y+l//2),(x-c,y-l//2)])
+
+    edges=[]
+    E=np.array([(c//2,-3*l//4),(c,0),(c//2,3*l//4),(-c//2,3*l//4),(-c,0),(-c//2,-3*l//4)])
+    for i, t in enumerate(positions):
+        for j in range(6):
+            e = (positions[i][0] + E[j][0],positions[i][1] + E[j][1])
+            if e not in edges:
+                edges.append(e)
+    print(len(edges))
+    #edges=np.array([(x+c//2,y-3*l//4),(x+c,y),(x+c//2,y+3*l//4),(x-c//2,y+3*l//4),(x-c,y),(x-c//2,y-3*l//4)])
 
     while run:
         pygame.time.Clock().tick(30)
@@ -96,10 +125,18 @@ def main(catan):
 
         fct.drawImageMidRight((cst.w-xoffset, 7*cst.h/8), CONSTRUCTION, 0.1)
         RECT_CONSTRUIRE = fct.rectDrawImageMidRight((cst.w-xoffset, 7*cst.h/8), CONSTRUCTION, 0.1)
-        
 
         for i in range(19):
-            fct.drawHexagon(hexagons[i], positions[i],numbers[i])
+            fct.drawHexagon(hexagons[i], positions[i],numbers[i]) #construction des hexagones, chemins et numéros sur les tuiles
+            fct.drawImage((positions[i][0]+20,positions[i][1]+20),CERCLE,0.04)
+
+        for i in range(len(vertices)):
+            fct.drawImage((vertices[i][0]+20,vertices[i][1]+20),CERCLE,0.03)
+
+        for i in range(len(edges)):
+            fct.drawImage((edges[i][0]+20,edges[i][1]+20),CERCLE,0.03)
+
+
 
         for event in pygame.event.get():
             fct.shouldQuit(event)
