@@ -96,9 +96,7 @@ def rectDrawImageMidRight(mid_right_coord, image, percentage = 1):
     return image.get_rect(midright = mid_right_coord)
 
 def drawHexagon(type, position, number):
-    xoff,yoff =20,20 #offsets pour placer le plateau
-
-    x,y = position[0]+xoff, position[1]+yoff
+    x,y = position[0]+cst.xoff, position[1]+cst.yoff
     l = np.round(cst.h / 12)
     c = np.round(l/2 * 3 ** (1 / 3))
     lint,cint=l*4/5,c*4/5

@@ -185,9 +185,9 @@ def main():
             RECT_J2.width = max(100, text_surface_J2.get_width() + 10)
             RECT_J3.width = max(100, text_surface_J3.get_width() + 10)
 
-            pygame.draw.rect(cst.fenetre, (255, 0, 0), RECT_J1, 2)
-            pygame.draw.rect(cst.fenetre, (0, 0, 255), RECT_J2, 2)
-            pygame.draw.rect(cst.fenetre, (0, 255, 0), RECT_J3, 2)
+            pygame.draw.rect(cst.fenetre, cst.couleurj1, RECT_J1, 2)
+            pygame.draw.rect(cst.fenetre, cst.couleurj2, RECT_J2, 2)
+            pygame.draw.rect(cst.fenetre, cst.couleurj3, RECT_J3, 2)
 
             cst.fenetre.blit(text_surface_J1, (RECT_J1.x + 5, RECT_J1.y + 5))
             cst.fenetre.blit(text_surface_J2, (RECT_J2.x + 5, RECT_J2.y + 5))
@@ -199,7 +199,7 @@ def main():
                 RECT_J4 = pygame.Rect(rectJ4.x + rectJ4.width + 30, rectJ4.y, 100, rectJ4.height)
                 text_surface_J4 = basefont.render(textJ4, True, (255, 255, 255))
                 RECT_J4.width = max(100, text_surface_J4.get_width() + 10)
-                pygame.draw.rect(cst.fenetre, (138,43,226), RECT_J4, 2)
+                pygame.draw.rect(cst.fenetre, cst.couleurj4, RECT_J4, 2)
                 cst.fenetre.blit(text_surface_J4, (RECT_J4.x + 5, RECT_J4.y + 5))
 
             if len(textJ1)>0 and len(textJ2)>0 and len(textJ3)>0:

@@ -34,6 +34,7 @@ RECT_WHEATIMAGE = pygame.Rect(0, 0, 0, 0)
 RECT_WOODIMAGE = pygame.Rect(0, 0, 0, 0)
 RECT_WOOLIMAGE = pygame.Rect(0, 0, 0, 0)
 RECT_PVIMAGE = pygame.Rect(0, 0, 0, 0)
+
 RECT_TILES = []
 for t in range(19):
     RECT_TILES.append(pygame.Rect(0,0,0,0))
@@ -51,7 +52,6 @@ RECT_CARTEDEV = pygame.Rect(0, 0, 0, 0)
 RECT_ANNULER = pygame.Rect(0, 0, 0, 0)
 RECT_ECHANGEBANQUE = pygame.Rect(0, 0, 0, 0)
 RECT_ECHANGEJOUEURS = pygame.Rect(0, 0, 0, 0)
-
 
 def main(catan):
     global RECT_MAIN, RECT_NEXTTURN, RECT_BRICKIMAGE, RECT_STONEIMAGE, RECT_WHEATIMAGE, RECT_WOODIMAGE, RECT_WOOLIMAGE, RECT_PVIMAGE, RECT_COLONIE, RECT_VILLE, RECT_ROUTE, RECT_CARTEDEV, RECT_ANNULER, ECHANGEBANQUE, ECHANGEJOUEURS
@@ -81,24 +81,38 @@ def main(catan):
     hexagons = [tile.color for tile in catan.plateau.tiles]
     numbers = [tile.value for tile in catan.plateau.tiles]
 
+    hexagon_coords =     [(-2,-1), (-1,-1), (0,-2),
+                       (-2,0), (-1,0), (0,-1), (1,-1),
+                     (-2,1), (-1,1), (0,0), (1,0), (2,-1),
+                       (-1,2), (0,1),  (1,1),  (2,0),
+                          (0,2),   (1,2),   (2,1)]
+
+    vertices_coords = []
+    edges_coords = []
+    for tile_coord in hexagon_coords:
+        for vertice_coord in catan.plateau.getVerticesFromTile(tile_coord):
+            if vertice_coord not in vertices_coords:
+                vertices_coords.append(vertice_coord)
+        for edge_coord in catan.plateau.getEdgesFromTile(tile_coord):
+            if edge_coord not in edges_coords:
+                edges_coords.append(edge_coord)
+
     vertices=[]
-    V=np.array([(0, -l),(c,-l//2),(c,l//2),(0,l),(-c,l//2),(-c,-l//2)])
+    V=np.array([(0, -l),(-c,-l//2),(-c,l//2),(c,-l//2),(c,l//2),(0,l)])
     for i,t in enumerate(positions):
         for j in range(6):
             v=(positions[i][0] + V[j][0],positions[i][1] + V[j][1])
             if v not in vertices:
                 vertices.append(v)
-    print(len(vertices))
     #vertices=np.array([(x, y-l),(x+c,y-l//2),(x+c,y+l//2),(x,y+l),(x-c,y+l//2),(x-c,y-l//2)])
 
     edges=[]
-    E=np.array([(c//2,-3*l//4),(c,0),(c//2,3*l//4),(-c//2,3*l//4),(-c,0),(-c//2,-3*l//4)])
+    E=np.array([(-c//2,-3*l//4),(-c,0),(c//2,-3*l//4),(-c//2,3*l//4),(c,0),(c//2,3*l//4)])
     for i, t in enumerate(positions):
         for j in range(6):
             e = (positions[i][0] + E[j][0],positions[i][1] + E[j][1])
             if e not in edges:
                 edges.append(e)
-    print(len(edges))
     #edges=np.array([(x+c//2,y-3*l//4),(x+c,y),(x+c//2,y+3*l//4),(x-c//2,y+3*l//4),(x-c,y),(x-c//2,y-3*l//4)])
 
     while run:
@@ -107,13 +121,13 @@ def main(catan):
         
         joueurActuel = catan.joueurActuel
         if joueurActuel.numero == 0:
-            color = (255, 0, 0)
+            color = cst.couleurj1
         elif joueurActuel.numero == 1:
-            color = (0, 0, 255)
+            color = cst.couleurj2
         elif joueurActuel.numero == 2:
-            color = (0, 255, 0)
+            color = cst.couleurj3
         elif joueurActuel.numero == 3:
-            color = (138,43,226)
+            color = cst.couleurj4
         playerTextsurface = basefont.render(joueurActuel.nom, False, color)
 
         cst.fenetre.fill((0,191,255))
@@ -146,20 +160,19 @@ def main(catan):
         fct.drawImageMidLeft(RECT_WOODIMAGE.midright, woodTextsurface, 0.035)
         fct.drawImageMidLeft(RECT_WOOLIMAGE.midright, woolTextsurface, 0.035)
         fct.drawImageMidLeft(RECT_PVIMAGE.midright, pvTextsurface, 0.035)
-
-        fct.drawImageMidRight((cst.w-xoffset, 7*cst.h/8), CONSTRUCTION, 0.1)
-        RECT_CONSTRUIRE = fct.rectDrawImageMidRight((cst.w-xoffset, 7*cst.h/8), CONSTRUCTION, 0.1)
+        
 
         for i in range(19):
             fct.drawHexagon(hexagons[i], positions[i],numbers[i]) #construction des hexagones, chemins et numéros sur les tuiles
-            fct.drawImage((positions[i][0]+20,positions[i][1]+20),CERCLE,0.04)
+            #fct.drawImage((positions[i][0]+cst.xoff,positions[i][1]+cst.yoff),CERCLE,0.04)
 
+        """
         for i in range(len(vertices)):
-            fct.drawImage((vertices[i][0]+20,vertices[i][1]+20),CERCLE,0.03)
+            fct.drawImage((vertices[i][0]+cst.xoff,vertices[i][1]+cst.yoff),CERCLE,0.03)
 
         for i in range(len(edges)):
-            fct.drawImage((edges[i][0]+20,edges[i][1]+20),CERCLE,0.03)
-
+            fct.drawImage((edges[i][0]+cst.xoff,edges[i][1]+cst.yoff),CERCLE,0.03)
+        """
 
 
         if startingColonie1:
