@@ -35,7 +35,11 @@ class Plateau():
             Booléen pour savoir si le plateau est aléatoire
         """
 
-        self.tiles = [WoodTile(self, (-2,-1), 6), WoolTile(self, (-1,-1), 3), WoolTile(self, (0,-2), 8), WheatTile(self, (-2,0), 2), StoneTile(self, (-1,0), 4), WheatTile(self, (0,-1), 5), WoodTile(self, (1,-1), 10), WoodTile(self, (-2,1), 5), ClayTile(self, (-1,1), 9), DesertTile(self, (0,0), 7), StoneTile(self, (1,0), 6), WheatTile(self, (2,-1), 9), WheatTile(self, (-1,2), 10), StoneTile(self, (0,1), 11), WoodTile(self, (1,1), 3), WoolTile(self, (2,0), 12), ClayTile(self, (0,2), 8), WoolTile(self, (1,2), 4), ClayTile(self, (2,1), 11)]
+        self.tiles = [WoodTile(self, (-2,-1), 6), WoolTile(self, (-1,-1), 3), WoolTile(self, (0,-2), 8),
+                      WheatTile(self, (-2,0), 2), StoneTile(self, (-1,0), 4), WheatTile(self, (0,-1), 5), WoodTile(self, (1,-1), 10),
+                      WoodTile(self, (-2,1), 5), ClayTile(self, (-1,1), 9), DesertTile(self, (0,0), 7), StoneTile(self, (1,0), 6), WheatTile(self, (2,-1), 9),
+                      WheatTile(self, (-1,2), 10), StoneTile(self, (0,1), 11), WoodTile(self, (1,1), 3), WoolTile(self, (2,0), 12),
+                      ClayTile(self, (0,2), 8), WoolTile(self, (1,2), 4), ClayTile(self, (2,1), 11)]
         self.intersections = []
         self.routes = []
         self.ports = [Port((-2,-2), [3,3,3,3,3]), Port((-2,-1), [3,3,3,3,3]), Port((-1,-3), [4,4,2,4,4]), Port((0,-3), [4,4,2,4,4]), Port((1,-3), [3,3,3,3,3]), Port((2,-3), [3,3,3,3,3]), Port((3,-2), [3,3,3,3,3]), Port((3,-1), [3,3,3,3,3]), Port((3,1), [4,2,4,4,4]), Port((3,2), [4,2,4,4,4]), Port((2,4), [2,4,4,4,4]), Port((2,5), [2,4,4,4,4]), Port((0,4), [3,3,3,3,3]), Port((1,4), [3,3,3,3,3]), Port((-1,4), [4,4,4,2,4]), Port((-1,5), [4,4,4,2,4]), Port((-2,1), [4,4,4,4,2]), Port((-2,2), [4,4,4,4,2])]
