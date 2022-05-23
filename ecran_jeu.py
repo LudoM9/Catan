@@ -26,6 +26,15 @@ ANNULER = pygame.image.load(os.path.join('images', 'Annuler.png'))
 ECHANGEBANQUE = pygame.image.load(os.path.join('images', 'EchangeBanque.png'))
 ECHANGEJOUEURS = pygame.image.load(os.path.join('images', 'EchangeJoueurs.png'))
 
+COLONIE_J1 = pygame.image.load(os.path.join('images', 'Colonie_J1.png'))
+COLONIE_J2 = pygame.image.load(os.path.join('images', 'Colonie_J2.png'))
+COLONIE_J3 = pygame.image.load(os.path.join('images', 'Colonie_J3.png'))
+COLONIE_J4 = pygame.image.load(os.path.join('images', 'Colonie_J4.png'))
+VILLE_J1 = pygame.image.load(os.path.join('images', 'Ville_J1.png'))
+VILLE_J2 = pygame.image.load(os.path.join('images', 'Ville_J2.png'))
+VILLE_J3 = pygame.image.load(os.path.join('images', 'Ville_J3.png'))
+VILLE_J4 = pygame.image.load(os.path.join('images', 'Ville_J4.png'))
+
 RECT_MAIN = pygame.Rect(0, 0, 0, 0)
 RECT_NEXTTURN = pygame.Rect(0, 0, 0, 0)
 RECT_BRICKIMAGE = pygame.Rect(0, 0, 0, 0)
@@ -35,9 +44,9 @@ RECT_WOODIMAGE = pygame.Rect(0, 0, 0, 0)
 RECT_WOOLIMAGE = pygame.Rect(0, 0, 0, 0)
 RECT_PVIMAGE = pygame.Rect(0, 0, 0, 0)
 
-RECT_TILES = []
+RECTS_TILES = []
 for t in range(19):
-    RECT_TILES.append(pygame.Rect(0,0,0,0))
+    RECTS_TILES.append(pygame.Rect(0,0,0,0))
 RECTS_VERTICES = []
 for v in range(54):
     RECTS_VERTICES.append(pygame.Rect(0,0,0,0))
@@ -54,14 +63,12 @@ RECT_ECHANGEBANQUE = pygame.Rect(0, 0, 0, 0)
 RECT_ECHANGEJOUEURS = pygame.Rect(0, 0, 0, 0)
 
 def main(catan):
-    global RECT_MAIN, RECT_NEXTTURN, RECT_BRICKIMAGE, RECT_STONEIMAGE, RECT_WHEATIMAGE, RECT_WOODIMAGE, RECT_WOOLIMAGE, RECT_PVIMAGE, RECT_COLONIE, RECT_VILLE, RECT_ROUTE, RECT_CARTEDEV, RECT_ANNULER, ECHANGEBANQUE, ECHANGEJOUEURS
+    global RECT_MAIN, RECT_NEXTTURN, RECT_BRICKIMAGE, RECT_STONEIMAGE, RECT_WHEATIMAGE, RECT_WOODIMAGE, RECT_WOOLIMAGE, RECT_PVIMAGE, RECT_COLONIE, RECT_VILLE, RECT_ROUTE, RECT_CARTEDEV, RECT_ANNULER, RECT_ECHANGEBANQUE, RECT_ECHANGEJOUEURS, RECTS_TILES, RECTS_VERTICES, RECTS_EDGES
 
     run = True
-    startingColonie1 = False
-    startingColonie2 = False
-    startingRoute1 = False
-    startingRoute2 = False
-    game = True
+    startingColonie = True
+    startingRoute = False
+    game = False
     constructionColonie = False
     constructionVille = False
     constructionRoute = False
@@ -105,6 +112,7 @@ def main(catan):
             if v not in vertices:
                 vertices.append(v)
     #vertices=np.array([(x, y-l),(x+c,y-l//2),(x+c,y+l//2),(x,y+l),(x-c,y+l//2),(x-c,y-l//2)])
+    vertices_available = [True for i in range(len(vertices))]
 
     edges=[]
     E=np.array([(-c//2,-3*l//4),(-c,0),(c//2,-3*l//4),(-c//2,3*l//4),(c,0),(c//2,3*l//4)])
@@ -161,10 +169,14 @@ def main(catan):
         fct.drawImageMidLeft(RECT_WOOLIMAGE.midright, woolTextsurface, 0.035)
         fct.drawImageMidLeft(RECT_PVIMAGE.midright, pvTextsurface, 0.035)
         
-
         for i in range(19):
             fct.drawHexagon(hexagons[i], positions[i],numbers[i]) #construction des hexagones, chemins et numéros sur les tuiles
             #fct.drawImage((positions[i][0]+cst.xoff,positions[i][1]+cst.yoff),CERCLE,0.04)
+
+        for elem in catan.plateau.intersections:
+            for i, vertice_coord in enumerate(vertices_coords):
+                if elem.coords == vertice_coord:
+                    drawColonie((vertices[i][0]+cst.xoff,vertices[i][1]+cst.yoff), elem.joueur.numero)
 
         """
         for i in range(len(vertices)):
@@ -175,20 +187,18 @@ def main(catan):
         """
 
 
-        if startingColonie1:
-            IndicTextsurface = basefont.render("Première colonie", False, (0,0,0))
+        if startingColonie:
+            IndicTextsurface = basefont.render("Placez votre colonie", False, (0,0,0))
             fct.drawImageTopRight((cst.w-xoffset, yoffset), IndicTextsurface, 0.04)
+            for i in range(len(vertices)):
+                if vertices_available[i]:
+                    rect = Rect((vertices[i][0]+cst.xoff,vertices[i][1]+cst.yoff),(20,20))
+                    rect.center = (vertices[i][0]+cst.xoff,vertices[i][1]+cst.yoff)
+                    pygame.draw.rect(cst.fenetre, (255,102,255), rect)
+                    RECTS_VERTICES[i] = rect
 
-        if startingColonie2:
-            IndicTextsurface = basefont.render("Deuxième colonie", False, (0,0,0))
-            fct.drawImageTopRight((cst.w-xoffset, yoffset), IndicTextsurface, 0.04)
-
-        if startingRoute1:
-            IndicTextsurface = basefont.render("Première route", False, (0,0,0))
-            fct.drawImageTopRight((cst.w-xoffset, yoffset), IndicTextsurface, 0.04)
-
-        if startingRoute1:
-            IndicTextsurface = basefont.render("Deuxième route", False, (0,0,0))
+        if startingRoute:
+            IndicTextsurface = basefont.render("Placez votre route", False, (0,0,0))
             fct.drawImageTopRight((cst.w-xoffset, yoffset), IndicTextsurface, 0.04)
 
         if game:
@@ -212,7 +222,6 @@ def main(catan):
         if constructionColonie or constructionVille or constructionRoute or echangeBanque or echangeJoueurs:
             fct.drawImageBotRight((cst.w-xoffset, 3*cst.h/4-yoffset), ANNULER, 0.08)
             RECT_ANNULER = fct.rectDrawImageBotRight((cst.w-xoffset, 3*cst.h/4-yoffset), ANNULER, 0.08)
-
 
         for event in pygame.event.get():
             fct.shouldQuit(event)
@@ -282,11 +291,25 @@ def main(catan):
                     carteDeveloppement = False
                     echangeBanque = False
                     echangeJoueurs = False
+                for i,rect_vertice in enumerate(RECTS_VERTICES):
+                    if rect_vertice.collidepoint(event.pos):
+                        if startingColonie:
+                            print(vertices_coords[i])
+                            if catan.construireColonieGratuit(joueurActuel, vertices_coords[i]):
+                                for j, coord in enumerate(vertices_coords):
+                                    if coord == vertices_coords[i]:
+                                        vertices_available[j] = False
+                                    elif coord in catan.plateau.getAdjacentVerticesFromVertice(vertices_coords[i]):
+                                        vertices_available[j] = False
+                                if catan.tourSuivantDebut():
+                                    startingColonie = False
+                                    startingRoute = True
+
 
         pygame.display.update()
 
 def resetRect():
-    global RECT_MAIN, RECT_NEXTTURN, RECT_BRICKIMAGE, RECT_STONEIMAGE, RECT_WHEATIMAGE, RECT_WOODIMAGE, RECT_WOOLIMAGE, RECT_PVIMAGE, RECT_COLONIE, RECT_VILLE, RECT_ROUTE, RECT_CARTEDEV, RECT_ANNULER, RECT_ECHANGEBANQUE, RECT_ECHANGEJOUEURS
+    global RECT_MAIN, RECT_NEXTTURN, RECT_BRICKIMAGE, RECT_STONEIMAGE, RECT_WHEATIMAGE, RECT_WOODIMAGE, RECT_WOOLIMAGE, RECT_PVIMAGE, RECT_COLONIE, RECT_VILLE, RECT_ROUTE, RECT_CARTEDEV, RECT_ANNULER, RECT_ECHANGEBANQUE, RECT_ECHANGEJOUEURS, RECTS_TILES, RECTS_VERTICES, RECTS_EDGES
 
     RECT_MAIN = pygame.Rect(0, 0, 0, 0)
     RECT_NEXTTURN = pygame.Rect(0, 0, 0, 0)
@@ -303,3 +326,23 @@ def resetRect():
     RECT_ANNULER = pygame.Rect(0, 0, 0, 0)
     RECT_ECHANGEBANQUE = pygame.Rect(0, 0, 0, 0)
     RECT_ECHANGEJOUEURS = pygame.Rect(0, 0, 0, 0)
+    RECTS_TILES = []
+    for t in range(19):
+        RECTS_TILES.append(pygame.Rect(0,0,0,0))
+    RECTS_VERTICES = []
+    for v in range(54):
+        RECTS_VERTICES.append(pygame.Rect(0,0,0,0))
+    RECTS_EDGES = []
+    for e in range(74):
+        RECTS_EDGES.append(pygame.Rect(0,0,0,0))
+
+def drawColonie(center_coords, joueur):
+    a = 0.05
+    if joueur == 0:
+        fct.drawImage(center_coords, COLONIE_J1, a)
+    elif joueur == 1:
+        fct.drawImage(center_coords, COLONIE_J2, a)
+    elif joueur == 2:
+        fct.drawImage(center_coords, COLONIE_J3, a)
+    elif joueur == 3:
+        fct.drawImage(center_coords, COLONIE_J4, a)

@@ -38,6 +38,7 @@ class Catan():
             self.joueurs.append(Joueur.Joueur(joueur, i, self.plateau))
         self.numeroJoueurActuel = 0
         self.joueurActuel = self.joueurs[self.numeroJoueurActuel]
+        self.numeroJoueurActuelDebut = 0
         
 
     def lancerDes(self, joueur):
@@ -168,7 +169,7 @@ class Catan():
         """
 
         if self.plateau.intersectionDispoConstruction(coords):
-            colonie = Colonie(joueur, coords)
+            colonie = Plateau.Colonie(joueur, coords)
             self.plateau.intersections.append(colonie)
             joueur.colonies.append(colonie)
             self.ajoutPort(joueur, coords)
@@ -275,6 +276,18 @@ class Catan():
         self.numeroJoueurActuel += 1
         if self.numeroJoueurActuel >= len(self.joueurs):
             self.numeroJoueurActuel = 0   
+        self.joueurActuel = self.joueurs[self.numeroJoueurActuel]
+
+    def tourSuivantDebut(self):
+        print("Joueur Suivant")
+        ordre = [0,1,2,2,1,0]
+        if len(self.joueurs) == 4:
+            ordre = [0,1,2,3,3,2,1,0]
+        self.numeroJoueurActuelDebut += 1
+        if self.numeroJoueurActuelDebut >= len(ordre):
+            self.numeroJoueurActuelDebut = 0
+            return True
+        self.numeroJoueurActuel = ordre[self.numeroJoueurActuelDebut]   
         self.joueurActuel = self.joueurs[self.numeroJoueurActuel]
 
     def calculPlusGrandeArmee(self):

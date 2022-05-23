@@ -246,13 +246,45 @@ class Plateau():
             elif x==-2 or x==3:
                 adjVertices.append((x,y+1))
                 adjVertices.append((x,y-1))
+
+        elif len(adjTiles) == 2:
+            x = vertice[0]
+            y = vertice[1]
+                        
+            #NW or SE
+            if x == -2 or x == 3:
+                adjVertices.append((x,y+1))
+                adjVertices.append((x,y-1))
+            #Nord
+            elif abs(x)+abs(y) == 3:
+                adjVertices.append((x-1,y))
+                adjVertices.append((x,y-1))
+            #Sud
+            elif abs(x)+abs(y) == 6:
+                adjVertices.append((x+1,y))
+                adjVertices.append((x,y+1))
+            #SW
+            elif abs(x)+abs(y) == 5:
+                adjVertices.append((x-1,y))
+                adjVertices.append((x,y+1))
+            #NE
+            elif abs(x)+abs(y) == 4:
+                adjVertices.append((x+1,y))
+                adjVertices.append((x,y-1))
+            
+            for tile in adjTiles:
+                allVertices.append(self.getVerticesFromTile(tile))
+            for i in range(len(allVertices)):
+                j = i + 1
+                while j<len(allVertices):
+                    adjVertices += [element for element in allVertices[i] if element in allVertices[j] and element!=vertice]
+                    j += 1
         else:
             for tile in adjTiles:
                 allVertices.append(self.getVerticesFromTile(tile))
             for i in range(len(allVertices)):
                 j = i + 1
                 while j<len(allVertices):
-                    print(j)
                     adjVertices += [element for element in allVertices[i] if element in allVertices[j] and element!=vertice]
                     j += 1
         return list(set(adjVertices))
@@ -377,7 +409,7 @@ class Plateau():
         for elem in self.intersections:             #elem = Villes et colonies
             if coords == elem.coords:
                 return False
-            elif elem.coords in self.getAdjacentVerticesFromVertice(self, coords):
+            elif elem.coords in self.getAdjacentVerticesFromVertice(coords):
                 return False
         return True
 
