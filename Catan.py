@@ -5,6 +5,7 @@ Module contenant tous les éléments qui apparaissent dans une partie de jeu.
 import pygame
 import Plateau
 import Joueur
+import random as rd
 
 class Catan():
     """
@@ -41,7 +42,7 @@ class Catan():
         self.numeroJoueurActuelDebut = 0
         
 
-    def lancerDes(self, joueur):
+    def lancerDes(self):
         """
         Lance deux dés réguliersà six faces et somme les deux résultats.
 
@@ -51,8 +52,16 @@ class Catan():
             Joueur qui lance les dés
         """
 
-        s = sum(rd.randrange(1,7)+rd.randrange(1,7))
+        s = rd.randrange(1,7)+rd.randrange(1,7)
         self.valeurDes = s
+
+    def ressourceDebut(self):
+        for joueur in self.joueurs:
+            for colonie in joueur.colonies:
+                for tile_coord in self.plateau.getAdjacentTilesFromVertice(colonie.coords):
+                    for tile in self.plateau.tiles:
+                        if tile_coord == tile.coords:
+                            joueur.ressource += tile.ressource
 
     def donRessource(self):
         """
@@ -63,7 +72,7 @@ class Catan():
         aucun
         """
         tiles = []
-        for tile in self.plateau:
+        for tile in self.plateau.tiles:
             if tile.value == self.valeurDes:
                 tiles.append(tile)
         for tile in tiles:
@@ -125,7 +134,7 @@ class Catan():
         if joueur.ressourceSuffisante(np.array([0,0,0,2,3])):
             if joueur.colonieExiste(coords):
                 joueur.ressource -= np.array([0,0,0,2,3])
-                ville = Ville(joueur, coords)
+                ville = Plateau.Ville(joueur, coords)
                 colonie = joueur.getColonie(coords)
                 self.plateau.intersections.remove(colonie)
                 joueur.colonies.remove(colonie)
@@ -150,7 +159,7 @@ class Catan():
             if self.plateau.routeDispoConstruction(coords):
                 if self.plateau.routeAdjacenteRouteExiste(joueur, coords) or self.plateau.colonieAdjacenteRouteExiste(joueur, coords):
                     joueur.ressource -= np.array([1,1,0,0,0])
-                    route = Route(joueur, coords)
+                    route = Plateau.Route(joueur, coords)
                     self.plateau.routes.append(route)
                     joueur.routes.append(route)
 
@@ -190,8 +199,8 @@ class Catan():
         """
 
         if self.plateau.routeDispoConstruction(coords):
-            if self.plateau.routeAdjacenteExiste(joueur, coords) or self.plateau.colonieAdjacenteExiste(joueur, coords):
-                route = Route(joueur, coords)
+            if self.plateau.routeAdjacenteRouteExiste(joueur, coords) or self.plateau.colonieAdjacenteRouteExiste(joueur, coords):
+                route = Plateau.Route(joueur, coords)
                 self.plateau.routes.append(route)
                 joueur.routes.append(route)
                 return True
@@ -277,6 +286,8 @@ class Catan():
         if self.numeroJoueurActuel >= len(self.joueurs):
             self.numeroJoueurActuel = 0   
         self.joueurActuel = self.joueurs[self.numeroJoueurActuel]
+        self.lancerDes()
+        self.donRessource()
 
     def tourSuivantDebut(self):
         print("Joueur Suivant")

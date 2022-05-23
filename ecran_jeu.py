@@ -122,6 +122,7 @@ def main(catan):
             if e not in edges:
                 edges.append(e)
     #edges=np.array([(x+c//2,y-3*l//4),(x+c,y),(x+c//2,y+3*l//4),(x-c//2,y+3*l//4),(x-c,y),(x-c//2,y-3*l//4)])
+    edges_available = [False for i in range(len(edges))]
 
     while run:
         pygame.time.Clock().tick(30)
@@ -178,6 +179,20 @@ def main(catan):
                 if elem.coords == vertice_coord:
                     drawColonie((vertices[i][0]+cst.xoff,vertices[i][1]+cst.yoff), elem.joueur.numero)
 
+        for route in catan.plateau.routes:
+            for i, edge_coord in enumerate(edges_coords):
+                if route.coords == edge_coord:
+                    rect = Rect((edges[i][0]+cst.xoff,edges[i][1]+cst.yoff),(20,20))
+                    rect.center = (edges[i][0]+cst.xoff,edges[i][1]+cst.yoff)
+                    if route.joueur.numero == 0:
+                        roadColor = cst.couleurj1
+                    elif route.joueur.numero == 1:
+                        roadColor = cst.couleurj2
+                    elif route.joueur.numero == 2:
+                        roadColor = cst.couleurj3
+                    elif route.joueur.numero == 3:
+                        roadColor = cst.couleurj4
+                    pygame.draw.rect(cst.fenetre, roadColor, rect)
         """
         for i in range(len(vertices)):
             fct.drawImage((vertices[i][0]+cst.xoff,vertices[i][1]+cst.yoff),CERCLE,0.03)
@@ -198,8 +213,25 @@ def main(catan):
                     RECTS_VERTICES[i] = rect
 
         if startingRoute:
-            IndicTextsurface = basefont.render("Placez votre route", False, (0,0,0))
+            IndicTextsurface = basefont.render("Placez vos routes", False, (0,0,0))
             fct.drawImageTopRight((cst.w-xoffset, yoffset), IndicTextsurface, 0.04)
+            for i in range(len(edges)):
+                if edges_available[i]:
+                    rect = Rect((edges[i][0]+cst.xoff,edges[i][1]+cst.yoff),(20,20))
+                    rect.center = (edges[i][0]+cst.xoff,edges[i][1]+cst.yoff)
+                    pygame.draw.rect(cst.fenetre, (255,102,255), rect)
+                    RECTS_EDGES[i] = rect
+            for i, coord in enumerate(edges_coords):
+                for route in joueurActuel.routes:
+                    if coord in catan.plateau.getAdjacentEdgesFromEdge(route.coords):
+                        edges_available[i] = True
+                for colonie in joueurActuel.colonies:
+                    if coord in catan.plateau.getAdjacentEdgesFromVertice(colonie.coords):
+                        edges_available[i] = True
+            for i, coord in enumerate(edges_coords):
+                for route in catan.plateau.routes:
+                    if coord == route.coords:
+                        edges_available[i] = False
 
         if game:
             fct.drawImageTopRight((cst.w-xoffset, 3*cst.h/4+yoffset), VILLE, 0.08)
@@ -294,7 +326,6 @@ def main(catan):
                 for i,rect_vertice in enumerate(RECTS_VERTICES):
                     if rect_vertice.collidepoint(event.pos):
                         if startingColonie:
-                            print(vertices_coords[i])
                             if catan.construireColonieGratuit(joueurActuel, vertices_coords[i]):
                                 for j, coord in enumerate(vertices_coords):
                                     if coord == vertices_coords[i]:
@@ -304,7 +335,17 @@ def main(catan):
                                 if catan.tourSuivantDebut():
                                     startingColonie = False
                                     startingRoute = True
-
+                for i,rect_edge in enumerate(RECTS_EDGES):
+                    if rect_edge.collidepoint(event.pos):
+                        if startingRoute:
+                            if catan.construireRouteGratuit(joueurActuel, edges_coords[i]):
+                                edges_available = [False for i in range(len(edges))]
+                                if catan.tourSuivantDebut():
+                                    startingRoute = False
+                                    catan.ressourceDebut()
+                                    catan.lancerDes()
+                                    catan.donRessource()
+                                    game = True 
 
         pygame.display.update()
 
