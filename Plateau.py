@@ -250,7 +250,7 @@ class Plateau():
         elif len(adjTiles) == 2:
             x = vertice[0]
             y = vertice[1]
-                        
+
             #NW or SE
             if x == -2 or x == 3:
                 adjVertices.append((x,y+1))
@@ -495,7 +495,7 @@ class Plateau():
         False sinon
         """
 
-        for elem in self.intersections: #il faudrait plutot regarder les routes
+        for elem in self.routes: #il faudrait plutot regarder les routes
             if elem.joueur == joueur:
                 if elem.coords in self.getAdjacentEdgesFromVertice(coords):
                     return True

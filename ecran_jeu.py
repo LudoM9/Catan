@@ -75,6 +75,7 @@ def main(catan):
     carteDeveloppement = False
     echangeBanque = False
     echangeJoueurs = False
+    indicText = False
     xoffset = 5
     yoffset = 5
 
@@ -174,10 +175,14 @@ def main(catan):
             fct.drawHexagon(hexagons[i], positions[i],numbers[i]) #construction des hexagones, chemins et numéros sur les tuiles
             #fct.drawImage((positions[i][0]+cst.xoff,positions[i][1]+cst.yoff),CERCLE,0.04)
 
+        #TODO
         for elem in catan.plateau.intersections:
             for i, vertice_coord in enumerate(vertices_coords):
                 if elem.coords == vertice_coord:
-                    drawColonie((vertices[i][0]+cst.xoff,vertices[i][1]+cst.yoff), elem.joueur.numero)
+                    #if elem.type() == Plateau.Colonie:
+                        drawColonie((vertices[i][0]+cst.xoff,vertices[i][1]+cst.yoff), elem.joueur.numero)
+                    #elif elem.type() == Plateau.Ville:
+                        #drawVille((vertices[i][0]+cst.xoff,vertices[i][1]+cst.yoff), elem.joueur.numero)
 
         for route in catan.plateau.routes:
             for i, edge_coord in enumerate(edges_coords):
@@ -202,7 +207,7 @@ def main(catan):
         """
 
 
-        if startingColonie:
+        if startingColonie or constructionColonie:
             IndicTextsurface = basefont.render("Placez votre colonie", False, (0,0,0))
             fct.drawImageTopRight((cst.w-xoffset, yoffset), IndicTextsurface, 0.04)
             for i in range(len(vertices)):
@@ -212,7 +217,7 @@ def main(catan):
                     pygame.draw.rect(cst.fenetre, (255,102,255), rect)
                     RECTS_VERTICES[i] = rect
 
-        if startingRoute:
+        if startingRoute or constructionRoute:
             IndicTextsurface = basefont.render("Placez vos routes", False, (0,0,0))
             fct.drawImageTopRight((cst.w-xoffset, yoffset), IndicTextsurface, 0.04)
             for i in range(len(edges)):
@@ -268,29 +273,51 @@ def main(catan):
                     echangeJoueurs = False
                     catan.tourSuivant()
                 elif RECT_COLONIE.collidepoint(event.pos):
-                    print("Colonie")
-                    constructionColonie = True
-                    constructionVille = False
-                    constructionRoute = False
-                    carteDeveloppement = False
-                    echangeBanque = False
-                    echangeJoueurs = False
+                    if joueurActuel.ressourceSuffisante(np.array([1,1,1,1,0])):
+                        print("Colonie")
+                        constructionColonie = True
+                        constructionVille = False
+                        constructionRoute = False
+                        carteDeveloppement = False
+                        echangeBanque = False
+                        echangeJoueurs = False
+
+                        vertices_available = [False for i in range(len(vertices))]
+                        for i, coord in enumerate(vertices_coords):
+                            if catan.plateau.intersectionDispoConstruction(coord):
+                                if catan.plateau.routeAdjacenteColonieExiste(joueurActuel, coord):
+                                    vertices_available[i] = True
+                    else:
+                        print("Impossible de construire")
+                        IndicTextsurface = basefont.render("Pas assez de ressource", False, (0,0,0))
+                        fct.drawImageTopRight((cst.w-xoffset, yoffset), IndicTextsurface, 0.04)
                 elif RECT_VILLE.collidepoint(event.pos):
-                    print("Ville")
-                    constructionColonie = False
-                    constructionVille = True
-                    constructionRoute = False
-                    carteDeveloppement = False
-                    echangeBanque = False
-                    echangeJoueurs = False
+                    if joueurActuel.ressourceSuffisante(np.array([0,0,0,2,3])):
+                        print("Ville")
+                        constructionColonie = False
+                        constructionVille = True
+                        constructionRoute = False
+                        carteDeveloppement = False
+                        echangeBanque = False
+                        echangeJoueurs = False
+                    else:
+                        print("Impossible de construire")
+                        IndicTextsurface = basefont.render("Pas assez de ressource", False, (0,0,0))
+                        fct.drawImageTopRight((cst.w-xoffset, yoffset), IndicTextsurface, 0.04)
                 elif RECT_ROUTE.collidepoint(event.pos):
-                    print("Route")
-                    constructionColonie = False
-                    constructionVille = False
-                    constructionRoute = True
-                    carteDeveloppement = False
-                    echangeBanque = False
-                    echangeJoueurs = False
+                    if joueurActuel.ressourceSuffisante(np.array([1,1,0,0,0])):
+                        print("Route")
+                        constructionColonie = False
+                        constructionVille = False
+                        constructionRoute = True
+                        carteDeveloppement = False
+                        echangeBanque = False
+                        echangeJoueurs = False
+                        edges_available = [False for i in range(len(edges))]
+                    else:
+                        print("Impossible de construire")
+                        IndicTextsurface = basefont.render("Pas assez de ressource", False, (0,0,0))
+                        fct.drawImageTopRight((cst.w-xoffset, yoffset), IndicTextsurface, 0.04)
                 elif RECT_CARTEDEV.collidepoint(event.pos):
                     print("CarteDev")
                     constructionColonie = False
@@ -335,6 +362,14 @@ def main(catan):
                                 if catan.tourSuivantDebut():
                                     startingColonie = False
                                     startingRoute = True
+                        if constructionColonie:
+                            if catan.construireColonie(joueurActuel, vertices_coords[i]):
+                                constructionColonie = False
+                                constructionVille = False
+                                constructionRoute = False
+                                carteDeveloppement = False
+                                echangeBanque = False
+                                echangeJoueurs = False
                 for i,rect_edge in enumerate(RECTS_EDGES):
                     if rect_edge.collidepoint(event.pos):
                         if startingRoute:
@@ -345,7 +380,15 @@ def main(catan):
                                     catan.ressourceDebut()
                                     catan.lancerDes()
                                     catan.donRessource()
-                                    game = True 
+                                    game = True
+                        if constructionRoute:
+                            if catan.construireRoute(joueurActuel, edges_coords[i]):
+                                constructionColonie = False
+                                constructionVille = False
+                                constructionRoute = False
+                                carteDeveloppement = False
+                                echangeBanque = False
+                                echangeJoueurs = False
 
         pygame.display.update()
 
@@ -387,3 +430,14 @@ def drawColonie(center_coords, joueur):
         fct.drawImage(center_coords, COLONIE_J3, a)
     elif joueur == 3:
         fct.drawImage(center_coords, COLONIE_J4, a)
+
+def drawVille(center_coords, joueur):
+    a = 0.05
+    if joueur == 0:
+        fct.drawImage(center_coords, VILLE_J1, a)
+    elif joueur == 1:
+        fct.drawImage(center_coords, VILLE_J2, a)
+    elif joueur == 2:
+        fct.drawImage(center_coords, VILLE_J3, a)
+    elif joueur == 3:
+        fct.drawImage(center_coords, VILLE_J4, a)

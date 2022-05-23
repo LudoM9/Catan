@@ -6,6 +6,7 @@ import pygame
 import Plateau
 import Joueur
 import random as rd
+import numpy as np
 
 class Catan():
     """
@@ -112,10 +113,12 @@ class Catan():
             if self.plateau.intersectionDispoConstruction(coords):
                 if self.plateau.routeAdjacenteColonieExiste(joueur, coords):
                     joueur.ressource -= np.array([1,1,1,1,0])
-                    colonie = Colonie(joueur, coords)
+                    colonie = Plateau.Colonie(joueur, coords)
                     self.plateau.intersections.append(colonie)
                     joueur.colonies.append(colonie)
                     self.ajoutPort(joueur, coords)
+                    return True
+        return False
     
     def construireVille(self, joueur, coords):
         """
@@ -140,6 +143,8 @@ class Catan():
                 joueur.colonies.remove(colonie)
                 self.plateau.intersections.append(ville)
                 joueur.villes.append(ville)
+                return True
+        return False
     
     def construireRoute(self, joueur, coords):
         """
@@ -162,6 +167,8 @@ class Catan():
                     route = Plateau.Route(joueur, coords)
                     self.plateau.routes.append(route)
                     joueur.routes.append(route)
+                    return True
+        return False
 
     def construireColonieGratuit(self, joueur, coords):
         """
