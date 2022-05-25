@@ -66,9 +66,9 @@ def main(catan):
     global RECT_MAIN, RECT_NEXTTURN, RECT_BRICKIMAGE, RECT_STONEIMAGE, RECT_WHEATIMAGE, RECT_WOODIMAGE, RECT_WOOLIMAGE, RECT_PVIMAGE, RECT_COLONIE, RECT_VILLE, RECT_ROUTE, RECT_CARTEDEV, RECT_ANNULER, RECT_ECHANGEBANQUE, RECT_ECHANGEJOUEURS, RECTS_TILES, RECTS_VERTICES, RECTS_EDGES
 
     run = True
-    startingColonie = True
+    startingColonie = False
     startingRoute = False
-    game = False
+    game = True
     constructionColonie = False
     constructionVille = False
     constructionRoute = False
@@ -175,14 +175,13 @@ def main(catan):
             fct.drawHexagon(hexagons[i], positions[i],numbers[i]) #construction des hexagones, chemins et numéros sur les tuiles
             #fct.drawImage((positions[i][0]+cst.xoff,positions[i][1]+cst.yoff),CERCLE,0.04)
 
-        #TODO
         for elem in catan.plateau.intersections:
             for i, vertice_coord in enumerate(vertices_coords):
                 if elem.coords == vertice_coord:
-                    #if elem.type() == Plateau.Colonie:
+                    if elem.multiplicateur == 1:
                         drawColonie((vertices[i][0]+cst.xoff,vertices[i][1]+cst.yoff), elem.joueur.numero)
-                    #elif elem.type() == Plateau.Ville:
-                        #drawVille((vertices[i][0]+cst.xoff,vertices[i][1]+cst.yoff), elem.joueur.numero)
+                    elif elem.multiplicateur == 2:
+                        drawVille((vertices[i][0]+cst.xoff,vertices[i][1]+cst.yoff), elem.joueur.numero)
 
         for route in catan.plateau.routes:
             for i, edge_coord in enumerate(edges_coords):
@@ -198,18 +197,11 @@ def main(catan):
                     elif route.joueur.numero == 3:
                         roadColor = cst.couleurj4
                     pygame.draw.rect(cst.fenetre, roadColor, rect)
-        """
-        for i in range(len(vertices)):
-            fct.drawImage((vertices[i][0]+cst.xoff,vertices[i][1]+cst.yoff),CERCLE,0.03)
-
-        for i in range(len(edges)):
-            fct.drawImage((edges[i][0]+cst.xoff,edges[i][1]+cst.yoff),CERCLE,0.03)
-        """
-
 
         if startingColonie or constructionColonie:
-            IndicTextsurface = basefont.render("Placez votre colonie", False, (0,0,0))
-            fct.drawImageTopRight((cst.w-xoffset, yoffset), IndicTextsurface, 0.04)
+            if startingColonie:
+                IndicTextsurface = basefont.render("Placez votre colonie", False, (0,0,0))
+                fct.drawImageTopRight((cst.w-xoffset, yoffset), IndicTextsurface, 0.04)
             for i in range(len(vertices)):
                 if vertices_available[i]:
                     rect = Rect((vertices[i][0]+cst.xoff,vertices[i][1]+cst.yoff),(20,20))
@@ -218,8 +210,9 @@ def main(catan):
                     RECTS_VERTICES[i] = rect
 
         if startingRoute or constructionRoute:
-            IndicTextsurface = basefont.render("Placez vos routes", False, (0,0,0))
-            fct.drawImageTopRight((cst.w-xoffset, yoffset), IndicTextsurface, 0.04)
+            if startingRoute:
+                IndicTextsurface = basefont.render("Placez vos routes", False, (0,0,0))
+                fct.drawImageTopRight((cst.w-xoffset, yoffset), IndicTextsurface, 0.04)
             for i in range(len(edges)):
                 if edges_available[i]:
                     rect = Rect((edges[i][0]+cst.xoff,edges[i][1]+cst.yoff),(20,20))
@@ -260,6 +253,43 @@ def main(catan):
             fct.drawImageBotRight((cst.w-xoffset, 3*cst.h/4-yoffset), ANNULER, 0.08)
             RECT_ANNULER = fct.rectDrawImageBotRight((cst.w-xoffset, 3*cst.h/4-yoffset), ANNULER, 0.08)
 
+        if indicText:
+            fct.drawImageTopRight((cst.w-xoffset, RECT_NEXTTURN.bottom+yoffset), IndicTextsurface, 0.04)
+
+        if echangeBanque:
+            pygame.draw.rect(cst.fenetre, (211,211,211), Rect(cst.w/4, cst.yoff, cst.w/2, cst.h-2*cst.xoff))
+            donTextsurface = basefont.render("Don", False, (0,0,0))
+            fct.drawImage((cst.w/4+2*cst.w/10, cst.yoff+yoffset), donTextsurface, 0.035)
+            tauxTextsurface = basefont.render("Taux", False, (0,0,0))
+            fct.drawImage((cst.w/4+3*cst.w/10, cst.yoff+yoffset), tauxTextsurface, 0.035)
+            banqueTextsurface = basefont.render("Reçu", False, (0,0,0))
+            fct.drawImage((cst.w/4+4*cst.w/10, cst.yoff+yoffset), banqueTextsurface, 0.035)
+            fct.drawImage((cst.w/4+cst.w/10-cst.w/20, cst.yoff+yoffset+cst.h/8), BRICK, 0.05)
+            fct.drawImage((cst.w/4+cst.w/10-cst.w/20, cst.yoff+yoffset+2*cst.h/8), STONE, 0.05)
+            fct.drawImage((cst.w/4+cst.w/10-cst.w/20, cst.yoff+yoffset+3*cst.h/8), WHEAT, 0.05)
+            fct.drawImage((cst.w/4+cst.w/10-cst.w/20, cst.yoff+yoffset+4*cst.h/8), WOOD, 0.05)
+            fct.drawImage((cst.w/4+cst.w/10-cst.w/20, cst.yoff+yoffset+5*cst.h/8), WOOL, 0.05)
+            brickTextsurface = basefont.render(str(joueurActuel.ressource[1]), False, (0,0,0))
+            stoneTextsurface = basefont.render(str(joueurActuel.ressource[4]), False, (0,0,0))
+            wheatTextsurface = basefont.render(str(joueurActuel.ressource[3]), False, (0,0,0))
+            woodTextsurface = basefont.render(str(joueurActuel.ressource[0]), False, (0,0,0))
+            woolTextsurface = basefont.render(str(joueurActuel.ressource[2]), False, (0,0,0))
+            fct.drawImage((cst.w/4+cst.w/10+cst.w/40, cst.yoff+yoffset+cst.h/8), brickTextsurface, 0.020)
+            fct.drawImage((cst.w/4+cst.w/10+cst.w/40, cst.yoff+yoffset+2*cst.h/8), stoneTextsurface, 0.020)
+            fct.drawImage((cst.w/4+cst.w/10+cst.w/40, cst.yoff+yoffset+3*cst.h/8), wheatTextsurface, 0.020)
+            fct.drawImage((cst.w/4+cst.w/10+cst.w/40, cst.yoff+yoffset+4*cst.h/8), woodTextsurface, 0.020)
+            fct.drawImage((cst.w/4+cst.w/10+cst.w/40, cst.yoff+yoffset+5*cst.h/8), woolTextsurface, 0.020)
+            brickTauxTextsurface = basefont.render(str(joueurActuel.valeurEchange[1]) + ":1", False, (0,0,0))
+            stoneTauxTextsurface = basefont.render(str(joueurActuel.valeurEchange[4]) + ":1", False, (0,0,0))
+            wheatTauxTextsurface = basefont.render(str(joueurActuel.valeurEchange[3]) + ":1", False, (0,0,0))
+            woodTauxTextsurface = basefont.render(str(joueurActuel.valeurEchange[0]) + ":1", False, (0,0,0))
+            woolTauxTextsurface = basefont.render(str(joueurActuel.valeurEchange[2]) + ":1", False, (0,0,0))
+            fct.drawImage((cst.w/4+3*cst.w/10, cst.yoff+yoffset+cst.h/8), brickTauxTextsurface, 0.03)
+            fct.drawImage((cst.w/4+3*cst.w/10, cst.yoff+yoffset+2*cst.h/8), stoneTauxTextsurface, 0.03)
+            fct.drawImage((cst.w/4+3*cst.w/10, cst.yoff+yoffset+3*cst.h/8), wheatTauxTextsurface, 0.03)
+            fct.drawImage((cst.w/4+3*cst.w/10, cst.yoff+yoffset+4*cst.h/8), woodTauxTextsurface, 0.03)
+            fct.drawImage((cst.w/4+3*cst.w/10, cst.yoff+yoffset+5*cst.h/8), woolTauxTextsurface, 0.03)
+
         for event in pygame.event.get():
             fct.shouldQuit(event)
             fct.shouldResize(event)
@@ -271,6 +301,7 @@ def main(catan):
                     carteDeveloppement = False
                     echangeBanque = False
                     echangeJoueurs = False
+                    indicText = False
                     catan.tourSuivant()
                 elif RECT_COLONIE.collidepoint(event.pos):
                     if joueurActuel.ressourceSuffisante(np.array([1,1,1,1,0])):
@@ -281,6 +312,7 @@ def main(catan):
                         carteDeveloppement = False
                         echangeBanque = False
                         echangeJoueurs = False
+                        indicText = False
 
                         vertices_available = [False for i in range(len(vertices))]
                         for i, coord in enumerate(vertices_coords):
@@ -289,8 +321,8 @@ def main(catan):
                                     vertices_available[i] = True
                     else:
                         print("Impossible de construire")
-                        IndicTextsurface = basefont.render("Pas assez de ressource", False, (0,0,0))
-                        fct.drawImageTopRight((cst.w-xoffset, yoffset), IndicTextsurface, 0.04)
+                        indicText = True
+                        IndicTextsurface = basefont.render("Pas assez de ressource", False, (255,0,0))
                 elif RECT_VILLE.collidepoint(event.pos):
                     if joueurActuel.ressourceSuffisante(np.array([0,0,0,2,3])):
                         print("Ville")
@@ -300,10 +332,11 @@ def main(catan):
                         carteDeveloppement = False
                         echangeBanque = False
                         echangeJoueurs = False
+                        indicText = False
                     else:
                         print("Impossible de construire")
-                        IndicTextsurface = basefont.render("Pas assez de ressource", False, (0,0,0))
-                        fct.drawImageTopRight((cst.w-xoffset, yoffset), IndicTextsurface, 0.04)
+                        indicText = True
+                        IndicTextsurface = basefont.render("Pas assez de ressource", False, (255,0,0))
                 elif RECT_ROUTE.collidepoint(event.pos):
                     if joueurActuel.ressourceSuffisante(np.array([1,1,0,0,0])):
                         print("Route")
@@ -313,12 +346,13 @@ def main(catan):
                         carteDeveloppement = False
                         echangeBanque = False
                         echangeJoueurs = False
+                        indicText = False
                         edges_available = [False for i in range(len(edges))]
                     else:
                         print("Impossible de construire")
-                        IndicTextsurface = basefont.render("Pas assez de ressource", False, (0,0,0))
-                        fct.drawImageTopRight((cst.w-xoffset, yoffset), IndicTextsurface, 0.04)
-                elif RECT_CARTEDEV.collidepoint(event.pos):
+                        indicText = True
+                        IndicTextsurface = basefont.render("Pas assez de ressource", False, (255,0,0))
+                elif RECT_CARTEDEV.collidepoint(event.pos): #TODO
                     print("CarteDev")
                     constructionColonie = False
                     constructionVille = False
@@ -326,6 +360,7 @@ def main(catan):
                     carteDeveloppement = True
                     echangeBanque = False
                     echangeJoueurs = False
+                    indicText = False
                 elif RECT_ECHANGEBANQUE.collidepoint(event.pos):
                     print("Echange Banque")
                     constructionColonie = False
@@ -334,6 +369,7 @@ def main(catan):
                     carteDeveloppement = False
                     echangeBanque = True
                     echangeJoueurs = False
+                    indicText = False
                 elif RECT_ECHANGEJOUEURS.collidepoint(event.pos):
                     print("Echange Joueurs")
                     constructionColonie = False
@@ -342,6 +378,7 @@ def main(catan):
                     carteDeveloppement = False
                     echangeBanque = False
                     echangeJoueurs = True
+                    indicText = False
                 elif RECT_ANNULER.collidepoint(event.pos):
                     print("Annuler")
                     constructionColonie = False
@@ -350,6 +387,7 @@ def main(catan):
                     carteDeveloppement = False
                     echangeBanque = False
                     echangeJoueurs = False
+                    indicText = False
                 for i,rect_vertice in enumerate(RECTS_VERTICES):
                     if rect_vertice.collidepoint(event.pos):
                         if startingColonie:
@@ -370,6 +408,16 @@ def main(catan):
                                 carteDeveloppement = False
                                 echangeBanque = False
                                 echangeJoueurs = False
+                                indicText = False
+                        if constructionVille:
+                            if catan.construireVille(joueurActuel, vertices_coords[i]):
+                                constructionColonie = False
+                                constructionVille = False
+                                constructionRoute = False
+                                carteDeveloppement = False
+                                echangeBanque = False
+                                echangeJoueurs = False
+                                indicText = False
                 for i,rect_edge in enumerate(RECTS_EDGES):
                     if rect_edge.collidepoint(event.pos):
                         if startingRoute:
@@ -389,6 +437,7 @@ def main(catan):
                                 carteDeveloppement = False
                                 echangeBanque = False
                                 echangeJoueurs = False
+                                indicText = False
 
         pygame.display.update()
 
