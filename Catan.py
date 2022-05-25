@@ -265,6 +265,8 @@ class Catan():
                 c += don[j]//joueur.valeurEchange[j]
             if sum(recu)<=c:
                 joueur.ressource = joueur.ressource - don + recu
+                return True
+        return False
 
     def echangeJoueur(self, joueur1, joueur2, don, recu):
         """

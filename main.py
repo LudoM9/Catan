@@ -37,7 +37,7 @@ while True:
     #    plateau_aleatoire, joueurs = accueil.main()
     #    ecranAccueil = False
     plateau_aleatoire = False
-    joueurs  = ["Jeep", "Nikos", "Dany"]
+    joueurs  = ["Jeep", "Luka", "Nico"]
     ecranAccueil = False
     catan = Catan.Catan(joueurs, plateau_aleatoire)
     ecranJeu = True

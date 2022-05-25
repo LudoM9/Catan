@@ -7,6 +7,7 @@ import numpy as np
 pygame.font.init()
 Broadwfont = pygame.font.Font(os.path.join('fonts', 'BROADW.TTF'), 30)
 basefont = pygame.font.Font(None, 100)
+echangefont = pygame.font.Font(None, 40)
 
 NEXTTURN = pygame.image.load(os.path.join('images', 'TourSuivant.png'))
 BRICK = pygame.image.load(os.path.join('images', 'Brick Image.png'))
@@ -35,6 +36,9 @@ VILLE_J2 = pygame.image.load(os.path.join('images', 'Ville_J2.png'))
 VILLE_J3 = pygame.image.load(os.path.join('images', 'Ville_J3.png'))
 VILLE_J4 = pygame.image.load(os.path.join('images', 'Ville_J4.png'))
 
+VALIDER_ON = pygame.image.load(os.path.join('images', 'Valider_ON.png'))
+VALIDER_OFF = pygame.image.load(os.path.join('images', 'Valider_OFF.png'))
+
 RECT_MAIN = pygame.Rect(0, 0, 0, 0)
 RECT_NEXTTURN = pygame.Rect(0, 0, 0, 0)
 RECT_BRICKIMAGE = pygame.Rect(0, 0, 0, 0)
@@ -62,8 +66,24 @@ RECT_ANNULER = pygame.Rect(0, 0, 0, 0)
 RECT_ECHANGEBANQUE = pygame.Rect(0, 0, 0, 0)
 RECT_ECHANGEJOUEURS = pygame.Rect(0, 0, 0, 0)
 
+RECT_ECHANGE_BRICK = pygame.Rect(0, 0, 0, 0)
+RECT_ECHANGE_STONE = pygame.Rect(0, 0, 0, 0)
+RECT_ECHANGE_WHEAT = pygame.Rect(0, 0, 0, 0)
+RECT_ECHANGE_WOOD = pygame.Rect(0, 0, 0, 0)
+RECT_ECHANGE_WOOL = pygame.Rect(0, 0, 0, 0)
+
+RECT_ECHANGE_BRICK2 = pygame.Rect(0, 0, 0, 0)
+RECT_ECHANGE_STONE2 = pygame.Rect(0, 0, 0, 0)
+RECT_ECHANGE_WHEAT2 = pygame.Rect(0, 0, 0, 0)
+RECT_ECHANGE_WOOD2 = pygame.Rect(0, 0, 0, 0)
+RECT_ECHANGE_WOOL2 = pygame.Rect(0, 0, 0, 0)
+
+RECT_ECHANGE_VALIDER = pygame.Rect(0, 0, 0, 0)
+RECT_ECHANGE_VALIDERJ1 = pygame.Rect(0, 0, 0, 0)
+RECT_ECHANGE_VALIDERJ2 = pygame.Rect(0, 0, 0, 0)
+
 def main(catan):
-    global RECT_MAIN, RECT_NEXTTURN, RECT_BRICKIMAGE, RECT_STONEIMAGE, RECT_WHEATIMAGE, RECT_WOODIMAGE, RECT_WOOLIMAGE, RECT_PVIMAGE, RECT_COLONIE, RECT_VILLE, RECT_ROUTE, RECT_CARTEDEV, RECT_ANNULER, RECT_ECHANGEBANQUE, RECT_ECHANGEJOUEURS, RECTS_TILES, RECTS_VERTICES, RECTS_EDGES
+    global RECT_MAIN, RECT_NEXTTURN, RECT_BRICKIMAGE, RECT_STONEIMAGE, RECT_WHEATIMAGE, RECT_WOODIMAGE, RECT_WOOLIMAGE, RECT_PVIMAGE, RECT_COLONIE, RECT_VILLE, RECT_ROUTE, RECT_CARTEDEV, RECT_ANNULER, RECT_ECHANGEBANQUE, RECT_ECHANGEJOUEURS, RECTS_TILES, RECTS_VERTICES, RECTS_EDGES, RECT_ECHANGE_BRICK, RECT_ECHANGE_STONE, RECT_ECHANGE_WHEAT, RECT_ECHANGE_WOOD, RECT_ECHANGE_WOOL, RECT_ECHANGE_BRICK2, RECT_ECHANGE_STONE2, RECT_ECHANGE_WHEAT2, RECT_ECHANGE_WOOD2, RECT_ECHANGE_WOOL2, RECT_ECHANGE_VALIDER, RECT_ECHANGE_VALIDERJ1, RECT_ECHANGE_VALIDERJ2
 
     run = True
     startingColonie = False
@@ -78,6 +98,30 @@ def main(catan):
     indicText = False
     xoffset = 5
     yoffset = 5
+
+    textBrick = '0'
+    textStone = '0'
+    textWheat = '0'
+    textWood = '0'
+    textWool = '0'
+    activeTextBrick = False
+    activeTextStone = False
+    activeTextWheat = False
+    activeTextWood = False
+    activeTextWool = False
+
+    textBrick2 = '0'
+    textStone2 = '0'
+    textWheat2 = '0'
+    textWood2 = '0'
+    textWool2 = '0'
+    activeTextBrick2 = False
+    activeTextStone2 = False
+    activeTextWheat2 = False
+    activeTextWood2 = False
+    activeTextWool2 = False
+
+    textInfo = ''
 
     l = np.round(cst.h / 12)
     c = np.round(l/2 * 3 ** (1 / 3))
@@ -290,6 +334,117 @@ def main(catan):
             fct.drawImage((cst.w/4+3*cst.w/10, cst.yoff+yoffset+4*cst.h/8), woodTauxTextsurface, 0.03)
             fct.drawImage((cst.w/4+3*cst.w/10, cst.yoff+yoffset+5*cst.h/8), woolTauxTextsurface, 0.03)
 
+            rectBrick = fct.rectDrawImage((cst.w/4+cst.w/10-cst.w/20, cst.yoff+yoffset+cst.h/8), BRICK, 0.05)
+            rectStone = fct.rectDrawImage((cst.w/4+cst.w/10-cst.w/20, cst.yoff+yoffset+2*cst.h/8), STONE, 0.05)
+            rectWheat = fct.rectDrawImage((cst.w/4+cst.w/10-cst.w/20, cst.yoff+yoffset+3*cst.h/8), WHEAT, 0.05)
+            rectWood = fct.rectDrawImage((cst.w/4+cst.w/10-cst.w/20, cst.yoff+yoffset+4*cst.h/8), WOOD, 0.05)
+            rectWool = fct.rectDrawImage((cst.w/4+cst.w/10-cst.w/20, cst.yoff+yoffset+5*cst.h/8), WOOL, 0.05)
+
+            RECT_ECHANGE_BRICK = pygame.Rect(cst.w/4+2*cst.w/10, cst.yoff+yoffset+cst.h/8, 30, rectBrick.height)
+            RECT_ECHANGE_STONE = pygame.Rect(cst.w/4+2*cst.w/10, cst.yoff+yoffset+2*cst.h/8, 30, rectStone.height)
+            RECT_ECHANGE_WHEAT = pygame.Rect(cst.w/4+2*cst.w/10, cst.yoff+yoffset+3*cst.h/8, 30, rectWheat.height)
+            RECT_ECHANGE_WOOD = pygame.Rect(cst.w/4+2*cst.w/10, cst.yoff+yoffset+4*cst.h/8, 30, rectWood.height)
+            RECT_ECHANGE_WOOL = pygame.Rect(cst.w/4+2*cst.w/10, cst.yoff+yoffset+5*cst.h/8, 30, rectWool.height)
+            RECT_ECHANGE_BRICK.center = (cst.w/4+2*cst.w/10, cst.yoff+yoffset+cst.h/8)
+            RECT_ECHANGE_STONE.center = (cst.w/4+2*cst.w/10, cst.yoff+yoffset+2*cst.h/8)
+            RECT_ECHANGE_WHEAT.center = (cst.w/4+2*cst.w/10, cst.yoff+yoffset+3*cst.h/8)
+            RECT_ECHANGE_WOOD.center = (cst.w/4+2*cst.w/10, cst.yoff+yoffset+4*cst.h/8)
+            RECT_ECHANGE_WOOL.center = (cst.w/4+2*cst.w/10, cst.yoff+yoffset+5*cst.h/8)
+
+            RECT_ECHANGE_BRICK2 = pygame.Rect(cst.w/4+4*cst.w/10, cst.yoff+yoffset+cst.h/8, 30, rectBrick.height)
+            RECT_ECHANGE_STONE2 = pygame.Rect(cst.w/4+4*cst.w/10, cst.yoff+yoffset+2*cst.h/8, 30, rectStone.height)
+            RECT_ECHANGE_WHEAT2 = pygame.Rect(cst.w/4+4*cst.w/10, cst.yoff+yoffset+3*cst.h/8, 30, rectWheat.height)
+            RECT_ECHANGE_WOOD2 = pygame.Rect(cst.w/4+4*cst.w/10, cst.yoff+yoffset+4*cst.h/8, 30, rectWood.height)
+            RECT_ECHANGE_WOOL2 = pygame.Rect(cst.w/4+4*cst.w/10, cst.yoff+yoffset+5*cst.h/8, 30, rectWool.height)
+            RECT_ECHANGE_BRICK2.center = (cst.w/4+4*cst.w/10, cst.yoff+yoffset+cst.h/8)
+            RECT_ECHANGE_STONE2.center = (cst.w/4+4*cst.w/10, cst.yoff+yoffset+2*cst.h/8)
+            RECT_ECHANGE_WHEAT2.center = (cst.w/4+4*cst.w/10, cst.yoff+yoffset+3*cst.h/8)
+            RECT_ECHANGE_WOOD2.center = (cst.w/4+4*cst.w/10, cst.yoff+yoffset+4*cst.h/8)
+            RECT_ECHANGE_WOOL2.center = (cst.w/4+4*cst.w/10, cst.yoff+yoffset+5*cst.h/8)
+
+            text_surface_brick = echangefont.render(textBrick, True, (0, 0, 0))
+            text_surface_stone = echangefont.render(textStone, True, (0, 0, 0))
+            text_surface_wheat = echangefont.render(textWheat, True, (0, 0, 0))
+            text_surface_wood = echangefont.render(textWood, True, (0, 0, 0))
+            text_surface_wool = echangefont.render(textWool, True, (0, 0, 0))
+            text_surface_brick2 = echangefont.render(textBrick2, True, (0, 0, 0))
+            text_surface_stone2 = echangefont.render(textStone2, True, (0, 0, 0))
+            text_surface_wheat2 = echangefont.render(textWheat2, True, (0, 0, 0))
+            text_surface_wood2 = echangefont.render(textWood2, True, (0, 0, 0))
+            text_surface_wool2 = echangefont.render(textWool2, True, (0, 0, 0))
+
+            RECT_ECHANGE_BRICK.width = max(30, text_surface_brick.get_width() + 10)
+            RECT_ECHANGE_STONE.width = max(30, text_surface_stone.get_width() + 10)
+            RECT_ECHANGE_WHEAT.width = max(30, text_surface_wheat.get_width() + 10)
+            RECT_ECHANGE_WOOD.width = max(30, text_surface_wood.get_width() + 10)
+            RECT_ECHANGE_WOOL.width = max(30, text_surface_wool.get_width() + 10)
+            RECT_ECHANGE_BRICK2.width = max(30, text_surface_brick2.get_width() + 10)
+            RECT_ECHANGE_STONE2.width = max(30, text_surface_stone2.get_width() + 10)
+            RECT_ECHANGE_WHEAT2.width = max(30, text_surface_wheat2.get_width() + 10)
+            RECT_ECHANGE_WOOD2.width = max(30, text_surface_wood2.get_width() + 10)
+            RECT_ECHANGE_WOOL2.width = max(30, text_surface_wool2.get_width() + 10)
+
+            if activeTextBrick:
+                pygame.draw.rect(cst.fenetre, (255,102,255), RECT_ECHANGE_BRICK, 2)
+            else:
+                pygame.draw.rect(cst.fenetre, (0,0,0), RECT_ECHANGE_BRICK, 2)
+            if activeTextStone:
+                pygame.draw.rect(cst.fenetre, (255,102,255), RECT_ECHANGE_STONE, 2)
+            else:
+                pygame.draw.rect(cst.fenetre, (0,0,0), RECT_ECHANGE_STONE, 2)
+            if activeTextWheat:
+                pygame.draw.rect(cst.fenetre, (255,102,255), RECT_ECHANGE_WHEAT, 2)
+            else:
+                pygame.draw.rect(cst.fenetre, (0,0,0), RECT_ECHANGE_WHEAT, 2)
+            if activeTextWood:
+                pygame.draw.rect(cst.fenetre, (255,102,255), RECT_ECHANGE_WOOD, 2)
+            else:
+                pygame.draw.rect(cst.fenetre, (0,0,0), RECT_ECHANGE_WOOD, 2)
+            if activeTextWool:
+                pygame.draw.rect(cst.fenetre, (255,102,255), RECT_ECHANGE_WOOL, 2)
+            else:
+                pygame.draw.rect(cst.fenetre, (0,0,0), RECT_ECHANGE_WOOL, 2)
+            if activeTextBrick2:
+                pygame.draw.rect(cst.fenetre, (255,102,255), RECT_ECHANGE_BRICK2, 2)
+            else:
+                pygame.draw.rect(cst.fenetre, (0,0,0), RECT_ECHANGE_BRICK2, 2)
+            if activeTextStone2:
+                pygame.draw.rect(cst.fenetre, (255,102,255), RECT_ECHANGE_STONE2, 2)
+            else:
+                pygame.draw.rect(cst.fenetre, (0,0,0), RECT_ECHANGE_STONE2, 2)
+            if activeTextWheat2:
+                pygame.draw.rect(cst.fenetre, (255,102,255), RECT_ECHANGE_WHEAT2, 2)
+            else:
+                pygame.draw.rect(cst.fenetre, (0,0,0), RECT_ECHANGE_WHEAT2, 2)
+            if activeTextWood2:
+                pygame.draw.rect(cst.fenetre, (255,102,255), RECT_ECHANGE_WOOD2, 2)
+            else:
+                pygame.draw.rect(cst.fenetre, (0,0,0), RECT_ECHANGE_WOOD2, 2)
+            if activeTextWool2:
+                pygame.draw.rect(cst.fenetre, (255,102,255), RECT_ECHANGE_WOOL2, 2)
+            else:
+                pygame.draw.rect(cst.fenetre, (0,0,0), RECT_ECHANGE_WOOL2, 2)
+
+            cst.fenetre.blit(text_surface_brick, (RECT_ECHANGE_BRICK.x + 5, RECT_ECHANGE_BRICK.y + 5))
+            cst.fenetre.blit(text_surface_stone, (RECT_ECHANGE_STONE.x + 5, RECT_ECHANGE_STONE.y + 5))
+            cst.fenetre.blit(text_surface_wheat, (RECT_ECHANGE_WHEAT.x + 5, RECT_ECHANGE_WHEAT.y + 5))
+            cst.fenetre.blit(text_surface_wood, (RECT_ECHANGE_WOOD.x + 5, RECT_ECHANGE_WOOD.y + 5))
+            cst.fenetre.blit(text_surface_wool, (RECT_ECHANGE_WOOL.x + 5, RECT_ECHANGE_WOOL.y + 5))
+            cst.fenetre.blit(text_surface_brick2, (RECT_ECHANGE_BRICK2.x + 5, RECT_ECHANGE_BRICK2.y + 5))
+            cst.fenetre.blit(text_surface_stone2, (RECT_ECHANGE_STONE2.x + 5, RECT_ECHANGE_STONE2.y + 5))
+            cst.fenetre.blit(text_surface_wheat2, (RECT_ECHANGE_WHEAT2.x + 5, RECT_ECHANGE_WHEAT2.y + 5))
+            cst.fenetre.blit(text_surface_wood2, (RECT_ECHANGE_WOOD2.x + 5, RECT_ECHANGE_WOOD2.y + 5))
+            cst.fenetre.blit(text_surface_wool2, (RECT_ECHANGE_WOOL2.x + 5, RECT_ECHANGE_WOOL2.y + 5))
+
+            text_surface_valider = basefont.render("Valider", True, (0, 0, 0))
+            fct.drawImage((cst.w/2, cst.yoff+yoffset+6*cst.h/8), text_surface_valider, 0.08)
+            fct.drawImage((cst.w/2, cst.yoff+yoffset+13*cst.h/16), VALIDER_OFF, 0.04)
+            RECT_ECHANGE_VALIDER = fct.rectDrawImage((cst.w/2, cst.yoff+yoffset+13*cst.h/16), VALIDER_OFF, 0.04)
+            
+            if textInfo != '':
+                text_surface_info = basefont.render(textInfo, True, (255, 0, 0))
+                fct.drawImage((cst.w/2, cst.yoff+yoffset+7*cst.h/8), text_surface_info, 0.2)
+
         for event in pygame.event.get():
             fct.shouldQuit(event)
             fct.shouldResize(event)
@@ -370,6 +525,17 @@ def main(catan):
                     echangeBanque = True
                     echangeJoueurs = False
                     indicText = False
+                    textStone = '0'
+                    textBrick = '0'
+                    textWheat = '0'
+                    textWood = '0'
+                    textWool = '0'
+                    textBrick2 = '0'
+                    textStone2 = '0'
+                    textWheat2 = '0'
+                    textWood2 = '0'
+                    textWool2 = '0'
+                    textInfo = ''
                 elif RECT_ECHANGEJOUEURS.collidepoint(event.pos):
                     print("Echange Joueurs")
                     constructionColonie = False
@@ -388,6 +554,143 @@ def main(catan):
                     echangeBanque = False
                     echangeJoueurs = False
                     indicText = False
+                elif RECT_ECHANGE_BRICK.collidepoint(event.pos):
+                    activeTextBrick = True
+                    activeTextStone = False
+                    activeTextWheat = False
+                    activeTextWood = False
+                    activeTextWool = False
+                    activeTextBrick2 = False
+                    activeTextStone2 = False
+                    activeTextWheat2 = False
+                    activeTextWood2 = False
+                    activeTextWool2 = False
+                elif RECT_ECHANGE_STONE.collidepoint(event.pos):
+                    activeTextBrick = False
+                    activeTextStone = True
+                    activeTextWheat = False
+                    activeTextWood = False
+                    activeTextWool = False
+                    activeTextBrick2 = False
+                    activeTextStone2 = False
+                    activeTextWheat2 = False
+                    activeTextWood2 = False
+                    activeTextWool2 = False
+                elif RECT_ECHANGE_WHEAT.collidepoint(event.pos):
+                    activeTextBrick = False
+                    activeTextStone = False
+                    activeTextWheat = True
+                    activeTextWood = False
+                    activeTextWool = False
+                    activeTextBrick2 = False
+                    activeTextStone2 = False
+                    activeTextWheat2 = False
+                    activeTextWood2 = False
+                    activeTextWool2 = False
+                elif RECT_ECHANGE_WOOD.collidepoint(event.pos):
+                    activeTextBrick = False
+                    activeTextStone = False
+                    activeTextWheat = False
+                    activeTextWood = True
+                    activeTextWool = False
+                    activeTextBrick2 = False
+                    activeTextStone2 = False
+                    activeTextWheat2 = False
+                    activeTextWood2 = False
+                    activeTextWool2 = False
+                elif RECT_ECHANGE_WOOL.collidepoint(event.pos):
+                    activeTextBrick = False
+                    activeTextStone = False
+                    activeTextWheat = False
+                    activeTextWood = False
+                    activeTextWool = True
+                    activeTextBrick2 = False
+                    activeTextStone2 = False
+                    activeTextWheat2 = False
+                    activeTextWood2 = False
+                    activeTextWool2 = False
+                elif RECT_ECHANGE_BRICK2.collidepoint(event.pos):
+                    activeTextBrick = False
+                    activeTextStone = False
+                    activeTextWheat = False
+                    activeTextWood = False
+                    activeTextWool = False
+                    activeTextBrick2 = True
+                    activeTextStone2 = False
+                    activeTextWheat2 = False
+                    activeTextWood2 = False
+                    activeTextWool2 = False
+                elif RECT_ECHANGE_STONE2.collidepoint(event.pos):
+                    activeTextBrick = False
+                    activeTextStone = False
+                    activeTextWheat = False
+                    activeTextWood = False
+                    activeTextWool = False
+                    activeTextBrick2 = False
+                    activeTextStone2 = True
+                    activeTextWheat2 = False
+                    activeTextWood2 = False
+                    activeTextWool2 = False
+                elif RECT_ECHANGE_WHEAT2.collidepoint(event.pos):
+                    activeTextBrick = False
+                    activeTextStone = False
+                    activeTextWheat = False
+                    activeTextWood = False
+                    activeTextWool = False
+                    activeTextBrick2 = False
+                    activeTextStone2 = False
+                    activeTextWheat2 = True
+                    activeTextWood2 = False
+                    activeTextWool2 = False
+                elif RECT_ECHANGE_WOOD2.collidepoint(event.pos):
+                    activeTextBrick = False
+                    activeTextStone = False
+                    activeTextWheat = False
+                    activeTextWood = False
+                    activeTextWool = False
+                    activeTextBrick2 = False
+                    activeTextStone2 = False
+                    activeTextWheat2 = False
+                    activeTextWood2 = True
+                    activeTextWool2 = False
+                elif RECT_ECHANGE_WOOL2.collidepoint(event.pos):
+                    activeTextBrick = False
+                    activeTextStone = False
+                    activeTextWheat = False
+                    activeTextWood = False
+                    activeTextWool = False
+                    activeTextBrick2 = False
+                    activeTextStone2 = False
+                    activeTextWheat2 = False
+                    activeTextWood2 = False
+                    activeTextWool2 = True
+                elif RECT_ECHANGE_VALIDER.collidepoint(event.pos):
+                    activeTextBrick = False
+                    activeTextStone = False
+                    activeTextWheat = False
+                    activeTextWood = False
+                    activeTextWool = False
+                    activeTextBrick2 = False
+                    activeTextStone2 = False
+                    activeTextWheat2 = False
+                    activeTextWood2 = False
+                    activeTextWool2 = False
+                    if catan.echangeBanque(joueurActuel, np.array([int(textWood), int(textBrick), int(textWool), int(textWheat), int(textStone)]), np.array([int(textWood2), int(textBrick2), int(textWool2), int(textWheat2), int(textStone2)])):
+                        echangeBanque = False
+                        textStone = '0'
+                        textBrick = '0'
+                        textWheat = '0'
+                        textWood = '0'
+                        textWool = '0'
+                        textBrick2 = '0'
+                        textStone2 = '0'
+                        textWheat2 = '0'
+                        textWood2 = '0'
+                        textWool2 = '0'
+                        textInfo = ''
+                    else:
+                        textInfo = 'Transaction Impossible!'
+
                 for i,rect_vertice in enumerate(RECTS_VERTICES):
                     if rect_vertice.collidepoint(event.pos):
                         if startingColonie:
@@ -438,11 +741,62 @@ def main(catan):
                                 echangeBanque = False
                                 echangeJoueurs = False
                                 indicText = False
+            elif event.type == pygame.KEYDOWN:
+                if activeTextBrick:
+                    if event.key == pygame.K_BACKSPACE:
+                        textBrick = textBrick[:-1]
+                    else:
+                        textBrick += event.unicode
+                elif activeTextStone:
+                    if event.key == pygame.K_BACKSPACE:
+                        textStone = textBrick[:-1]
+                    else:
+                        textStone += event.unicode
+                elif activeTextWheat:
+                    if event.key == pygame.K_BACKSPACE:
+                        textWheat = textBrick[:-1]
+                    else:
+                        textWheat += event.unicode
+                elif activeTextWood:
+                    if event.key == pygame.K_BACKSPACE:
+                        textWood = textBrick[:-1]
+                    else:
+                        textWood += event.unicode
+                elif activeTextWool:
+                    if event.key == pygame.K_BACKSPACE:
+                        textWool = textBrick[:-1]
+                    else:
+                        textWool += event.unicode
+                elif activeTextBrick2:
+                    if event.key == pygame.K_BACKSPACE:
+                        textBrick2 = textBrick[:-1]
+                    else:
+                        textBrick2 += event.unicode
+                elif activeTextStone2:
+                    if event.key == pygame.K_BACKSPACE:
+                        textStone2 = textBrick[:-1]
+                    else:
+                        textStone2 += event.unicode
+                elif activeTextWheat2:
+                    if event.key == pygame.K_BACKSPACE:
+                        textWheat2 = textBrick[:-1]
+                    else:
+                        textWheat2 += event.unicode
+                elif activeTextWood2:
+                    if event.key == pygame.K_BACKSPACE:
+                        textWood2 = textBrick[:-1]
+                    else:
+                        textWood2 += event.unicode
+                elif activeTextWool2:
+                    if event.key == pygame.K_BACKSPACE:
+                        textWool2 = textBrick[:-1]
+                    else:
+                        textWool2 += event.unicode
 
         pygame.display.update()
 
 def resetRect():
-    global RECT_MAIN, RECT_NEXTTURN, RECT_BRICKIMAGE, RECT_STONEIMAGE, RECT_WHEATIMAGE, RECT_WOODIMAGE, RECT_WOOLIMAGE, RECT_PVIMAGE, RECT_COLONIE, RECT_VILLE, RECT_ROUTE, RECT_CARTEDEV, RECT_ANNULER, RECT_ECHANGEBANQUE, RECT_ECHANGEJOUEURS, RECTS_TILES, RECTS_VERTICES, RECTS_EDGES
+    global RECT_MAIN, RECT_NEXTTURN, RECT_BRICKIMAGE, RECT_STONEIMAGE, RECT_WHEATIMAGE, RECT_WOODIMAGE, RECT_WOOLIMAGE, RECT_PVIMAGE, RECT_COLONIE, RECT_VILLE, RECT_ROUTE, RECT_CARTEDEV, RECT_ANNULER, RECT_ECHANGEBANQUE, RECT_ECHANGEJOUEURS, RECTS_TILES, RECTS_VERTICES, RECTS_EDGES, RECT_ECHANGE_BRICK, RECT_ECHANGE_STONE, RECT_ECHANGE_WHEAT, RECT_ECHANGE_WOOD, RECT_ECHANGE_WOOL, RECT_ECHANGE_BRICK2, RECT_ECHANGE_STONE2, RECT_ECHANGE_WHEAT2, RECT_ECHANGE_WOOD2, RECT_ECHANGE_WOOL2, RECT_ECHANGE_VALIDER, RECT_ECHANGE_VALIDERJ1, RECT_ECHANGE_VALIDERJ2
 
     RECT_MAIN = pygame.Rect(0, 0, 0, 0)
     RECT_NEXTTURN = pygame.Rect(0, 0, 0, 0)
@@ -468,6 +822,22 @@ def resetRect():
     RECTS_EDGES = []
     for e in range(74):
         RECTS_EDGES.append(pygame.Rect(0,0,0,0))
+        
+    RECT_ECHANGE_BRICK = pygame.Rect(0, 0, 0, 0)
+    RECT_ECHANGE_STONE = pygame.Rect(0, 0, 0, 0)
+    RECT_ECHANGE_WHEAT = pygame.Rect(0, 0, 0, 0)
+    RECT_ECHANGE_WOOD = pygame.Rect(0, 0, 0, 0)
+    RECT_ECHANGE_WOOL = pygame.Rect(0, 0, 0, 0)
+
+    RECT_ECHANGE_BRICK2 = pygame.Rect(0, 0, 0, 0)
+    RECT_ECHANGE_STONE2 = pygame.Rect(0, 0, 0, 0)
+    RECT_ECHANGE_WHEAT2 = pygame.Rect(0, 0, 0, 0)
+    RECT_ECHANGE_WOOD2 = pygame.Rect(0, 0, 0, 0)
+    RECT_ECHANGE_WOOL2 = pygame.Rect(0, 0, 0, 0)
+
+    RECT_ECHANGE_VALIDER = pygame.Rect(0, 0, 0, 0)
+    RECT_ECHANGE_VALIDERJ1 = pygame.Rect(0, 0, 0, 0)
+    RECT_ECHANGE_VALIDERJ2 = pygame.Rect(0, 0, 0, 0)
 
 def drawColonie(center_coords, joueur):
     a = 0.05
