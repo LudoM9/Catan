@@ -288,6 +288,8 @@ class Catan():
         if joueur1.ressourceSuffisante(don) and joueur2.ressourceSuffisante(recu):
             joueur1.ressource = joueur1.ressource - don + recu
             joueur2.ressource = joueur2.ressource + don - recu
+            return True
+        return False
 
     def tourSuivant(self):
         print("Tour Suivant")

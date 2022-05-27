@@ -82,8 +82,12 @@ RECT_ECHANGE_VALIDER = pygame.Rect(0, 0, 0, 0)
 RECT_ECHANGE_VALIDERJ1 = pygame.Rect(0, 0, 0, 0)
 RECT_ECHANGE_VALIDERJ2 = pygame.Rect(0, 0, 0, 0)
 
+RECT_ECHANGE_JOUEURS = []
+for j in range(3):
+    RECT_ECHANGE_JOUEURS.append(pygame.Rect(0, 0, 0, 0))
+
 def main(catan):
-    global RECT_MAIN, RECT_NEXTTURN, RECT_BRICKIMAGE, RECT_STONEIMAGE, RECT_WHEATIMAGE, RECT_WOODIMAGE, RECT_WOOLIMAGE, RECT_PVIMAGE, RECT_COLONIE, RECT_VILLE, RECT_ROUTE, RECT_CARTEDEV, RECT_ANNULER, RECT_ECHANGEBANQUE, RECT_ECHANGEJOUEURS, RECTS_TILES, RECTS_VERTICES, RECTS_EDGES, RECT_ECHANGE_BRICK, RECT_ECHANGE_STONE, RECT_ECHANGE_WHEAT, RECT_ECHANGE_WOOD, RECT_ECHANGE_WOOL, RECT_ECHANGE_BRICK2, RECT_ECHANGE_STONE2, RECT_ECHANGE_WHEAT2, RECT_ECHANGE_WOOD2, RECT_ECHANGE_WOOL2, RECT_ECHANGE_VALIDER, RECT_ECHANGE_VALIDERJ1, RECT_ECHANGE_VALIDERJ2
+    global RECT_MAIN, RECT_NEXTTURN, RECT_BRICKIMAGE, RECT_STONEIMAGE, RECT_WHEATIMAGE, RECT_WOODIMAGE, RECT_WOOLIMAGE, RECT_PVIMAGE, RECT_COLONIE, RECT_VILLE, RECT_ROUTE, RECT_CARTEDEV, RECT_ANNULER, RECT_ECHANGEBANQUE, RECT_ECHANGEJOUEURS, RECTS_TILES, RECTS_VERTICES, RECTS_EDGES, RECT_ECHANGE_BRICK, RECT_ECHANGE_STONE, RECT_ECHANGE_WHEAT, RECT_ECHANGE_WOOD, RECT_ECHANGE_WOOL, RECT_ECHANGE_BRICK2, RECT_ECHANGE_STONE2, RECT_ECHANGE_WHEAT2, RECT_ECHANGE_WOOD2, RECT_ECHANGE_WOOL2, RECT_ECHANGE_VALIDER, RECT_ECHANGE_VALIDERJ1, RECT_ECHANGE_VALIDERJ2, RECT_ECHANGE_JOUEURS
 
     run = True
     startingColonie = False
@@ -94,6 +98,7 @@ def main(catan):
     constructionRoute = False
     carteDeveloppement = False
     echangeBanque = False
+    choixEchangeJoueurs = False
     echangeJoueurs = False
     indicText = False
     xoffset = 5
@@ -122,6 +127,10 @@ def main(catan):
     activeTextWool2 = False
 
     textInfo = ''
+    validerJ1 = False
+    validerJ2 = False
+
+    numeroJoueurEchange = 0
 
     l = np.round(cst.h / 12)
     c = np.round(l/2 * 3 ** (1 / 3))
@@ -300,13 +309,37 @@ def main(catan):
         if indicText:
             fct.drawImageTopRight((cst.w-xoffset, RECT_NEXTTURN.bottom+yoffset), IndicTextsurface, 0.04)
 
-        if echangeBanque:
+        if choixEchangeJoueurs:
+            pygame.draw.rect(cst.fenetre, (211,211,211), Rect(cst.w/4, cst.h/3, cst.w/2, cst.h/3))
+            j = 0
+            for joueur in catan.joueurs:
+                if joueur.numero != joueurActuel.numero:
+                    if len(catan.joueurs) == 3:
+                        joueurTextSurface = basefont.render(joueur.nom, False, (0,0,0))
+                        fct.drawImage((cst.w/4 + (j+1)*cst.w/6, cst.h/2), joueurTextSurface, 0.1)
+                        RECT_ECHANGE_JOUEURS[j] = fct.rectDrawImage((cst.w/4 + (j+1)*cst.w/6, cst.h/2), joueurTextSurface, 0.1)
+                    else:
+                        joueurTextSurface = basefont.render(joueur.nom, False, (0,0,0))
+                        fct.drawImage((cst.w/4 + (j+1)*cst.w/8, cst.h/2), joueurTextSurface, 0.1)
+                        RECT_ECHANGE_JOUEURS[j] = fct.rectDrawImage((cst.w/4 + (j+1)*cst.w/6, cst.h/2), joueurTextSurface, 0.1)
+                    j += 1
+
+        if echangeBanque or echangeJoueurs:
             pygame.draw.rect(cst.fenetre, (211,211,211), Rect(cst.w/4, cst.yoff, cst.w/2, cst.h-2*cst.xoff))
-            donTextsurface = basefont.render("Don", False, (0,0,0))
-            fct.drawImage((cst.w/4+2*cst.w/10, cst.yoff+yoffset), donTextsurface, 0.035)
-            tauxTextsurface = basefont.render("Taux", False, (0,0,0))
-            fct.drawImage((cst.w/4+3*cst.w/10, cst.yoff+yoffset), tauxTextsurface, 0.035)
-            banqueTextsurface = basefont.render("Reçu", False, (0,0,0))
+            if echangeBanque:
+                donTextsurface = basefont.render("Don", False, (0,0,0))
+                fct.drawImage((cst.w/4+2*cst.w/10, cst.yoff+yoffset), donTextsurface, 0.035)
+                tauxTextsurface = basefont.render("Taux", False, (0,0,0))
+                fct.drawImage((cst.w/4+3*cst.w/10, cst.yoff+yoffset), tauxTextsurface, 0.035)
+                banqueTextsurface = basefont.render("Reçu", False, (0,0,0))
+                fct.drawImage((cst.w/4+4*cst.w/10, cst.yoff+yoffset), banqueTextsurface, 0.035)
+            else:
+                donTextsurface = basefont.render(joueurActuel.nom, False, (0,0,0))
+                fct.drawImage((cst.w/4+2*cst.w/10, cst.yoff+yoffset), donTextsurface, 0.035)
+                tauxTextsurface = basefont.render("Taux", False, (0,0,0))
+                fct.drawImage((cst.w/4+3*cst.w/10, cst.yoff+yoffset), tauxTextsurface, 0.035)
+                banqueTextsurface = basefont.render(catan.joueurs[numeroJoueurEchange].nom, False, (0,0,0))
+                fct.drawImage((cst.w/4+4*cst.w/10, cst.yoff+yoffset), banqueTextsurface, 0.035)
             fct.drawImage((cst.w/4+4*cst.w/10, cst.yoff+yoffset), banqueTextsurface, 0.035)
             fct.drawImage((cst.w/4+cst.w/10-cst.w/20, cst.yoff+yoffset+cst.h/8), BRICK, 0.05)
             fct.drawImage((cst.w/4+cst.w/10-cst.w/20, cst.yoff+yoffset+2*cst.h/8), STONE, 0.05)
@@ -436,10 +469,30 @@ def main(catan):
             cst.fenetre.blit(text_surface_wood2, (RECT_ECHANGE_WOOD2.x + 5, RECT_ECHANGE_WOOD2.y + 5))
             cst.fenetre.blit(text_surface_wool2, (RECT_ECHANGE_WOOL2.x + 5, RECT_ECHANGE_WOOL2.y + 5))
 
-            text_surface_valider = basefont.render("Valider", True, (0, 0, 0))
-            fct.drawImage((cst.w/2, cst.yoff+yoffset+6*cst.h/8), text_surface_valider, 0.08)
-            fct.drawImage((cst.w/2, cst.yoff+yoffset+13*cst.h/16), VALIDER_OFF, 0.04)
-            RECT_ECHANGE_VALIDER = fct.rectDrawImage((cst.w/2, cst.yoff+yoffset+13*cst.h/16), VALIDER_OFF, 0.04)
+            if echangeBanque:
+                text_surface_valider = basefont.render("Valider", True, (0, 0, 0))
+                fct.drawImage((cst.w/2, cst.yoff+yoffset+6*cst.h/8), text_surface_valider, 0.08)
+                fct.drawImage((cst.w/2, cst.yoff+yoffset+13*cst.h/16), VALIDER_OFF, 0.04)
+                RECT_ECHANGE_VALIDER = fct.rectDrawImage((cst.w/2, cst.yoff+yoffset+13*cst.h/16), VALIDER_OFF, 0.04)
+            
+            if echangeJoueurs:
+                text_surface_validerJ1 = basefont.render("Valider J1", True, (0, 0, 0))
+                fct.drawImage((cst.w/2 - cst.w/8, cst.yoff+yoffset+6*cst.h/8), text_surface_validerJ1, 0.08)
+                text_surface_validerJ2 = basefont.render("Valider J2", True, (0, 0, 0))
+                fct.drawImage((cst.w/2 + cst.w/8, cst.yoff+yoffset+6*cst.h/8), text_surface_validerJ2, 0.08)
+
+                if validerJ1:
+                    fct.drawImage((cst.w/2 - cst.w/8, cst.yoff+yoffset+13*cst.h/16), VALIDER_ON, 0.04)
+                    RECT_ECHANGE_VALIDERJ1 = fct.rectDrawImage((cst.w/2 - cst.w/8, cst.yoff+yoffset+13*cst.h/16), VALIDER_ON, 0.04)
+                else:
+                    fct.drawImage((cst.w/2 - cst.w/8, cst.yoff+yoffset+13*cst.h/16), VALIDER_OFF, 0.04)
+                    RECT_ECHANGE_VALIDERJ1 = fct.rectDrawImage((cst.w/2 - cst.w/8, cst.yoff+yoffset+13*cst.h/16), VALIDER_OFF, 0.04)
+                if validerJ2:
+                    fct.drawImage((cst.w/2 + cst.w/8, cst.yoff+yoffset+13*cst.h/16), VALIDER_ON, 0.04)
+                    RECT_ECHANGE_VALIDERJ2 = fct.rectDrawImage((cst.w/2 + cst.w/8, cst.yoff+yoffset+13*cst.h/16), VALIDER_ON, 0.04)
+                else:
+                    fct.drawImage((cst.w/2 + cst.w/8, cst.yoff+yoffset+13*cst.h/16), VALIDER_OFF, 0.04)
+                    RECT_ECHANGE_VALIDERJ2 = fct.rectDrawImage((cst.w/2 + cst.w/8, cst.yoff+yoffset+13*cst.h/16), VALIDER_OFF, 0.04)
             
             if textInfo != '':
                 text_surface_info = basefont.render(textInfo, True, (255, 0, 0))
@@ -455,6 +508,7 @@ def main(catan):
                     constructionRoute = False
                     carteDeveloppement = False
                     echangeBanque = False
+                    choixEchangeJoueurs = False
                     echangeJoueurs = False
                     indicText = False
                     catan.tourSuivant()
@@ -466,6 +520,7 @@ def main(catan):
                         constructionRoute = False
                         carteDeveloppement = False
                         echangeBanque = False
+                        choixEchangeJoueurs = False
                         echangeJoueurs = False
                         indicText = False
 
@@ -486,6 +541,7 @@ def main(catan):
                         constructionRoute = False
                         carteDeveloppement = False
                         echangeBanque = False
+                        choixEchangeJoueurs = False
                         echangeJoueurs = False
                         indicText = False
                     else:
@@ -500,6 +556,7 @@ def main(catan):
                         constructionRoute = True
                         carteDeveloppement = False
                         echangeBanque = False
+                        choixEchangeJoueurs = False
                         echangeJoueurs = False
                         indicText = False
                         edges_available = [False for i in range(len(edges))]
@@ -514,6 +571,7 @@ def main(catan):
                     constructionRoute = False
                     carteDeveloppement = True
                     echangeBanque = False
+                    choixEchangeJoueurs = False
                     echangeJoueurs = False
                     indicText = False
                 elif RECT_ECHANGEBANQUE.collidepoint(event.pos):
@@ -523,6 +581,7 @@ def main(catan):
                     constructionRoute = False
                     carteDeveloppement = False
                     echangeBanque = True
+                    choixEchangeJoueurs = False
                     echangeJoueurs = False
                     indicText = False
                     textStone = '0'
@@ -543,7 +602,8 @@ def main(catan):
                     constructionRoute = False
                     carteDeveloppement = False
                     echangeBanque = False
-                    echangeJoueurs = True
+                    choixEchangeJoueurs = True
+                    echangeJoueurs = False
                     indicText = False
                 elif RECT_ANNULER.collidepoint(event.pos):
                     print("Annuler")
@@ -552,6 +612,7 @@ def main(catan):
                     constructionRoute = False
                     carteDeveloppement = False
                     echangeBanque = False
+                    choixEchangeJoueurs = False
                     echangeJoueurs = False
                     indicText = False
                 elif RECT_ECHANGE_BRICK.collidepoint(event.pos):
@@ -690,6 +751,82 @@ def main(catan):
                         textInfo = ''
                     else:
                         textInfo = 'Transaction Impossible!'
+                elif RECT_ECHANGE_VALIDERJ1.collidepoint(event.pos):
+                    validerJ1 = not(validerJ1)
+                    activeTextBrick = False
+                    activeTextStone = False
+                    activeTextWheat = False
+                    activeTextWood = False
+                    activeTextWool = False
+                    activeTextBrick2 = False
+                    activeTextStone2 = False
+                    activeTextWheat2 = False
+                    activeTextWood2 = False
+                    activeTextWool2 = False
+                    activeTextBrick = False
+                    activeTextStone = False
+                    activeTextWheat = False
+                    activeTextWood = False
+                    activeTextWool = False
+                    activeTextBrick2 = False
+                    activeTextStone2 = False
+                    activeTextWheat2 = False
+                    activeTextWood2 = False
+                    activeTextWool2 = False
+                    if validerJ1 and validerJ2:
+                        if catan.echangeJoueur(joueurActuel, catan.joueurs[numeroJoueurEchange], np.array([int(textWood), int(textBrick), int(textWool), int(textWheat), int(textStone)]), np.array([int(textWood2), int(textBrick2), int(textWool2), int(textWheat2), int(textStone2)])):
+                            echangeJoueurs = False
+                            textStone = '0'
+                            textBrick = '0'
+                            textWheat = '0'
+                            textWood = '0'
+                            textWool = '0'
+                            textBrick2 = '0'
+                            textStone2 = '0'
+                            textWheat2 = '0'
+                            textWood2 = '0'
+                            textWool2 = '0'
+                            textInfo = ''
+                        else:
+                            textInfo = 'Transaction Impossible!'
+                elif RECT_ECHANGE_VALIDERJ2.collidepoint(event.pos):
+                    validerJ2 = not(validerJ2)
+                    activeTextBrick = False
+                    activeTextStone = False
+                    activeTextWheat = False
+                    activeTextWood = False
+                    activeTextWool = False
+                    activeTextBrick2 = False
+                    activeTextStone2 = False
+                    activeTextWheat2 = False
+                    activeTextWood2 = False
+                    activeTextWool2 = False
+                    if validerJ1 and validerJ2:
+                        if catan.echangeJoueur(joueurActuel, catan.joueurs[numeroJoueurEchange], np.array([int(textWood), int(textBrick), int(textWool), int(textWheat), int(textStone)]), np.array([int(textWood2), int(textBrick2), int(textWool2), int(textWheat2), int(textStone2)])):
+                            echangeJoueurs = False
+                            textStone = '0'
+                            textBrick = '0'
+                            textWheat = '0'
+                            textWood = '0'
+                            textWool = '0'
+                            textBrick2 = '0'
+                            textStone2 = '0'
+                            textWheat2 = '0'
+                            textWood2 = '0'
+                            textWool2 = '0'
+                            textInfo = ''
+                        else:
+                            textInfo = 'Transaction Impossible!'
+                for i, rect_joueur in enumerate(RECT_ECHANGE_JOUEURS):
+                    if rect_joueur.collidepoint(event.pos):
+                        j = 0
+                        for joueur in catan.joueurs:
+                            if joueur.numero != joueurActuel.numero:
+                                if i == j:
+                                    numeroJoueurEchange = joueur.numero
+                                    choixEchangeJoueurs = False
+                                    echangeJoueurs = True
+                                j += 1
 
                 for i,rect_vertice in enumerate(RECTS_VERTICES):
                     if rect_vertice.collidepoint(event.pos):
@@ -710,6 +847,7 @@ def main(catan):
                                 constructionRoute = False
                                 carteDeveloppement = False
                                 echangeBanque = False
+                                choixEchangeJoueurs = False
                                 echangeJoueurs = False
                                 indicText = False
                         if constructionVille:
@@ -719,6 +857,7 @@ def main(catan):
                                 constructionRoute = False
                                 carteDeveloppement = False
                                 echangeBanque = False
+                                choixEchangeJoueurs = False
                                 echangeJoueurs = False
                                 indicText = False
                 for i,rect_edge in enumerate(RECTS_EDGES):
@@ -739,6 +878,7 @@ def main(catan):
                                 constructionRoute = False
                                 carteDeveloppement = False
                                 echangeBanque = False
+                                choixEchangeJoueurs = False
                                 echangeJoueurs = False
                                 indicText = False
             elif event.type == pygame.KEYDOWN:
@@ -796,7 +936,7 @@ def main(catan):
         pygame.display.update()
 
 def resetRect():
-    global RECT_MAIN, RECT_NEXTTURN, RECT_BRICKIMAGE, RECT_STONEIMAGE, RECT_WHEATIMAGE, RECT_WOODIMAGE, RECT_WOOLIMAGE, RECT_PVIMAGE, RECT_COLONIE, RECT_VILLE, RECT_ROUTE, RECT_CARTEDEV, RECT_ANNULER, RECT_ECHANGEBANQUE, RECT_ECHANGEJOUEURS, RECTS_TILES, RECTS_VERTICES, RECTS_EDGES, RECT_ECHANGE_BRICK, RECT_ECHANGE_STONE, RECT_ECHANGE_WHEAT, RECT_ECHANGE_WOOD, RECT_ECHANGE_WOOL, RECT_ECHANGE_BRICK2, RECT_ECHANGE_STONE2, RECT_ECHANGE_WHEAT2, RECT_ECHANGE_WOOD2, RECT_ECHANGE_WOOL2, RECT_ECHANGE_VALIDER, RECT_ECHANGE_VALIDERJ1, RECT_ECHANGE_VALIDERJ2
+    global RECT_MAIN, RECT_NEXTTURN, RECT_BRICKIMAGE, RECT_STONEIMAGE, RECT_WHEATIMAGE, RECT_WOODIMAGE, RECT_WOOLIMAGE, RECT_PVIMAGE, RECT_COLONIE, RECT_VILLE, RECT_ROUTE, RECT_CARTEDEV, RECT_ANNULER, RECT_ECHANGEBANQUE, RECT_ECHANGEJOUEURS, RECTS_TILES, RECTS_VERTICES, RECTS_EDGES, RECT_ECHANGE_BRICK, RECT_ECHANGE_STONE, RECT_ECHANGE_WHEAT, RECT_ECHANGE_WOOD, RECT_ECHANGE_WOOL, RECT_ECHANGE_BRICK2, RECT_ECHANGE_STONE2, RECT_ECHANGE_WHEAT2, RECT_ECHANGE_WOOD2, RECT_ECHANGE_WOOL2, RECT_ECHANGE_VALIDER, RECT_ECHANGE_VALIDERJ1, RECT_ECHANGE_VALIDERJ2, RECT_ECHANGE_JOUEURS
 
     RECT_MAIN = pygame.Rect(0, 0, 0, 0)
     RECT_NEXTTURN = pygame.Rect(0, 0, 0, 0)
@@ -838,6 +978,10 @@ def resetRect():
     RECT_ECHANGE_VALIDER = pygame.Rect(0, 0, 0, 0)
     RECT_ECHANGE_VALIDERJ1 = pygame.Rect(0, 0, 0, 0)
     RECT_ECHANGE_VALIDERJ2 = pygame.Rect(0, 0, 0, 0)
+
+    RECT_ECHANGE_JOUEURS = []
+    for j in range(3):
+        RECT_ECHANGE_JOUEURS.append(pygame.Rect(0, 0, 0, 0))
 
 def drawColonie(center_coords, joueur):
     a = 0.05
