@@ -82,7 +82,7 @@ class Catan():
                 for elem in elems:
                     elem.joueur.ressource += elem.multiplicateur*tile.ressource
     
-    def deplacerVoleur(self, coords):
+    def deplacerVoleur(self, joueurVoleur, coords):
         """
         Déplace le voleur selon le choix du joueur ayant obtenu 7 au lancer de dés.
 
@@ -94,6 +94,29 @@ class Catan():
         ancienneCoords = self.plateau.voleur.coords
         if coords != ancienneCoords:
             self.plateau.voleur.coords = coords
+            ressource = np.array([0,0,0,0,0])
+            elems = self.plateau.colonieAdjacenteTile(coords)
+            if len(elems) != 0:
+                i = rd.randint(0, len(elems)-1)
+                ressource = elems[i].joueur.ressources
+                e = rd.randint(1, sum(ressource))
+                if e <= ressource[0]:
+                    elems[i].joueur.ressources -= np.array([1,0,0,0,0])
+                    joueurVoleur.ressources += np.array([1,0,0,0,0])
+                elif e <= ressource[0]+ressource[1]:
+                    elems[i].joueur.ressources -= np.array([0,1,0,0,0])
+                    joueurVoleur.ressources += np.array([0,1,0,0,0])
+                elif e <= ressource[0]+ressource[1]+ressource[2]:
+                    elems[i].joueur.ressources -= np.array([0,0,1,0,0])
+                    joueurVoleur.ressources += np.array([0,0,1,0,0])
+                elif e <= ressource[0]+ressource[1]+ressource[2]+ressource[3]:
+                    elems[i].joueur.ressources -= np.array([0,0,0,1,0])
+                    joueurVoleur.ressources += np.array([0,0,0,1,0])
+                else:
+                    elems[i].joueur.ressources -= np.array([0,0,0,0,1])
+                    joueurVoleur.ressources += np.array([0,0,0,0,1])
+            return True
+        return False
 
     def construireColonie(self, joueur, coords):
         """
@@ -239,10 +262,12 @@ class Catan():
         joueur : Joueur
             Joueur qui achète la carte développement
         """
-        if len(self.plateau.pioche.carteDev)>0:
+        if len(self.plateau.pioche.devCards)>0:
             if joueur.ressourceSuffisante(np.array([0,0,1,1,1])):
                 joueur.ressource -= np.array([0,0,1,1,1])
-                joueur.carteDev.append(self.plateau.pioche.carteDev.pop())
+                joueur.carteDev.append(self.plateau.pioche.devCards.pop())
+                return True
+        return False
 
     def echangeBanque(self, joueur, don, recu):
         """
@@ -293,10 +318,12 @@ class Catan():
 
     def tourSuivant(self):
         print("Tour Suivant")
+        self.calculPlusGrandeArmee()
         self.numeroJoueurActuel += 1
         if self.numeroJoueurActuel >= len(self.joueurs):
             self.numeroJoueurActuel = 0   
         self.joueurActuel = self.joueurs[self.numeroJoueurActuel]
+        self.joueurActuel.calculPV()
         self.lancerDes()
         self.donRessource()
 
@@ -325,11 +352,11 @@ class Catan():
         m = 0 #nombre maximum de chevaliers
         n = 0 #nombre de chevalier de chaque joueur
         numeroJoueur = 0
-        for joueur in joueurs:
+        for joueur in self.joueurs:
             if joueur.plusGrandeArmee:
                 m = joueur.nombreChevalier()
                 numeroJoueur = joueur.numero
-        for joueur in joueurs:
+        for joueur in self.joueurs:
             joueur.plusGrandeArmee = False   
             n = joueur.nombreChevalier()
             if n > m:

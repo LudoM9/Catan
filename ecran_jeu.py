@@ -132,6 +132,8 @@ def main(catan):
 
     numeroJoueurEchange = 0
 
+    deplacerVoleur = False
+
     l = np.round(cst.h / 12)
     c = np.round(l/2 * 3 ** (1 / 3))
     positions = np.array([(3*c,l),(5*c,l),(7*c,l),
@@ -227,6 +229,15 @@ def main(catan):
         for i in range(19):
             fct.drawHexagon(hexagons[i], positions[i],numbers[i]) #construction des hexagones, chemins et numéros sur les tuiles
             #fct.drawImage((positions[i][0]+cst.xoff,positions[i][1]+cst.yoff),CERCLE,0.04)
+
+        for i, hexagon_coord in enumerate(hexagon_coords):
+            if catan.plateau.voleur.coords == hexagon_coord:
+                rect = Rect((positions[i][0]+cst.xoff, positions[i][1]+cst.yoff), (40,40))
+                rect.center = (positions[i][0]+cst.xoff, positions[i][1]+cst.yoff)
+                pygame.draw.rect(cst.fenetre, (0,0,0), rect)
+                voleurTextsurface = basefont.render("V", False, (255,255,255))
+                fct.drawImage((positions[i][0]+cst.xoff, positions[i][1]+cst.yoff), voleurTextsurface, 0.035)
+
 
         for elem in catan.plateau.intersections:
             for i, vertice_coord in enumerate(vertices_coords):
@@ -498,6 +509,15 @@ def main(catan):
                 text_surface_info = basefont.render(textInfo, True, (255, 0, 0))
                 fct.drawImage((cst.w/2, cst.yoff+yoffset+7*cst.h/8), text_surface_info, 0.2)
 
+        if deplacerVoleur:
+            game = False
+            for i, coord in enumerate(hexagon_coords):
+                if coord != catan.plateau.voleur.coords:
+                    rect = Rect((positions[i][0]+cst.xoff,positions[i][1]+cst.yoff),(20,20))
+                    rect.center = (positions[i][0]+cst.xoff,positions[i][1]+cst.yoff)
+                    pygame.draw.rect(cst.fenetre, (255,102,255), rect)
+                    RECTS_TILES[i] = rect
+
         for event in pygame.event.get():
             fct.shouldQuit(event)
             fct.shouldResize(event)
@@ -512,6 +532,8 @@ def main(catan):
                     echangeJoueurs = False
                     indicText = False
                     catan.tourSuivant()
+                    if catan.valeurDes == 7:
+                        deplacerVoleur = True
                 elif RECT_COLONIE.collidepoint(event.pos):
                     if joueurActuel.ressourceSuffisante(np.array([1,1,1,1,0])):
                         print("Colonie")
@@ -564,16 +586,21 @@ def main(catan):
                         print("Impossible de construire")
                         indicText = True
                         IndicTextsurface = basefont.render("Pas assez de ressource", False, (255,0,0))
-                elif RECT_CARTEDEV.collidepoint(event.pos): #TODO
-                    print("CarteDev")
-                    constructionColonie = False
-                    constructionVille = False
-                    constructionRoute = False
-                    carteDeveloppement = True
-                    echangeBanque = False
-                    choixEchangeJoueurs = False
-                    echangeJoueurs = False
-                    indicText = False
+                elif RECT_CARTEDEV.collidepoint(event.pos):
+                    if catan.achatCarteDev(joueurActuel):
+                        print("CarteDev")
+                        constructionColonie = False
+                        constructionVille = False
+                        constructionRoute = False
+                        carteDeveloppement = True
+                        echangeBanque = False
+                        choixEchangeJoueurs = False
+                        echangeJoueurs = False
+                        indicText = False
+                    else:
+                        print("Impossible de construire")
+                        indicText = True
+                        IndicTextsurface = basefont.render("Pas assez de ressource", False, (255,0,0))
                 elif RECT_ECHANGEBANQUE.collidepoint(event.pos):
                     print("Echange Banque")
                     constructionColonie = False
@@ -817,6 +844,7 @@ def main(catan):
                             textInfo = ''
                         else:
                             textInfo = 'Transaction Impossible!'
+
                 for i, rect_joueur in enumerate(RECT_ECHANGE_JOUEURS):
                     if rect_joueur.collidepoint(event.pos):
                         j = 0
@@ -827,6 +855,12 @@ def main(catan):
                                     choixEchangeJoueurs = False
                                     echangeJoueurs = True
                                 j += 1
+
+                for i, rect_tiles in enumerate(RECTS_TILES):
+                    if rect_tiles.collidepoint(event.pos):
+                        if catan.deplacerVoleur(joueurActuel, hexagon_coords[i]):
+                            deplacerVoleur = False
+                            game = True
 
                 for i,rect_vertice in enumerate(RECTS_VERTICES):
                     if rect_vertice.collidepoint(event.pos):
@@ -1004,3 +1038,4 @@ def drawVille(center_coords, joueur):
         fct.drawImage(center_coords, VILLE_J3, a)
     elif joueur == 3:
         fct.drawImage(center_coords, VILLE_J4, a)
+    

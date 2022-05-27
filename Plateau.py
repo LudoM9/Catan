@@ -864,106 +864,31 @@ class Port():
         self.echange = np.array([])
 
 class CarteDeveloppement():
-    """
-    Classe représentant une carte développement, mère des types de telles cartes.
-
-    Attributs
-    ---------
-    joueur : Joueur
-        joueur possédant la carte développement
-    coût : ndarray
-        prix d'une carte développement
-    """
-
     def __init__(self, joueur):
-        """
-        Parametres
-        ----------
-        joueur : Joueur
-            Joueur possédant la carte développement
-        """
-
         self.joueur = joueur
         self.coût = np.array([0,0,1,1,1])
 
     def effet(self):
-        """
-        Affiche l'effet d'une carte développement
-
-        Parametres
-        ----------
-        aucun
-        """
-
         print("No Effect")
 
-    #Check if player has the greatest army    
-
 class DevConstructionDeRoutes(CarteDeveloppement):
-    """
-    Classe représentant une carte construction de route, fille de CarteDeveloppement.
-    """
-
     def __init__(self, joueur):
-        """
-        Parametres
-        ----------
-        joueur : Joueur
-            Joueur possédant la carte construction de route
-        """
         super().__init__(joueur)
     
 class DevMonopole(CarteDeveloppement):
-    """
-    Classe représentant une carte monopole, fille de CarteDeveloppement.
-    """
-
     def __init__(self, joueur):
-        """
-        Parametres
-        ----------
-        joueur : Joueur
-            Joueur possédant la carte monopole
-        """
         super().__init__(joueur)
 
 class DevInvention(CarteDeveloppement):
-    """
-    Classe représentant une carte invention, fille de CarteDeveloppement.
-    """
     def __init__(self, joueur):
-        """
-        Parametres
-        ----------
-        joueur : Joueur
-            Joueur possédant la carte invention
-        """
         super().__init__(joueur)
 
 class DevPV(CarteDeveloppement):
-    """
-    Classe représentant une carte point de victoire, fille de CarteDeveloppement.
-    """
     def __init__(self, joueur):
-        """
-        Parametres
-        ----------
-        joueur : Joueur
-            Joueur possédant la carte point de victoire
-        """
         super().__init__(joueur)
 
 class DevChevalier(CarteDeveloppement):
-    """
-    Classe représentant une carte chevalier, fille de CarteDeveloppement.
-    """
     def __init__(self, joueur):
-        """
-        Parametres
-        ----------
-        joueur : Joueur
-            Joueur possédant la carte chevalier
-        """
         super().__init__(joueur)
 
 class Pioche():
