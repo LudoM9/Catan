@@ -42,7 +42,15 @@ class Plateau():
                       ClayTile(self, (0,2), 8), WoolTile(self, (1,2), 4), ClayTile(self, (2,1), 11)]
         self.intersections = []
         self.routes = []
-        self.ports = [Port((-2,-2), [3,3,3,3,3]), Port((-2,-1), [3,3,3,3,3]), Port((-1,-3), [4,4,2,4,4]), Port((0,-3), [4,4,2,4,4]), Port((1,-3), [3,3,3,3,3]), Port((2,-3), [3,3,3,3,3]), Port((3,-2), [3,3,3,3,3]), Port((3,-1), [3,3,3,3,3]), Port((3,1), [4,2,4,4,4]), Port((3,2), [4,2,4,4,4]), Port((2,4), [2,4,4,4,4]), Port((2,5), [2,4,4,4,4]), Port((0,4), [3,3,3,3,3]), Port((1,4), [3,3,3,3,3]), Port((-1,4), [4,4,4,2,4]), Port((-1,5), [4,4,4,2,4]), Port((-2,1), [4,4,4,4,2]), Port((-2,2), [4,4,4,4,2])]
+        self.ports = [Port((-2,-2), [3,3,3,3,3], "Tout"), Port((-2,-1), [3,3,3,3,3], "Tout"), 
+                        Port((-1,-3), [4,4,2,4,4], "Laine"), Port((0,-3), [4,4,2,4,4], "Laine"), 
+                        Port((1,-3), [3,3,3,3,3], "Tout"), Port((2,-3), [3,3,3,3,3], "Tout"), 
+                        Port((3,-2), [3,3,3,3,3], "Tout"), Port((3,-1), [3,3,3,3,3], "Tout"), 
+                        Port((3,1), [4,2,4,4,4], "Brick"), Port((3,2), [4,2,4,4,4], "Brick"), 
+                        Port((2,4), [2,4,4,4,4], "Bois"), Port((2,5), [2,4,4,4,4], "Bois"), 
+                        Port((0,6), [3,3,3,3,3], "Tout"), Port((1,6), [3,3,3,3,3], "Tout"), 
+                        Port((-1,4), [4,4,4,2,4], "Blé"), Port((-1,5), [4,4,4,2,4], "Blé"), 
+                        Port((-2,1), [4,4,4,4,2], "Stone"), Port((-2,2), [4,4,4,4,2], "Stone")]
         self.voleur = Voleur((0,0))
         self.pioche = Pioche()
         if rdPlateau:
@@ -61,7 +69,7 @@ class Plateau():
                     Ltiles.append("Clay") 
             rd.shuffle(Ltiles)
             Ltiles += ["Desert"]
-            Lvalues[18],Lvalues[9] = Lvalues[9], Ltiles[18]           
+            Ltiles[18],Ltiles[9] = Ltiles[9], Ltiles[18]           
             self.tiles = []
             for i in range(19):
                 if Ltiles[i] == "Wood":
@@ -74,6 +82,8 @@ class Plateau():
                     self.tiles.append(StoneTile(self, Lcoords[i], Lvalues[i]))
                 elif Ltiles[i] == "Clay":
                     self.tiles.append(ClayTile(self, Lcoords[i], Lvalues[i]))
+                elif Ltiles[i] == "Desert":
+                    self.tiles.append(DesertTile(self, Lcoords[i], Lvalues[i]))
     
     def getAdjacentTilesFromTile(self, tile):
         """
@@ -323,20 +333,32 @@ class Plateau():
             if len(edgeOfTile)>=3:
                 #Nord
                 if abs(x)+abs(y) == 4:
-                    adjEdges.append((x*2,y))
-                    adjEdges.append((x*2+1,y))
+                    if x==3 and y==-1:
+                        adjEdges.append((x*2,y-1))
+                        adjEdges.append((x*2,y))
+                    else:
+                        adjEdges.append((x*2,y))
+                        adjEdges.append((x*2+1,y))
                 #Sud
                 elif abs(x)+abs(y) == 7:
                     adjEdges.append((x*2-1,y))
                     adjEdges.append((x*2,y-1))
                 #SW
                 elif abs(x)+abs(y) == 6:
-                    adjEdges.append((x*2,y-1))
-                    adjEdges.append((x*2+1,y))
+                    if x==3 and y==3:
+                        adjEdges.append((x*2,y-1))
+                        adjEdges.append((x*2,y))
+                    else:
+                        adjEdges.append((x*2,y-1))
+                        adjEdges.append((x*2+1,y))
                 #NE
                 elif abs(x)+abs(y) == 5:
-                    adjEdges.append((x*2-1,y))
-                    adjEdges.append((x*2,y))
+                    if x==-2 and y==3:
+                        adjEdges.append((x*2,y-1))
+                        adjEdges.append((x*2,y))
+                    else:
+                        adjEdges.append((x*2-1,y))
+                        adjEdges.append((x*2,y))
                 #NW or SE
                 elif x==-2 or x==3:
                     adjEdges.append((x*2,y-1))
@@ -850,7 +872,7 @@ class Port():
         echanges de ressources possibles pour ce type de port
     """
 
-    def __init__(self, coords, echange):
+    def __init__(self, coords, echange, type):
         """
         Parametres
         ----------
@@ -858,10 +880,13 @@ class Port():
             Coordonnées du port
         echange : ndarray
             Echanges de ressources possibles pour ce type de port
+        type : string
+            Type d'échange que fournit le port
         """
 
         self.coords = coords
-        self.echange = np.array([])
+        self.echange = echange
+        self.type = type
 
 class CarteDeveloppement():
     """

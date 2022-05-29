@@ -291,7 +291,6 @@ class Catan():
         coords : ndarray
             Coordonnées du port
         """
-
         for port in self.plateau.ports:
             if port.coords == coords:
                 joueur.ports.append(port)
@@ -383,8 +382,6 @@ class Catan():
         ----------
         aucun
         """
-
-        #print("Tour Suivant")
         self.calculPlusGrandeArmee()
         self.calculValeurPlusGrandeRoute(self.joueurActuel)
         self.calculPlusGrandeRoute()
@@ -399,6 +396,7 @@ class Catan():
         self.calculPlusGrandeRoute()
         self.calculPlusGrandeArmee()
         self.joueurActuel.calculPV()
+        self.joueurActuel.calculValeurEchange()
         self.lancerDes()
         self.donRessource()
 
@@ -414,8 +412,6 @@ class Catan():
         -------
         True si tous les joueurs ont placé leurs premières colonies et routes
         """
-
-        #print("Joueur Suivant")
         ordre = [0,1,2,2,1,0]
         if len(self.joueurs) == 4:
             ordre = [0,1,2,3,3,2,1,0]
@@ -425,6 +421,7 @@ class Catan():
             self.calculValeurPlusGrandeRoute(self.joueurActuel)
             self.calculPlusGrandeRoute()
             self.joueurActuel.calculPV()
+            self.joueurActuel.calculValeurEchange()
             return True
         self.numeroJoueurActuel = ordre[self.numeroJoueurActuelDebut]   
         self.joueurActuel = self.joueurs[self.numeroJoueurActuel]

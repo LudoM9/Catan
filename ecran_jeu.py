@@ -105,8 +105,10 @@ RECT_ECHANGE_JOUEURS = []
 for j in range(3):
     RECT_ECHANGE_JOUEURS.append(pygame.Rect(0, 0, 0, 0))
 
+RECT_PORT = pygame.Rect(0, 0, 0, 0)
+
 def main(catan):
-    global RECT_MAIN, RECT_NEXTTURN, RECT_BRICKIMAGE, RECT_STONEIMAGE, RECT_WHEATIMAGE, RECT_WOODIMAGE, RECT_WOOLIMAGE, RECT_PVIMAGE, RECT_COLONIE, RECT_VILLE, RECT_ROUTE, RECT_CARTEDEV, RECT_ANNULER, RECT_ECHANGEBANQUE, RECT_ECHANGEJOUEURS, RECTS_TILES, RECTS_VERTICES, RECTS_EDGES, RECT_ECHANGE_BRICK, RECT_ECHANGE_STONE, RECT_ECHANGE_WHEAT, RECT_ECHANGE_WOOD, RECT_ECHANGE_WOOL, RECT_ECHANGE_BRICK2, RECT_ECHANGE_STONE2, RECT_ECHANGE_WHEAT2, RECT_ECHANGE_WOOD2, RECT_ECHANGE_WOOL2, RECT_ECHANGE_VALIDER, RECT_ECHANGE_VALIDERJ1, RECT_ECHANGE_VALIDERJ2, RECT_ECHANGE_JOUEURS, RECT_CARTEDEV_ROUTES, RECT_CARTEDEV_INVENTION, RECT_CARTEDEV_MONOPOLE, RECT_CARTEDEV_CHEVALIER, RECT_CARTEDEV_BRICK, RECT_CARTEDEV_STONE, RECT_CARTEDEV_WHEAT, RECT_CARTEDEV_WOOD, RECT_CARTEDEV_WOOL
+    global RECT_MAIN, RECT_NEXTTURN, RECT_BRICKIMAGE, RECT_STONEIMAGE, RECT_WHEATIMAGE, RECT_WOODIMAGE, RECT_WOOLIMAGE, RECT_PVIMAGE, RECT_COLONIE, RECT_VILLE, RECT_ROUTE, RECT_CARTEDEV, RECT_ANNULER, RECT_ECHANGEBANQUE, RECT_ECHANGEJOUEURS, RECTS_TILES, RECTS_VERTICES, RECTS_EDGES, RECT_ECHANGE_BRICK, RECT_ECHANGE_STONE, RECT_ECHANGE_WHEAT, RECT_ECHANGE_WOOD, RECT_ECHANGE_WOOL, RECT_ECHANGE_BRICK2, RECT_ECHANGE_STONE2, RECT_ECHANGE_WHEAT2, RECT_ECHANGE_WOOD2, RECT_ECHANGE_WOOL2, RECT_ECHANGE_VALIDER, RECT_ECHANGE_VALIDERJ1, RECT_ECHANGE_VALIDERJ2, RECT_ECHANGE_JOUEURS, RECT_CARTEDEV_ROUTES, RECT_CARTEDEV_INVENTION, RECT_CARTEDEV_MONOPOLE, RECT_CARTEDEV_CHEVALIER, RECT_CARTEDEV_BRICK, RECT_CARTEDEV_STONE, RECT_CARTEDEV_WHEAT, RECT_CARTEDEV_WOOD, RECT_CARTEDEV_WOOL, RECT_PORT
 
     run = True
     startingColonie = True
@@ -158,6 +160,8 @@ def main(catan):
     carteDevInvention = False
     nbRouteGratuite = 0
     nbRessourceRecup = 0
+
+    portOn = True
 
     l = np.round(cst.h / 12)
     c = np.round(l/2 * 3 ** (1 / 3))
@@ -252,7 +256,7 @@ def main(catan):
         fct.drawImageMidLeft(RECT_PVIMAGE.midright, pvTextsurface, 0.035)
         
         for i in range(19):
-            fct.drawHexagon(hexagons[i], positions[i],numbers[i]) #construction des hexagones, chemins et numéros sur les tuiles
+            fct.drawHexagon(hexagons[i], positions[i], numbers[i]) #construction des hexagones, chemins et numéros sur les tuiles
             #fct.drawImage((positions[i][0]+cst.xoff,positions[i][1]+cst.yoff),CERCLE,0.04)
 
         for i, hexagon_coord in enumerate(hexagon_coords):
@@ -285,6 +289,22 @@ def main(catan):
                     elif route.joueur.numero == 3:
                         roadColor = cst.couleurj4
                     pygame.draw.rect(cst.fenetre, roadColor, rect)
+        if portOn:
+            for port in catan.plateau.ports:
+                for i, vertice_coord in enumerate(vertices_coords):
+                    if port.coords == vertice_coord:
+                        x = port.coords[0]
+                        y = port.coords[1]
+                        if x == -2:
+                            drawPort((vertices[i][0]+cst.xoff,vertices[i][1]+cst.yoff), port, "W")
+                        elif y == -3 and (y==0 or y==-1):
+                            drawPort((vertices[i][0]+cst.xoff,vertices[i][1]+cst.yoff), port, "N")
+                        elif x == 3 or y==-3:
+                            drawPort((vertices[i][0]+cst.xoff,vertices[i][1]+cst.yoff), port, "E")
+                        elif x == 2 or y == 6:
+                            drawPort((vertices[i][0]+cst.xoff,vertices[i][1]+cst.yoff), port, "S")
+                        elif x == -1:
+                            drawPort((vertices[i][0]+cst.xoff,vertices[i][1]+cst.yoff), port, "W")
 
         if startingColonie or constructionColonie:
             if startingColonie:
@@ -336,6 +356,16 @@ def main(catan):
             RECT_NEXTTURN = fct.rectDrawImageTopRight((cst.w, 0), NEXTTURN, 0.05)
             diceTextsurface = basefont.render("Résultat dés : " + str(catan.valeurDes), False, (0,0,0))
             fct.drawImageTopRight((RECT_NEXTTURN.left-xoffset, yoffset), diceTextsurface, 0.035)
+            rectDiceText = fct.rectDrawImageTopRight((RECT_NEXTTURN.left-xoffset, yoffset), diceTextsurface, 0.035)
+
+            if portOn:
+                fct.drawImageMidRight((rectDiceText.left-3*xoffset, rectDiceText.centery), VALIDER_ON, 0.035)
+                RECT_PORT = fct.rectDrawImageMidRight((rectDiceText.left-3*xoffset, rectDiceText.centery), VALIDER_ON, 0.035)
+            else:
+                fct.drawImageMidRight((rectDiceText.left-3*xoffset, rectDiceText.centery), VALIDER_OFF, 0.035)
+                RECT_PORT = fct.rectDrawImageMidRight((rectDiceText.left-3*xoffset, rectDiceText.centery), VALIDER_ON, 0.035)
+            portTextsurface = basefont.render("Ports : ", False, (0,0,0))
+            fct.drawImageTopRight((RECT_PORT.left, yoffset), portTextsurface, 0.035)
 
             nbChevalierTextsurface = basefont.render(": " + str(joueurActuel.nbChevalier), False, (0,0,0))
             fct.drawImageBotRight((cst.w-cst.xoff, 3*cst.h/4-cst.yoff/2), nbChevalierTextsurface, 0.035)
@@ -346,6 +376,55 @@ def main(catan):
             fct.drawImageBotRight((rectNbChevalier.left - cst.xoff, rectNbChevalier.bottom), nbRouteTextsurface, 0.035)
             rectNbRoute = fct.rectDrawImageBotRight((rectNbChevalier.left - cst.xoff, rectNbChevalier.bottom), nbRouteTextsurface, 0.035)
             fct.drawImageBotRight(rectNbRoute.bottomleft, NB_ROUTES, 0.05)
+
+            j = 0
+            for i, joueur in enumerate(catan.joueurs):
+                if i == 0:
+                    color = cst.couleurj1
+                elif i == 1:
+                    color = cst.couleurj2
+                elif i == 2:
+                    color = cst.couleurj3
+                elif i == 3:
+                    color = cst.couleurj4
+                if joueur.numero != joueurActuel.numero:
+                    rect = Rect(3*cst.w/4, 0, cst.w/4, cst.h/8)
+                    rect.bottom = rectNbChevalier.top - cst.yoff - j*(rect.h+cst.yoff/4)
+                    pygame.draw.rect(cst.fenetre, (211,211,211), rect)
+
+                    joueurTextSurface = basefont.render(joueur.nom, False, color)
+                    fct.drawImageTopLeft(rect.topleft, joueurTextSurface, 0.025)
+                    rectJoueur = fct.rectDrawImageTopLeft(rect.topleft, joueurTextSurface, 0.025)
+
+                    fct.drawImageTopLeft((rectJoueur.right + cst.xoff/2, rectJoueur.top), BRICK, 0.03)
+                    RECT_BRICKIMAGE = fct.rectDrawImageTopLeft((rectJoueur.right + cst.xoff/2, rectJoueur.top), BRICK, 0.03)
+                    brickTextsurface = basefont.render(str(joueur.ressource[1]), False, (0,0,0))
+                    fct.drawImageMidLeft(RECT_BRICKIMAGE.midright, brickTextsurface, 0.025)
+                    rectBrickTextSurface = fct.rectDrawImageMidLeft(RECT_BRICKIMAGE.midright, brickTextsurface, 0.025)
+
+                    fct.drawImageTopLeft((rectBrickTextSurface.right + cst.xoff/2, rectJoueur.top), STONE, 0.03)
+                    RECT_STONEIMAGE = fct.rectDrawImageTopLeft((rectBrickTextSurface.right + cst.xoff/2, rectJoueur.top), STONE, 0.03)
+                    stoneTextsurface = basefont.render(str(joueur.ressource[4]), False, (0,0,0))
+                    fct.drawImageMidLeft(RECT_STONEIMAGE.midright, stoneTextsurface, 0.025)
+
+                    fct.drawImageTopLeft((rect.left, rectJoueur.bottom + cst.yoff/3), WHEAT, 0.03)
+                    RECT_WHEATIMAGE = fct.rectDrawImageTopLeft((rect.left,rectJoueur.bottom + cst.yoff/3), WHEAT, 0.03)
+                    wheatTextsurface = basefont.render(str(joueur.ressource[3]), False, (0,0,0))
+                    fct.drawImageMidLeft(RECT_WHEATIMAGE.midright, wheatTextsurface, 0.025)
+                    rectWheatTextSurface = fct.rectDrawImageMidLeft(RECT_WHEATIMAGE.midright, wheatTextsurface, 0.025)
+
+                    fct.drawImageTopLeft((rectWheatTextSurface.right + cst.xoff/2, rectJoueur.bottom + cst.yoff/3), WOOD, 0.03)
+                    RECT_WOODIMAGE = fct.rectDrawImageTopLeft((rectWheatTextSurface.right + cst.xoff/2, rectJoueur.bottom + cst.yoff/3), WOOD, 0.03)
+                    woodTextsurface = basefont.render(str(joueur.ressource[0]), False, (0,0,0))
+                    fct.drawImageMidLeft(RECT_WOODIMAGE.midright, woodTextsurface, 0.025)
+                    rectWoodTextSurface = fct.rectDrawImageMidLeft(RECT_WOODIMAGE.midright, woodTextsurface, 0.025)
+
+                    fct.drawImageTopLeft((rectWoodTextSurface.right + cst.xoff/2, rectJoueur.bottom + cst.yoff/3), WOOL, 0.03)
+                    RECT_WOOLIMAGE = fct.rectDrawImageTopLeft((rectWoodTextSurface.right + cst.xoff/2, rectJoueur.bottom + cst.yoff/3), WOOL, 0.03)
+                    woolTextsurface = basefont.render(str(joueur.ressource[2]), False, (0,0,0))
+                    fct.drawImageMidLeft(RECT_WOOLIMAGE.midright, woolTextsurface, 0.025)
+                    j+=1
+
 
             rect = fct.rectDrawImageMidLeft(RECT_PVIMAGE.midright, pvTextsurface, 0.035)
             rectRoutes = fct.rectDrawImageTopLeft((rect.right + xoffset, 3*cst.h/4), CARTEDEV_ROUTES, 0.2)
@@ -396,16 +475,24 @@ def main(catan):
         if choixEchangeJoueurs:
             pygame.draw.rect(cst.fenetre, (211,211,211), Rect(cst.w/4, cst.h/3, cst.w/2, cst.h/3))
             j = 0
-            for joueur in catan.joueurs:
+            for i, joueur in enumerate(catan.joueurs):
+                if i == 0:
+                    color = cst.couleurj1
+                elif i == 1:
+                    color = cst.couleurj2
+                elif i == 2:
+                    color = cst.couleurj3
+                elif i == 3:
+                    color = cst.couleurj4
                 if joueur.numero != joueurActuel.numero:
                     if len(catan.joueurs) == 3:
-                        joueurTextSurface = basefont.render(joueur.nom, False, (0,0,0))
+                        joueurTextSurface = basefont.render(joueur.nom, False, color)
                         fct.drawImage((cst.w/4 + (j+1)*cst.w/6, cst.h/2), joueurTextSurface, 0.1)
                         RECT_ECHANGE_JOUEURS[j] = fct.rectDrawImage((cst.w/4 + (j+1)*cst.w/6, cst.h/2), joueurTextSurface, 0.1)
                     else:
-                        joueurTextSurface = basefont.render(joueur.nom, False, (0,0,0))
+                        joueurTextSurface = basefont.render(joueur.nom, False, color)
                         fct.drawImage((cst.w/4 + (j+1)*cst.w/8, cst.h/2), joueurTextSurface, 0.1)
-                        RECT_ECHANGE_JOUEURS[j] = fct.rectDrawImage((cst.w/4 + (j+1)*cst.w/6, cst.h/2), joueurTextSurface, 0.1)
+                        RECT_ECHANGE_JOUEURS[j] = fct.rectDrawImage((cst.w/4 + (j+1)*cst.w/8, cst.h/2), joueurTextSurface, 0.1)
                     j += 1
 
         if echangeBanque or echangeJoueurs:
@@ -996,6 +1083,8 @@ def main(catan):
                     elif carteDevMonopole:
                         catan.carteDevMonopole(joueurActuel, 2)
                         carteDevMonopole = False
+                elif RECT_PORT.collidepoint(event.pos):
+                    portOn = not(portOn)
 
                 for i, rect_joueur in enumerate(RECT_ECHANGE_JOUEURS):
                     if rect_joueur.collidepoint(event.pos):
@@ -1132,7 +1221,7 @@ def resetRect():
     """
     Réinitialise les rectangles utilisés dans l'affichage
     """
-    global RECT_MAIN, RECT_NEXTTURN, RECT_BRICKIMAGE, RECT_STONEIMAGE, RECT_WHEATIMAGE, RECT_WOODIMAGE, RECT_WOOLIMAGE, RECT_PVIMAGE, RECT_COLONIE, RECT_VILLE, RECT_ROUTE, RECT_CARTEDEV, RECT_ANNULER, RECT_ECHANGEBANQUE, RECT_ECHANGEJOUEURS, RECTS_TILES, RECTS_VERTICES, RECTS_EDGES, RECT_ECHANGE_BRICK, RECT_ECHANGE_STONE, RECT_ECHANGE_WHEAT, RECT_ECHANGE_WOOD, RECT_ECHANGE_WOOL, RECT_ECHANGE_BRICK2, RECT_ECHANGE_STONE2, RECT_ECHANGE_WHEAT2, RECT_ECHANGE_WOOD2, RECT_ECHANGE_WOOL2, RECT_ECHANGE_VALIDER, RECT_ECHANGE_VALIDERJ1, RECT_ECHANGE_VALIDERJ2, RECT_ECHANGE_JOUEURS, RECT_CARTEDEV_ROUTES, RECT_CARTEDEV_INVENTION, RECT_CARTEDEV_MONOPOLE, RECT_CARTEDEV_CHEVALIER, RECT_CARTEDEV_BRICK, RECT_CARTEDEV_STONE, RECT_CARTEDEV_WHEAT, RECT_CARTEDEV_WOOD, RECT_CARTEDEV_WOOL
+    global RECT_MAIN, RECT_NEXTTURN, RECT_BRICKIMAGE, RECT_STONEIMAGE, RECT_WHEATIMAGE, RECT_WOODIMAGE, RECT_WOOLIMAGE, RECT_PVIMAGE, RECT_COLONIE, RECT_VILLE, RECT_ROUTE, RECT_CARTEDEV, RECT_ANNULER, RECT_ECHANGEBANQUE, RECT_ECHANGEJOUEURS, RECTS_TILES, RECTS_VERTICES, RECTS_EDGES, RECT_ECHANGE_BRICK, RECT_ECHANGE_STONE, RECT_ECHANGE_WHEAT, RECT_ECHANGE_WOOD, RECT_ECHANGE_WOOL, RECT_ECHANGE_BRICK2, RECT_ECHANGE_STONE2, RECT_ECHANGE_WHEAT2, RECT_ECHANGE_WOOD2, RECT_ECHANGE_WOOL2, RECT_ECHANGE_VALIDER, RECT_ECHANGE_VALIDERJ1, RECT_ECHANGE_VALIDERJ2, RECT_ECHANGE_JOUEURS, RECT_CARTEDEV_ROUTES, RECT_CARTEDEV_INVENTION, RECT_CARTEDEV_MONOPOLE, RECT_CARTEDEV_CHEVALIER, RECT_CARTEDEV_BRICK, RECT_CARTEDEV_STONE, RECT_CARTEDEV_WHEAT, RECT_CARTEDEV_WOOD, RECT_CARTEDEV_WOOL, RECT_PORT
 
     RECT_MAIN = pygame.Rect(0, 0, 0, 0)
     RECT_NEXTTURN = pygame.Rect(0, 0, 0, 0)
@@ -1190,6 +1279,8 @@ def resetRect():
     for j in range(3):
         RECT_ECHANGE_JOUEURS.append(pygame.Rect(0, 0, 0, 0))
 
+    RECT_PORT = pygame.Rect(0, 0, 0, 0)
+
 def drawColonie(center_coords, joueur):
     """
     Affiche une nouvelle colonie d'un joueur à l'endroit choisi.
@@ -1233,4 +1324,28 @@ def drawVille(center_coords, joueur):
         fct.drawImage(center_coords, VILLE_J3, a)
     elif joueur == 3:
         fct.drawImage(center_coords, VILLE_J4, a)
+
+def drawPort(vertice_coord, port, direction):
+    """
+    Affiche un port à l'endroit choisi.
+
+    Paramètres
+    ----------
+    vertice_coords : tuple(int)
+        Coordonnées de l'instersection
+    port : Port
+        Port qui doit être construit
+    direction : String
+        Direction dans laquelle dessiner le port
+    """
+
+    portTextsurface = basefont.render(port.type + " " + str(min(port.echange)) +":1", False, (255,51,153))
+    if direction == "N":
+        fct.drawImage((vertice_coord[0], vertice_coord[1] - cst.yoff), portTextsurface, 0.07)
+    elif direction == "S":
+        fct.drawImage((vertice_coord[0], vertice_coord[1] + cst.yoff), portTextsurface, 0.07)
+    elif direction == "E":
+        fct.drawImage((vertice_coord[0] + cst.xoff, vertice_coord[1]), portTextsurface, 0.07)
+    elif direction == "W":
+        fct.drawImage((vertice_coord[0] - cst.xoff, vertice_coord[1]), portTextsurface, 0.07)
     

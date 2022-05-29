@@ -77,8 +77,8 @@ class Joueur():
 
         for port in self.ports:
             for i in range(len(self.valeurEchange)):
-                if port[i]<self.valeurEchange[i]:
-                    self.valeurEchange[i] = port[i]
+                if port.echange[i]<self.valeurEchange[i]:
+                    self.valeurEchange[i] = port.echange[i]
 
     def ressourceSuffisante(self, valeur):
         """
@@ -166,7 +166,7 @@ class Joueur():
             n+=2
         if self.plusGrandeRoute:
             n+=2
-        return n
+        self.pointsVictoire = n
     
     def removeRoutes(self):
         c = 0
@@ -211,9 +211,8 @@ class Joueur():
         False sinon
         """
 
-        if self.calculPV()>=10:
+        if self.pointsVictoire>=10:
             return True
             print(self.nom)
         else:
             return False
-            print("A pas gagné")

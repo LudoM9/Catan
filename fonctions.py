@@ -279,5 +279,8 @@ def drawHexagon(type, position, number):
     if type!="desert":
 
         pygame.draw.circle(cst.fenetre, (0, 0, 0), (int(x), int(y)), 15)
-        text=basefont.render(str(number), False, pygame.Color('white'))
+        if number == 6 or number == 8:
+            text=basefont.render(str(number), False, (255,0,0))
+        else:
+            text=basefont.render(str(number), False, pygame.Color('white'))
         cst.fenetre.blit(text,(x-5,y-5))
