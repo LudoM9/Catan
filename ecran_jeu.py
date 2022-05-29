@@ -238,7 +238,6 @@ def main(catan):
                 voleurTextsurface = basefont.render("V", False, (255,255,255))
                 fct.drawImage((positions[i][0]+cst.xoff, positions[i][1]+cst.yoff), voleurTextsurface, 0.035)
 
-
         for elem in catan.plateau.intersections:
             for i, vertice_coord in enumerate(vertices_coords):
                 if elem.coords == vertice_coord:
@@ -970,6 +969,9 @@ def main(catan):
         pygame.display.update()
 
 def resetRect():
+    """
+    Réinitialise les rectangles utilisés dans l'affichage
+    """
     global RECT_MAIN, RECT_NEXTTURN, RECT_BRICKIMAGE, RECT_STONEIMAGE, RECT_WHEATIMAGE, RECT_WOODIMAGE, RECT_WOOLIMAGE, RECT_PVIMAGE, RECT_COLONIE, RECT_VILLE, RECT_ROUTE, RECT_CARTEDEV, RECT_ANNULER, RECT_ECHANGEBANQUE, RECT_ECHANGEJOUEURS, RECTS_TILES, RECTS_VERTICES, RECTS_EDGES, RECT_ECHANGE_BRICK, RECT_ECHANGE_STONE, RECT_ECHANGE_WHEAT, RECT_ECHANGE_WOOD, RECT_ECHANGE_WOOL, RECT_ECHANGE_BRICK2, RECT_ECHANGE_STONE2, RECT_ECHANGE_WHEAT2, RECT_ECHANGE_WOOD2, RECT_ECHANGE_WOOL2, RECT_ECHANGE_VALIDER, RECT_ECHANGE_VALIDERJ1, RECT_ECHANGE_VALIDERJ2, RECT_ECHANGE_JOUEURS
 
     RECT_MAIN = pygame.Rect(0, 0, 0, 0)
@@ -1018,6 +1020,17 @@ def resetRect():
         RECT_ECHANGE_JOUEURS.append(pygame.Rect(0, 0, 0, 0))
 
 def drawColonie(center_coords, joueur):
+    """
+    Affiche une nouvelle colonie d'un joueur à l'endroit choisi.
+
+    Paramètres
+    ----------
+    center_coords : tuple(int)
+        Coordonnées de l'instersection où dessiner la colonie
+    joueur : Joueur
+        Joueur à qui appartient la colonie
+    """
+
     a = 0.05
     if joueur == 0:
         fct.drawImage(center_coords, COLONIE_J1, a)
@@ -1029,6 +1042,17 @@ def drawColonie(center_coords, joueur):
         fct.drawImage(center_coords, COLONIE_J4, a)
 
 def drawVille(center_coords, joueur):
+    """
+    Affiche une nouvelle ville d'un joueur à l'endroit choisi.
+
+    Paramètres
+    ----------
+    center_coords : tuple(int)
+        Coordonnées de l'instersection où dessiner la colonie
+    joueur : Joueur
+        Joueur à qui appartient la ville
+    """
+
     a = 0.05
     if joueur == 0:
         fct.drawImage(center_coords, VILLE_J1, a)

@@ -40,7 +40,7 @@ class Joueur():
 
     def __init__(self, nom, num, plateau):
         """
-        Parametres
+        Paramètres
         ----------
         nom : string
             Nom ou pseudo que choisit le joueur
@@ -67,7 +67,7 @@ class Joueur():
         """
         Calcule les taux d'échanges d'un joueur avec la banque selon les ports qu'il possède.
 
-        Parametres
+        Paramètres
         ----------
         aucun
         """
@@ -81,7 +81,7 @@ class Joueur():
         """
         Vérifie qu'un joueur possède suffisamment de ressources pour effectuer un achat ou une construction.
 
-        Parametres
+        Paramètres
         ----------
         valeur : ndarray
             Coût de l'achat ou de la construction
@@ -101,7 +101,7 @@ class Joueur():
         """
         Vérifie que le joueur possède une colonie au sommet testé.
 
-        Parametres
+        Paramètres
         ----------
         coords : ndarray
             Coordonnées du sommet  à tester
@@ -121,7 +121,7 @@ class Joueur():
         """
         Trouve la colonie d'un joueur à un sommet donné s'il en possède une.
 
-        Parametres
+        Paramètres
         ----------
         coords : ndarray
             Coordonnées du sommet à tester
@@ -141,7 +141,7 @@ class Joueur():
         """
         Compte le nombre de chevaliers que possède un joueur.
 
-        Parametres
+        Paramètres
         ----------
         aucun
 
@@ -161,7 +161,7 @@ class Joueur():
         """
         Compte le nombre de points de victoire que possède un joueur.
 
-        Parametres
+        Paramètres
         ----------
         aucun
 
@@ -189,7 +189,7 @@ class Joueur():
         """
         Vérifie si un joueur possède assez de points de victoire pour gagner la partie.
 
-        Parametres
+        Paramètres
         ----------
         aucun
 

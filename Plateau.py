@@ -495,7 +495,7 @@ class Plateau():
         False sinon
         """
 
-        for elem in self.routes: #il faudrait plutot regarder les routes
+        for elem in self.routes:
             if elem.joueur == joueur:
                 if elem.coords in self.getAdjacentEdgesFromVertice(coords):
                     return True
@@ -536,8 +536,8 @@ class Tile(metaclass = ABCMeta):
         valeur du numéro de la case correspondant au résultat des dés
     ressource : ndarray
         ressource liée à la case
-    color : int
-        Couleur de la case sous forme hexadécimale
+    color : string
+        Nom de la ressource correspondant à la couleur de la case
     """
 
     def __init__(self, plateau, coords, value):
@@ -566,8 +566,8 @@ class WoodTile(Tile):
     ---------
     ressource : ndarray
         ressource liée à la case
-    color : int
-        Couleur de la case sous forme hexadécimale
+    color : string
+        Nom de la ressource correspondant à la couleur de la case
     """
 
     def __init__(self, plateau, coords, value):
@@ -593,8 +593,8 @@ class WheatTile(Tile):
     ---------
     ressource : ndarray
         ressource liée à la case
-    color : int
-        Couleur de la case sous forme hexadécimale
+    color : string
+        Nom de la ressource correspondant à la couleur de la case
     """
 
     def __init__(self, plateau, coords, value):
@@ -621,8 +621,8 @@ class WoolTile(Tile):
     ---------
     ressource : ndarray
         ressource liée à la case
-    color : int
-        Couleur de la case sous forme hexadécimale
+    color : string
+        Nom de la ressource correspondant à la couleur de la case
     """
 
     def __init__(self, plateau, coords, value):
@@ -649,8 +649,8 @@ class ClayTile(Tile):
     ---------
     ressource : ndarray
         ressource liée à la case
-    color : int
-        Couleur de la case sous forme hexadécimale
+    color : string
+        Nom de la ressource correspondant à la couleur de la case
     """
 
     def __init__(self, plateau, coords, value):
@@ -677,8 +677,8 @@ class StoneTile(Tile):
     ---------
     ressource : ndarray
         ressource liée à la case
-    color : int
-        Couleur de la case sous forme hexadécimale
+    color : string
+        Nom de la ressource correspondant à la couleur de la case
     """
 
     def __init__(self, plateau, coords, value):
@@ -705,9 +705,10 @@ class DesertTile(Tile):
     ---------
     ressource : ndarray
         ressource liée à la case
-    color : int
-        Couleur de la case sous forme hexadécimale
+    color : string
+        Nom de la case correspondant à sa couleur
     """
+
     def __init__(self, plateau, coords, value):
         """
         Parametres
@@ -759,7 +760,7 @@ class Colonie():
 
 class Ville(Colonie):
     """
-    Classe représentant une Ville, fille de Colinie.
+    Classe représentant une Ville, fille de Colonie.
 
     Attributs
     ---------
@@ -864,6 +865,17 @@ class Port():
         self.echange = np.array([])
 
 class CarteDeveloppement():
+    """
+    Classe représentant une carte développement.
+
+    Attributs
+    ---------
+    joueur : Joueur
+        joueur possédant la carte développement
+    coût : ndarray
+        prix d'une carte développement
+    """
+
     def __init__(self, joueur):
         self.joueur = joueur
         self.coût = np.array([0,0,1,1,1])
