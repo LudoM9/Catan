@@ -219,6 +219,9 @@ def main():
 
 
 def resetRect():
+    """
+    Réinitialise les rectangles utilisés dans l'affichage
+    """
     global RECT_START, RECT_RETOUR, RECT_3, RECT_4, RECT_J1, RECT_J2, RECT_J3, RECT_J4, RECT_DEMARRER, RECT_ALEATOIRE
 
     RECT_START = pygame.Rect(0, 0, 0, 0)

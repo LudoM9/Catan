@@ -17,18 +17,24 @@ class Catan():
     ---------
     plateau : Plateau
         plateau sur le quel le jeu évolue
-    joueurs : list(string)
+    joueurs : list(Joueur)
         liste des joueurs participant au jeu
-    valeurDes : bool
+    valeurDes : int
         résultat de la somme de deux lancers de dés à six faces réguliers
+    numeroJoueurActuel : int
+        numéro du joueur actif, attribué automatiquement au remplissage de self.joueurs
+    joueurActuel : Joueur
+        joueur actif
+    numeroJoueurActuelDebut : int
+        numéro du joueur actif lors du placement des premières colonies
     """
 
     def __init__(self, joueurs, rdPlateau = False):
         """
-        Parametres
+        Paramètres
         ----------
         joueurs : list(string)
-            Liste des noms des joueurs
+            Liste des joueurs
         rdPlateau : bool, optionnel, False par défaut
             Booléen pour savoir si le plateau est aléatoire
         """
@@ -45,18 +51,25 @@ class Catan():
 
     def lancerDes(self):
         """
-        Lance deux dés réguliersà six faces et somme les deux résultats.
+        Lance deux dés réguliers à six faces et somme les deux résultats.
 
-        Parametres
+        Paramètres
         ----------
-        joueur : Joueur
-            Joueur qui lance les dés
+        aucun
         """
 
         s = rd.randrange(1,7)+rd.randrange(1,7)
         self.valeurDes = s
 
     def ressourceDebut(self):
+        """
+        Distribue aux joueurs les ressources des tuiles adjacentes à leurs premières colonies en début de partie.
+
+        Paramètres
+        ----------
+        aucun
+        """
+
         for joueur in self.joueurs:
             for colonie in joueur.colonies:
                 for tile_coord in self.plateau.getAdjacentTilesFromVertice(colonie.coords):
@@ -66,9 +79,10 @@ class Catan():
 
     def donRessource(self):
         """
-        Distribue au joueur les ressources des cases définies par le lancer de dés dont le joueur a un une colonie ou ville adjacente.
+        Distribue aux joueurs les ressources des cases définies par le lancer de dés dont les
+        joueurs ont une colonie ou ville adjacente et si le voleur n'est pas sur la case.
 
-        Parametres
+        Paramètres
         ----------
         aucun
         """
@@ -86,11 +100,15 @@ class Catan():
         """
         Déplace le voleur selon le choix du joueur ayant obtenu 7 au lancer de dés.
 
-        Parametres
+        Paramètres
         ----------
+        joueurVoleur : Joueur
+            Joueur qui déplace le voleur et vole une carte à un adversaire un poss-de une
+            colonie adjacente à la nouvelle position du voleur.
         coords : ndarray
             Coordonnées anciennes du voleur
         """
+
         ancienneCoords = self.plateau.voleur.coords
         if coords != ancienneCoords:
             self.plateau.voleur.coords = coords
@@ -124,12 +142,17 @@ class Catan():
         n'y a pas d'infrastructure adjacente et le joueur possède suffisamment de ressources.
         Le coût de la colonie est prélevé au joueur.
 
-        Parametres
+        Paramètres
         ----------
         joueur : Joueur
             Joueur qui construit la colonie
         coords : ndarray
             Coordonnées de la nouvelle colonie
+
+        Renvoie
+        -------
+        True si la colonie est construite
+        False sinon
         """
 
         if joueur.ressourceSuffisante(np.array([1,1,1,1,0])):
@@ -149,12 +172,17 @@ class Catan():
         n'y a pas d'infrastructure adjacente et le joueur possède suffisamment de ressources.
         Le coût de la ville est prélevé au joueur.
 
-        Parametres
+        Paramètres
         ----------
         joueur : Joueur
             Joueur qui construit la ville
         coords : ndarray
             Coordonnées de la nouvelle ville
+
+        Renvoie
+        -------
+        True si la ville est construite
+        False sinon
         """
 
         if joueur.ressourceSuffisante(np.array([0,0,0,2,3])):
@@ -175,12 +203,17 @@ class Catan():
         et le joueur possède suffisamment de ressources.
         Le coût de la route est prélevé au joueur.
 
-        Parametres
+        Paramètres
         ----------
         joueur : Joueur
             Joueur qui construit la route
         coords : ndarray
             Coordonnées de la nouvelle route
+
+        Renvoie
+        -------
+        True si la route est construite
+        False sinon
         """
 
         if joueur.ressourceSuffisante(np.array([1,1,0,0,0])):
@@ -199,12 +232,17 @@ class Catan():
         n'y a pas d'infrastructure adjacente.
         Le coût de la colonie n'est pas prélevé au joueur.
 
-        Parametres
+        Paramètres
         ----------
         joueur : Joueur
             Joueur qui construit la colonie
         coords : ndarray
             Coordonnées de la nouvelle colonie
+
+        Renvoie
+        -------
+        True si la colonie est construite
+        False sinon
         """
 
         if self.plateau.intersectionDispoConstruction(coords):
@@ -220,12 +258,17 @@ class Catan():
         Construit une route à l'emplacement choisi s'il est vide.
         Le coût de la route n'est pas prélevé au joueur.
 
-        Parametres
+        Paramètres
         ----------
         joueur : Joueur
             Joueur qui construit la route
         coords : ndarray
             Coordonnées de la nouvelle route
+
+        Renvoie
+        -------
+        True si la route est construite
+        False sinon
         """
 
         if self.plateau.routeDispoConstruction(coords):
@@ -241,7 +284,7 @@ class Catan():
         """
         Ajoute à la liste des ports du joueur un port qu'il a atteint grâce à la construction d'une colonie.
 
-        Parametres
+        Paramètres
         ----------
         joueur : Joueur
             Joueur qui a construit une colonie liée à un port
@@ -257,11 +300,17 @@ class Catan():
         """
         Donne au joueur une carte développement de la pioche contre son coût.
 
-        Parametres
+        Paramètres
         ----------
         joueur : Joueur
             Joueur qui achète la carte développement
+
+        Renvoie
+        -------
+        True si la carte est achetée
+        False sinon
         """
+
         if len(self.plateau.pioche.devCards)>0:
             if joueur.ressourceSuffisante(np.array([0,0,1,1,1])):
                 joueur.ressource -= np.array([0,0,1,1,1])
@@ -273,7 +322,7 @@ class Catan():
         """
         Procède à un échange de ressources entre le joueur et la banque à un taux déterminé par ses ports.
 
-        Parametres
+        Paramètres
         ----------
         joueur : Joueur
             Joueur qui échange avec la banque
@@ -281,6 +330,11 @@ class Catan():
             Ressources que le joueur perd
         recu : ndarray
             Ressources que le joueur gagne
+
+        Renvoie
+        -------
+        True si l'échange est effectué
+        False sinon
         """
 
         joueur.calculValeurEchange()
@@ -298,7 +352,7 @@ class Catan():
         Procède à un échange entre le joueur actif et un autre joueur
         qui choisissent ce qu'ils veulent donner et recevoir.
 
-        Parametres
+        Paramètres
         ----------
         joueur1 : Joueur
             Premier joueur participant à l'échange, dont c'est le tour
@@ -309,7 +363,12 @@ class Catan():
         recu : ndarray
             Ressources que le joueur2 perd et que le joueur1 gagne
 
+        Renvoie
+        -------
+        True si l'échange est effectué
+        False sinon
         """
+
         if joueur1.ressourceSuffisante(don) and joueur2.ressourceSuffisante(recu):
             joueur1.ressource = joueur1.ressource - don + recu
             joueur2.ressource = joueur2.ressource + don - recu
@@ -317,7 +376,15 @@ class Catan():
         return False
 
     def tourSuivant(self):
-        print("Tour Suivant")
+        """
+        Passe au tour du joueur suivant qui lance les dés et donne ainsi des ressources aux joueurs.
+
+        Paramètres
+        ----------
+        aucun
+        """
+
+        #print("Tour Suivant")
         self.calculPlusGrandeArmee()
         self.calculValeurPlusGrandeRoute(self.joueurActuel)
         self.calculPlusGrandeRoute()
@@ -336,7 +403,19 @@ class Catan():
         self.donRessource()
 
     def tourSuivantDebut(self):
-        print("Joueur Suivant")
+        """
+        Passe au tour du joueur suivant lors du placement des premières colonies et premières routes.
+
+        Paramètres
+        ----------
+        aucun
+
+        Renvoie
+        -------
+        True si tous les joueurs ont placé leurs premières colonies et routes
+        """
+
+        #print("Joueur Suivant")
         ordre = [0,1,2,2,1,0]
         if len(self.joueurs) == 4:
             ordre = [0,1,2,3,3,2,1,0]
@@ -364,8 +443,8 @@ class Catan():
         Calcule quel joueur dans la partie possède la plus grande armée
         et si elle est composée d'au moins 3 chevaliers.
 
-        Parametres
-        ---------
+        Paramètres
+        ----------
         aucun
         """
 
