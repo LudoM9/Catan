@@ -864,32 +864,34 @@ class Port():
         self.echange = np.array([])
 
 class CarteDeveloppement():
-    def __init__(self, joueur):
-        self.joueur = joueur
+    def __init__(self):
         self.coût = np.array([0,0,1,1,1])
-
-    def effet(self):
-        print("No Effect")
+        self.type = ""
 
 class DevConstructionDeRoutes(CarteDeveloppement):
-    def __init__(self, joueur):
-        super().__init__(joueur)
+    def __init__(self):
+        super().__init__()
+        self.type = "Routes"
     
 class DevMonopole(CarteDeveloppement):
-    def __init__(self, joueur):
-        super().__init__(joueur)
+    def __init__(self):
+        super().__init__()
+        self.type = "Monopole"
 
 class DevInvention(CarteDeveloppement):
-    def __init__(self, joueur):
-        super().__init__(joueur)
+    def __init__(self):
+        super().__init__()
+        self.type = "Invention"
 
 class DevPV(CarteDeveloppement):
-    def __init__(self, joueur):
-        super().__init__(joueur)
+    def __init__(self):
+        super().__init__()
+        self.type = "PV"
 
 class DevChevalier(CarteDeveloppement):
-    def __init__(self, joueur):
-        super().__init__(joueur)
+    def __init__(self):
+        super().__init__()
+        self.type = "Chevalier"
 
 class Pioche():
     """
@@ -897,16 +899,6 @@ class Pioche():
 
     Attributs
     ---------
-    wheatRessources : int
-        nombre de cartes ressource de blé restantes dans la pioche
-    woodRessources : int
-        nombre de cartes ressource de bois restantes dans la pioche
-    woolRessources : int
-        nombre de cartes ressource de laine restantes dans la pioche
-    clayRessources : int
-        nombre de cartes ressource d'argile restantes dans la pioche
-    stoneRessources : int
-        nombre de cartes ressource de pierre restantes dans la pioche
     devCards : list
         liste des cartes développement dans la pioche, remplie aléatoirement
     """
@@ -917,14 +909,9 @@ class Pioche():
         ----------
         aucun
         """
-        self.wheatRessources = 19
-        self.woodRessources = 19
-        self.woolRessources = 19
-        self.clayRessources = 19
-        self.stoneRessources = 19
-        self.devCards = [DevConstructionDeRoutes(""), DevConstructionDeRoutes(""), DevInvention(""), DevInvention(""), DevMonopole(""), DevMonopole("")]
+        self.devCards = [DevConstructionDeRoutes(), DevConstructionDeRoutes(), DevInvention(), DevInvention(), DevMonopole(), DevMonopole()]
         for i in range(14):
-            self.devCards.append(DevChevalier(""))
+            self.devCards.append(DevChevalier())
             if i < 5:
-                self.devCards.append(DevPV(""))
+                self.devCards.append(DevPV())
         rd.shuffle(self.devCards)

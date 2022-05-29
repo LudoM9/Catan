@@ -8,6 +8,7 @@ import fonctions as fct
 import accueil
 import ecran_jeu
 import Catan
+import Plateau
 import ecran_jeu
 from pygame.locals import *
 

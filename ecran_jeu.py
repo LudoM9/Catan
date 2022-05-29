@@ -39,6 +39,14 @@ VILLE_J4 = pygame.image.load(os.path.join('images', 'Ville_J4.png'))
 VALIDER_ON = pygame.image.load(os.path.join('images', 'Valider_ON.png'))
 VALIDER_OFF = pygame.image.load(os.path.join('images', 'Valider_OFF.png'))
 
+CARTEDEV_CHEVALIER = pygame.image.load(os.path.join('images', 'CarteDevChevalier.png'))
+CARTEDEV_INVENTION = pygame.image.load(os.path.join('images', 'CarteDevInvention.png'))
+CARTEDEV_MONOPOLE = pygame.image.load(os.path.join('images', 'CarteDevMonopole.png'))
+CARTEDEV_ROUTES = pygame.image.load(os.path.join('images', 'CarteDevRoutes.png'))
+
+NB_CHEVALIER = pygame.image.load(os.path.join('images', 'NbChevalier.png'))
+NB_ROUTES = pygame.image.load(os.path.join('images', 'NbRoutes.png'))
+
 RECT_MAIN = pygame.Rect(0, 0, 0, 0)
 RECT_NEXTTURN = pygame.Rect(0, 0, 0, 0)
 RECT_BRICKIMAGE = pygame.Rect(0, 0, 0, 0)
@@ -82,17 +90,28 @@ RECT_ECHANGE_VALIDER = pygame.Rect(0, 0, 0, 0)
 RECT_ECHANGE_VALIDERJ1 = pygame.Rect(0, 0, 0, 0)
 RECT_ECHANGE_VALIDERJ2 = pygame.Rect(0, 0, 0, 0)
 
+RECT_CARTEDEV_ROUTES = pygame.Rect(0, 0, 0, 0)
+RECT_CARTEDEV_INVENTION = pygame.Rect(0, 0, 0, 0)
+RECT_CARTEDEV_MONOPOLE = pygame.Rect(0, 0, 0, 0)
+RECT_CARTEDEV_CHEVALIER = pygame.Rect(0, 0, 0, 0)
+
+RECT_CARTEDEV_BRICK = pygame.Rect(0, 0, 0, 0)
+RECT_CARTEDEV_STONE = pygame.Rect(0, 0, 0, 0)
+RECT_CARTEDEV_WHEAT = pygame.Rect(0, 0, 0, 0)
+RECT_CARTEDEV_WOOD = pygame.Rect(0, 0, 0, 0)
+RECT_CARTEDEV_WOOL = pygame.Rect(0, 0, 0, 0)
+
 RECT_ECHANGE_JOUEURS = []
 for j in range(3):
     RECT_ECHANGE_JOUEURS.append(pygame.Rect(0, 0, 0, 0))
 
 def main(catan):
-    global RECT_MAIN, RECT_NEXTTURN, RECT_BRICKIMAGE, RECT_STONEIMAGE, RECT_WHEATIMAGE, RECT_WOODIMAGE, RECT_WOOLIMAGE, RECT_PVIMAGE, RECT_COLONIE, RECT_VILLE, RECT_ROUTE, RECT_CARTEDEV, RECT_ANNULER, RECT_ECHANGEBANQUE, RECT_ECHANGEJOUEURS, RECTS_TILES, RECTS_VERTICES, RECTS_EDGES, RECT_ECHANGE_BRICK, RECT_ECHANGE_STONE, RECT_ECHANGE_WHEAT, RECT_ECHANGE_WOOD, RECT_ECHANGE_WOOL, RECT_ECHANGE_BRICK2, RECT_ECHANGE_STONE2, RECT_ECHANGE_WHEAT2, RECT_ECHANGE_WOOD2, RECT_ECHANGE_WOOL2, RECT_ECHANGE_VALIDER, RECT_ECHANGE_VALIDERJ1, RECT_ECHANGE_VALIDERJ2, RECT_ECHANGE_JOUEURS
+    global RECT_MAIN, RECT_NEXTTURN, RECT_BRICKIMAGE, RECT_STONEIMAGE, RECT_WHEATIMAGE, RECT_WOODIMAGE, RECT_WOOLIMAGE, RECT_PVIMAGE, RECT_COLONIE, RECT_VILLE, RECT_ROUTE, RECT_CARTEDEV, RECT_ANNULER, RECT_ECHANGEBANQUE, RECT_ECHANGEJOUEURS, RECTS_TILES, RECTS_VERTICES, RECTS_EDGES, RECT_ECHANGE_BRICK, RECT_ECHANGE_STONE, RECT_ECHANGE_WHEAT, RECT_ECHANGE_WOOD, RECT_ECHANGE_WOOL, RECT_ECHANGE_BRICK2, RECT_ECHANGE_STONE2, RECT_ECHANGE_WHEAT2, RECT_ECHANGE_WOOD2, RECT_ECHANGE_WOOL2, RECT_ECHANGE_VALIDER, RECT_ECHANGE_VALIDERJ1, RECT_ECHANGE_VALIDERJ2, RECT_ECHANGE_JOUEURS, RECT_CARTEDEV_ROUTES, RECT_CARTEDEV_INVENTION, RECT_CARTEDEV_MONOPOLE, RECT_CARTEDEV_CHEVALIER, RECT_CARTEDEV_BRICK, RECT_CARTEDEV_STONE, RECT_CARTEDEV_WHEAT, RECT_CARTEDEV_WOOD, RECT_CARTEDEV_WOOL
 
     run = True
-    startingColonie = False
+    startingColonie = True
     startingRoute = False
-    game = True
+    game = False
     constructionColonie = False
     constructionVille = False
     constructionRoute = False
@@ -133,6 +152,12 @@ def main(catan):
     numeroJoueurEchange = 0
 
     deplacerVoleur = False
+
+    carteDevConstructionRoute = False
+    carteDevMonopole = False
+    carteDevInvention = False
+    nbRouteGratuite = 0
+    nbRessourceRecup = 0
 
     l = np.round(cst.h / 12)
     c = np.round(l/2 * 3 ** (1 / 3))
@@ -273,16 +298,10 @@ def main(catan):
                     pygame.draw.rect(cst.fenetre, (255,102,255), rect)
                     RECTS_VERTICES[i] = rect
 
-        if startingRoute or constructionRoute:
+        if startingRoute or constructionRoute or carteDevConstructionRoute:
             if startingRoute:
                 IndicTextsurface = basefont.render("Placez vos routes", False, (0,0,0))
                 fct.drawImageTopRight((cst.w-xoffset, yoffset), IndicTextsurface, 0.04)
-            for i in range(len(edges)):
-                if edges_available[i]:
-                    rect = Rect((edges[i][0]+cst.xoff,edges[i][1]+cst.yoff),(20,20))
-                    rect.center = (edges[i][0]+cst.xoff,edges[i][1]+cst.yoff)
-                    pygame.draw.rect(cst.fenetre, (255,102,255), rect)
-                    RECTS_EDGES[i] = rect
             for i, coord in enumerate(edges_coords):
                 for route in joueurActuel.routes:
                     if coord in catan.plateau.getAdjacentEdgesFromEdge(route.coords):
@@ -294,6 +313,12 @@ def main(catan):
                 for route in catan.plateau.routes:
                     if coord == route.coords:
                         edges_available[i] = False
+            for i in range(len(edges)):
+                if edges_available[i]:
+                    rect = Rect((edges[i][0]+cst.xoff,edges[i][1]+cst.yoff),(20,20))
+                    rect.center = (edges[i][0]+cst.xoff,edges[i][1]+cst.yoff)
+                    pygame.draw.rect(cst.fenetre, (255,102,255), rect)
+                    RECTS_EDGES[i] = rect
 
         if game:
             fct.drawImageTopRight((cst.w-xoffset, 3*cst.h/4+yoffset), VILLE, 0.08)
@@ -312,6 +337,55 @@ def main(catan):
             RECT_NEXTTURN = fct.rectDrawImageTopRight((cst.w, 0), NEXTTURN, 0.05)
             diceTextsurface = basefont.render("Résultat dés : " + str(catan.valeurDes), False, (0,0,0))
             fct.drawImageTopRight((RECT_NEXTTURN.left-xoffset, yoffset), diceTextsurface, 0.035)
+
+            nbChevalierTextsurface = basefont.render(": " + str(joueurActuel.nbChevalier), False, (0,0,0))
+            fct.drawImageBotRight((cst.w-cst.xoff, 3*cst.h/4-cst.yoff/2), nbChevalierTextsurface, 0.035)
+            rectNbChevalier = fct.rectDrawImageBotRight((cst.w-cst.xoff, 3*cst.h/4-cst.yoff/2), nbChevalierTextsurface, 0.035)
+            fct.drawImageBotRight(rectNbChevalier.bottomleft, NB_CHEVALIER, 0.05)
+            rectNbChevalier = fct.rectDrawImageBotRight(rectNbChevalier.bottomleft, NB_CHEVALIER, 0.05)
+            nbRouteTextsurface = basefont.render(": " + str(joueurActuel.nbRoutes), False, (0,0,0))
+            fct.drawImageBotRight((rectNbChevalier.left - cst.xoff, rectNbChevalier.bottom), nbRouteTextsurface, 0.035)
+            rectNbRoute = fct.rectDrawImageBotRight((rectNbChevalier.left - cst.xoff, rectNbChevalier.bottom), nbRouteTextsurface, 0.035)
+            fct.drawImageBotRight(rectNbRoute.bottomleft, NB_ROUTES, 0.05)
+
+            rect = fct.rectDrawImageMidLeft(RECT_PVIMAGE.midright, pvTextsurface, 0.035)
+            rectRoutes = fct.rectDrawImageTopLeft((rect.right + xoffset, 3*cst.h/4), CARTEDEV_ROUTES, 0.2)
+            rectInvention = fct.rectDrawImageTopLeft((rectRoutes.right, 3*cst.h/4), CARTEDEV_INVENTION, 0.2)
+            rectMonopole = fct.rectDrawImageTopLeft((rectInvention.right, 3*cst.h/4), CARTEDEV_MONOPOLE, 0.2)
+            rectChevalier = fct.rectDrawImageTopLeft((rectMonopole.right, 3*cst.h/4), CARTEDEV_CHEVALIER, 0.2)
+            c_routes = 0
+            c_invention = 0
+            c_monopole = 0
+            c_chevalier = 0
+            for carteDev in joueurActuel.carteDev:
+                if carteDev.type == "Routes":
+                    c_routes += 1
+                    fct.drawImageTopLeft((rect.right + xoffset, 3*cst.h/4), CARTEDEV_ROUTES, 0.2)
+                    RECT_CARTEDEV_ROUTES = fct.rectDrawImageTopLeft((rect.right + xoffset, 3*cst.h/4), CARTEDEV_ROUTES, 0.2)
+                elif carteDev.type == "Invention":
+                    c_invention += 1
+                    fct.drawImageTopLeft((rectRoutes.right, 3*cst.h/4), CARTEDEV_INVENTION, 0.2)
+                    RECT_CARTEDEV_INVENTION = fct.rectDrawImageTopLeft((rectRoutes.right, 3*cst.h/4), CARTEDEV_INVENTION, 0.2)
+                elif carteDev.type == "Monopole":
+                    c_monopole += 1
+                    fct.drawImageTopLeft((rectInvention.right, 3*cst.h/4), CARTEDEV_MONOPOLE, 0.2)
+                    RECT_CARTEDEV_MONOPOLE = fct.rectDrawImageTopLeft((rectInvention.right, 3*cst.h/4), CARTEDEV_MONOPOLE, 0.2)
+                elif carteDev.type == "Chevalier":
+                    c_chevalier += 1
+                    fct.drawImageTopLeft((rectMonopole.right, 3*cst.h/4), CARTEDEV_CHEVALIER, 0.2)
+                    RECT_CARTEDEV_CHEVALIER = fct.rectDrawImageTopLeft((rectMonopole.right, 3*cst.h/4), CARTEDEV_CHEVALIER, 0.2)
+            if c_routes != 0 and c_routes != 1:
+                c_routesTextsurface = basefont.render(str(c_routes), False, (0,0,0))
+                fct.drawImageTopRight(rectRoutes.topright, c_routesTextsurface, 0.025)
+            if c_invention != 0 and c_invention != 1:
+                c_inventionTextsurface = basefont.render(str(c_invention), False, (0,0,0))
+                fct.drawImageTopRight(rectInvention.topright, c_inventionTextsurface, 0.025)
+            if c_monopole != 0 and c_monopole != 1:
+                c_monopoleTextsurface = basefont.render(str(c_monopole), False, (0,0,0))
+                fct.drawImageTopRight(rectMonopole.topright, c_monopoleTextsurface, 0.025)
+            if c_chevalier != 0 and c_chevalier != 1:
+                c_chevalierTextsurface = basefont.render(str(c_chevalier), False, (0,0,0))
+                fct.drawImageTopRight(rectChevalier.topright, c_chevalierTextsurface, 0.025)
 
         if constructionColonie or constructionVille or constructionRoute or echangeBanque or echangeJoueurs:
             fct.drawImageBotRight((cst.w-xoffset, 3*cst.h/4-yoffset), ANNULER, 0.08)
@@ -517,6 +591,19 @@ def main(catan):
                     rect.center = (positions[i][0]+cst.xoff,positions[i][1]+cst.yoff)
                     pygame.draw.rect(cst.fenetre, (255,102,255), rect)
                     RECTS_TILES[i] = rect
+        
+        if carteDevInvention or carteDevMonopole:
+            pygame.draw.rect(cst.fenetre, (211,211,211), Rect(cst.w/8, cst.h/3, 3*cst.w/4, cst.h/3))
+            fct.drawImage((2*cst.w/8, cst.h/2), BRICK, 0.1)
+            fct.drawImage((3*cst.w/8, cst.h/2), STONE, 0.1)
+            fct.drawImage((4*cst.w/8, cst.h/2), WHEAT, 0.1)
+            fct.drawImage((5*cst.w/8, cst.h/2), WOOD, 0.1)
+            fct.drawImage((6*cst.w/8, cst.h/2), WOOL, 0.1)
+            RECT_CARTEDEV_BRICK = fct.rectDrawImage((2*cst.w/8, cst.h/2), BRICK, 0.1)
+            RECT_CARTEDEV_STONE = fct.rectDrawImage((3*cst.w/8, cst.h/2), STONE, 0.1)
+            RECT_CARTEDEV_WHEAT = fct.rectDrawImage((4*cst.w/8, cst.h/2), WHEAT, 0.1)
+            RECT_CARTEDEV_WOOD = fct.rectDrawImage((5*cst.w/8, cst.h/2), WOOD, 0.1)
+            RECT_CARTEDEV_WOOL = fct.rectDrawImage((6*cst.w/8, cst.h/2), WOOL, 0.1)
 
         for event in pygame.event.get():
             fct.shouldQuit(event)
@@ -844,6 +931,72 @@ def main(catan):
                             textInfo = ''
                         else:
                             textInfo = 'Transaction Impossible!'
+                elif RECT_CARTEDEV_ROUTES.collidepoint(event.pos):
+                    print("CARTEDEV_ROUTES")
+                    carteDevConstructionRoute = True
+                    joueurActuel.removeRoutes()
+                elif RECT_CARTEDEV_INVENTION.collidepoint(event.pos):
+                    print("CARTEDEV_INVENTION")
+                    carteDevInvention = True
+                    joueurActuel.removeInvention()
+                elif RECT_CARTEDEV_MONOPOLE.collidepoint(event.pos):
+                    print("CARTEDEV_MONOPOLE")
+                    carteDevMonopole = True
+                    joueurActuel.removeMonopole()
+                elif RECT_CARTEDEV_CHEVALIER.collidepoint(event.pos):
+                    print("CARTEDEV_CHEVALIER")
+                    deplacerVoleur = True
+                    joueurActuel.removeChevalier()
+                elif RECT_CARTEDEV_BRICK.collidepoint(event.pos):
+                    if carteDevInvention:
+                        nbRessourceRecup += 1
+                        joueurActuel.ressource += np.array([0,1,0,0,0])
+                        if nbRessourceRecup == 2:
+                            carteDevInvention = False
+                            nbRessourceRecup = 0
+                    elif carteDevMonopole:
+                        catan.carteDevMonopole(joueurActuel, 1)
+                        carteDevMonopole = False
+                elif RECT_CARTEDEV_STONE.collidepoint(event.pos):
+                    if carteDevInvention:
+                        nbRessourceRecup += 1
+                        joueurActuel.ressource += np.array([0,0,0,0,1])
+                        if nbRessourceRecup == 2:
+                            carteDevInvention = False
+                            nbRessourceRecup = 0
+                    elif carteDevMonopole:
+                        catan.carteDevMonopole(joueurActuel, 4)
+                        carteDevMonopole = False
+                elif RECT_CARTEDEV_WHEAT.collidepoint(event.pos):
+                    if carteDevInvention:
+                        nbRessourceRecup += 1
+                        joueurActuel.ressource += np.array([0,0,0,1,0])
+                        if nbRessourceRecup == 2:
+                            carteDevInvention = False
+                            nbRessourceRecup = 0
+                    elif carteDevMonopole:
+                        catan.carteDevMonopole(joueurActuel, 3)
+                        carteDevMonopole = False
+                elif RECT_CARTEDEV_WOOD.collidepoint(event.pos):
+                    if carteDevInvention:
+                        nbRessourceRecup += 1
+                        joueurActuel.ressource += np.array([1,0,0,0,0])
+                        if nbRessourceRecup == 2:
+                            carteDevInvention = False
+                            nbRessourceRecup = 0
+                    elif carteDevMonopole:
+                        catan.carteDevMonopole(joueurActuel, 0)
+                        carteDevMonopole = False
+                elif RECT_CARTEDEV_WOOL.collidepoint(event.pos):
+                    if carteDevInvention:
+                        nbRessourceRecup += 1
+                        joueurActuel.ressource += np.array([0,0,1,0,0])
+                        if nbRessourceRecup == 2:
+                            carteDevInvention = False
+                            nbRessourceRecup = 0
+                    elif carteDevMonopole:
+                        catan.carteDevMonopole(joueurActuel, 2)
+                        carteDevMonopole = False
 
                 for i, rect_joueur in enumerate(RECT_ECHANGE_JOUEURS):
                     if rect_joueur.collidepoint(event.pos):
@@ -915,6 +1068,13 @@ def main(catan):
                                 choixEchangeJoueurs = False
                                 echangeJoueurs = False
                                 indicText = False
+                        if carteDevConstructionRoute:
+                            if catan.construireRouteGratuit(joueurActuel, edges_coords[i]):
+                                edges_available = [False for i in range(len(edges))]
+                                nbRouteGratuite += 1
+                                if nbRouteGratuite == 2:
+                                    carteDevConstructionRoute = False
+                                    nbRouteGratuite = 0
             elif event.type == pygame.KEYDOWN:
                 if activeTextBrick:
                     if event.key == pygame.K_BACKSPACE:
@@ -970,7 +1130,7 @@ def main(catan):
         pygame.display.update()
 
 def resetRect():
-    global RECT_MAIN, RECT_NEXTTURN, RECT_BRICKIMAGE, RECT_STONEIMAGE, RECT_WHEATIMAGE, RECT_WOODIMAGE, RECT_WOOLIMAGE, RECT_PVIMAGE, RECT_COLONIE, RECT_VILLE, RECT_ROUTE, RECT_CARTEDEV, RECT_ANNULER, RECT_ECHANGEBANQUE, RECT_ECHANGEJOUEURS, RECTS_TILES, RECTS_VERTICES, RECTS_EDGES, RECT_ECHANGE_BRICK, RECT_ECHANGE_STONE, RECT_ECHANGE_WHEAT, RECT_ECHANGE_WOOD, RECT_ECHANGE_WOOL, RECT_ECHANGE_BRICK2, RECT_ECHANGE_STONE2, RECT_ECHANGE_WHEAT2, RECT_ECHANGE_WOOD2, RECT_ECHANGE_WOOL2, RECT_ECHANGE_VALIDER, RECT_ECHANGE_VALIDERJ1, RECT_ECHANGE_VALIDERJ2, RECT_ECHANGE_JOUEURS
+    global RECT_MAIN, RECT_NEXTTURN, RECT_BRICKIMAGE, RECT_STONEIMAGE, RECT_WHEATIMAGE, RECT_WOODIMAGE, RECT_WOOLIMAGE, RECT_PVIMAGE, RECT_COLONIE, RECT_VILLE, RECT_ROUTE, RECT_CARTEDEV, RECT_ANNULER, RECT_ECHANGEBANQUE, RECT_ECHANGEJOUEURS, RECTS_TILES, RECTS_VERTICES, RECTS_EDGES, RECT_ECHANGE_BRICK, RECT_ECHANGE_STONE, RECT_ECHANGE_WHEAT, RECT_ECHANGE_WOOD, RECT_ECHANGE_WOOL, RECT_ECHANGE_BRICK2, RECT_ECHANGE_STONE2, RECT_ECHANGE_WHEAT2, RECT_ECHANGE_WOOD2, RECT_ECHANGE_WOOL2, RECT_ECHANGE_VALIDER, RECT_ECHANGE_VALIDERJ1, RECT_ECHANGE_VALIDERJ2, RECT_ECHANGE_JOUEURS, RECT_CARTEDEV_ROUTES, RECT_CARTEDEV_INVENTION, RECT_CARTEDEV_MONOPOLE, RECT_CARTEDEV_CHEVALIER, RECT_CARTEDEV_BRICK, RECT_CARTEDEV_STONE, RECT_CARTEDEV_WHEAT, RECT_CARTEDEV_WOOD, RECT_CARTEDEV_WOOL
 
     RECT_MAIN = pygame.Rect(0, 0, 0, 0)
     RECT_NEXTTURN = pygame.Rect(0, 0, 0, 0)
@@ -1012,6 +1172,17 @@ def resetRect():
     RECT_ECHANGE_VALIDER = pygame.Rect(0, 0, 0, 0)
     RECT_ECHANGE_VALIDERJ1 = pygame.Rect(0, 0, 0, 0)
     RECT_ECHANGE_VALIDERJ2 = pygame.Rect(0, 0, 0, 0)
+
+    RECT_CARTEDEV_ROUTES = pygame.Rect(0, 0, 0, 0)
+    RECT_CARTEDEV_INVENTION = pygame.Rect(0, 0, 0, 0)
+    RECT_CARTEDEV_MONOPOLE = pygame.Rect(0, 0, 0, 0)
+    RECT_CARTEDEV_CHEVALIER = pygame.Rect(0, 0, 0, 0)
+
+    RECT_CARTEDEV_BRICK = pygame.Rect(0, 0, 0, 0)
+    RECT_CARTEDEV_STONE = pygame.Rect(0, 0, 0, 0)
+    RECT_CARTEDEV_WHEAT = pygame.Rect(0, 0, 0, 0)
+    RECT_CARTEDEV_WOOD = pygame.Rect(0, 0, 0, 0)
+    RECT_CARTEDEV_WOOL = pygame.Rect(0, 0, 0, 0)
 
     RECT_ECHANGE_JOUEURS = []
     for j in range(3):

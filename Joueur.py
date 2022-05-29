@@ -60,6 +60,8 @@ class Joueur():
         self.routes = []
         self.ports = []
         self.valeurEchange = np.array([4,4,4,4,4])
+        self.nbChevalier = 0
+        self.nbRoutes = 0
         self.plusGrandeRoute = False
         self.plusGrandeArmee = False
 
@@ -137,26 +139,6 @@ class Joueur():
                 if coords == colonie.coords:
                     return colonie
 
-    def nombreChevalier(self):
-        """
-        Compte le nombre de chevaliers que possède un joueur.
-
-        Parametres
-        ----------
-        aucun
-
-        Renvoie
-        -------
-        n : int
-            Nombre de cartes chevalier du joueur (Taille de l'armée du joueur)
-        """
-
-        n = 0
-        for carte in self.carteDev:
-            if type == DevChevalier:
-                n += 1
-        return n
-
     def calculPV(self):
         """
         Compte le nombre de points de victoire que possède un joueur.
@@ -172,18 +154,47 @@ class Joueur():
         """
 
         n = 0
-        for cartes in self.carteDev:
-            if type==DevPV:
+        for carte in self.carteDev:
+            if carte.type == "PV":
                 n+=1
         for colonie in self.colonies:
             n+=1
         for ville in self.villes:
             n+=2
         if self.plusGrandeArmee:
-            n+=3
+            n+=2
         if self.plusGrandeRoute:
-            n+=3
+            n+=2
         return n
+    
+    def removeRoutes(self):
+        c = 0
+        for i, carte in enumerate(self.carteDev):
+            if carte.type == "Routes":
+                c = i
+        del self.carteDev[c]
+    
+    def removeChevalier(self):
+        c = 0
+        for i, carte in enumerate(self.carteDev):
+            if carte.type == "Chevalier":
+                c = i
+        self.nbChevalier += 1
+        del self.carteDev[c]
+
+    def removeInvention(self):
+        c = 0
+        for i, carte in enumerate(self.carteDev):
+            if carte.type == "Invention":
+                c = i
+        del self.carteDev[c]
+    
+    def removeMonopole(self):
+        c = 0
+        for i, carte in enumerate(self.carteDev):
+            if carte.type == "Monopole":
+                c = i
+        del self.carteDev[c]
 
     def victoire(self):
         """
@@ -201,5 +212,7 @@ class Joueur():
 
         if self.calculPV()>=10:
             return True
+            print(self.nom)
         else:
             return False
+            print("A pas gagné")

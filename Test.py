@@ -5,6 +5,7 @@ from abc import abstractmethod, ABCMeta
 from numpy.random import randint
 import random as rd
 import numpy as np
+import Joueur
 
 
 class Plateau():
@@ -1068,7 +1069,44 @@ print(P.getAdjacentTilesFromVertice((3,2)))
 print(P.getAdjacentTilesFromVertice((3,3)))
 print(P.getAdjacentTilesFromVertice((3,4)))
 """
-
+"""
 print(P.getAdjacentVerticesFromVertice((-2,2)))
 print(P.getAdjacentVerticesFromVertice((1,5)))
+
+a.add((0,2))
+if (0,3) not in a:
+    print("lol")
+print(a)
+print(len(a))
+"""
+a = set([(0,1), (1,0), (2,0), (0,1)])
+for x in a:
+    print(x)
         
+# P = self.plateau
+def calculValeurPlusGrandeRoute(self, joueur):
+    routes_coords = [route.coords for route in joueur.routes]
+    longueur = []
+    while len(routes_coords) != 0:
+        road = set([routes_coords[0]])
+        road = addElemToSet(joueur, road)
+        longueur.append(len(road))
+        for edge in road:
+            if edge in routes_coords:
+                routes_coords.remove(edge)
+    return max(longueur)
+
+def addElemToSet(self, joueur, road):
+    GoOn = False
+    for elem in road:
+        adj = P.getAdjacentEdgesFromEdge(elem)
+        for edge in adj:
+            for route in joueur.routes:
+                if route.coords == edge:
+                    if edge not in road:
+                        road.add(edge)
+                        GoOn = True
+    if GoOn:
+        addElemToSet(joueur, road)
+    else:
+        return road

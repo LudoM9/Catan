@@ -98,23 +98,23 @@ class Catan():
             elems = self.plateau.colonieAdjacenteTile(coords)
             if len(elems) != 0:
                 i = rd.randint(0, len(elems)-1)
-                ressource = elems[i].joueur.ressources
+                ressource = elems[i].joueur.ressource
                 e = rd.randint(1, sum(ressource))
                 if e <= ressource[0]:
-                    elems[i].joueur.ressources -= np.array([1,0,0,0,0])
-                    joueurVoleur.ressources += np.array([1,0,0,0,0])
+                    elems[i].joueur.ressource -= np.array([1,0,0,0,0])
+                    joueurVoleur.ressource += np.array([1,0,0,0,0])
                 elif e <= ressource[0]+ressource[1]:
-                    elems[i].joueur.ressources -= np.array([0,1,0,0,0])
-                    joueurVoleur.ressources += np.array([0,1,0,0,0])
+                    elems[i].joueur.ressource -= np.array([0,1,0,0,0])
+                    joueurVoleur.ressource += np.array([0,1,0,0,0])
                 elif e <= ressource[0]+ressource[1]+ressource[2]:
-                    elems[i].joueur.ressources -= np.array([0,0,1,0,0])
-                    joueurVoleur.ressources += np.array([0,0,1,0,0])
+                    elems[i].joueur.ressource -= np.array([0,0,1,0,0])
+                    joueurVoleur.ressource += np.array([0,0,1,0,0])
                 elif e <= ressource[0]+ressource[1]+ressource[2]+ressource[3]:
-                    elems[i].joueur.ressources -= np.array([0,0,0,1,0])
-                    joueurVoleur.ressources += np.array([0,0,0,1,0])
+                    elems[i].joueur.ressource -= np.array([0,0,0,1,0])
+                    joueurVoleur.ressource += np.array([0,0,0,1,0])
                 else:
-                    elems[i].joueur.ressources -= np.array([0,0,0,0,1])
-                    joueurVoleur.ressources += np.array([0,0,0,0,1])
+                    elems[i].joueur.ressource -= np.array([0,0,0,0,1])
+                    joueurVoleur.ressource += np.array([0,0,0,0,1])
             return True
         return False
 
@@ -319,10 +319,18 @@ class Catan():
     def tourSuivant(self):
         print("Tour Suivant")
         self.calculPlusGrandeArmee()
+        self.calculValeurPlusGrandeRoute(self.joueurActuel)
+        self.calculPlusGrandeRoute()
+        self.joueurActuel.calculPV()
+        if self.joueurActuel.victoire(): #TODO
+            print("C'est fini")
         self.numeroJoueurActuel += 1
         if self.numeroJoueurActuel >= len(self.joueurs):
             self.numeroJoueurActuel = 0   
         self.joueurActuel = self.joueurs[self.numeroJoueurActuel]
+        self.calculValeurPlusGrandeRoute(self.joueurActuel)
+        self.calculPlusGrandeRoute()
+        self.calculPlusGrandeArmee()
         self.joueurActuel.calculPV()
         self.lancerDes()
         self.donRessource()
@@ -335,9 +343,21 @@ class Catan():
         self.numeroJoueurActuelDebut += 1
         if self.numeroJoueurActuelDebut >= len(ordre):
             self.numeroJoueurActuelDebut = 0
+            self.calculValeurPlusGrandeRoute(self.joueurActuel)
+            self.calculPlusGrandeRoute()
+            self.joueurActuel.calculPV()
             return True
         self.numeroJoueurActuel = ordre[self.numeroJoueurActuelDebut]   
         self.joueurActuel = self.joueurs[self.numeroJoueurActuel]
+        
+
+    def carteDevMonopole(self, joueurActuel, ressource):
+        ajout = 0
+        for joueur in self.joueurs:
+            if joueur.numero != joueurActuel.numero:
+                ajout += joueur.ressource[ressource]
+                joueur.ressource[ressource] = 0
+        joueurActuel.ressource += ajout
 
     def calculPlusGrandeArmee(self):
         """
@@ -354,15 +374,65 @@ class Catan():
         numeroJoueur = 0
         for joueur in self.joueurs:
             if joueur.plusGrandeArmee:
-                m = joueur.nombreChevalier()
+                m = joueur.nbChevalier
                 numeroJoueur = joueur.numero
         for joueur in self.joueurs:
             joueur.plusGrandeArmee = False   
-            n = joueur.nombreChevalier()
+            n = joueur.nbChevalier
             if n > m:
                 m = n
                 numeroJoueur = joueur.numero
         if m >= 3:
             self.joueurs[numeroJoueur].plusGrandeArmee = True
+    
+    def calculPlusGrandeRoute(self):
+        m = 0
+        n = 0
+        numeroJoueur = 0
+        for joueur in self.joueurs:
+            if joueur.plusGrandeRoute:
+                m = joueur.nbRoutes
+                numeroJoueur = joueur.numero
+        for joueur in self.joueurs:
+            joueur.plusGrandeRoute = False
+            n = joueur.nbRoutes
+            if n > m:
+                m = n
+                numeroJoueur = joueur.numero
+        if m >= 5:
+            self.joueurs[numeroJoueur].plusGrandeRoute = True
+    
+    def calculValeurPlusGrandeRoute(self, joueur):
+        routes_coords = [route.coords for route in joueur.routes]
+        longueur = []
+        while len(routes_coords) != 0:
+            road = set([routes_coords[0]])
+            road = self.addElemToSet(joueur, road)
+            longueur.append(len(road))
+            for edge in road:
+                if edge in routes_coords:
+                    routes_coords.remove(edge)
+        if len(longueur) == 0:
+            joueur.nbRoutes = 0
+            return 0
+        joueur.nbRoutes = max(longueur)
+        return max(longueur)
 
+    def addElemToSet(self, joueur, road):
+        GoOn = False
+        autreRoad = set([])
+        for elem in road:
+            adj = self.plateau.getAdjacentEdgesFromEdge(elem)
+            for edge in adj:
+                for route in joueur.routes:
+                    if route.coords == edge:
+                        if edge not in road:
+                            autreRoad.add(edge)
+                            GoOn = True
+        
+        if GoOn:
+            road = road | autreRoad
+            return self.addElemToSet(joueur, road)
+        else:
+            return road
 
