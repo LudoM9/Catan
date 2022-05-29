@@ -5,6 +5,7 @@ Module contenant les informations relatives aux joueurs.
 import pygame
 import random as rd
 import numpy as np
+import Plateau
 
 class Joueur():
     """
@@ -18,7 +19,7 @@ class Joueur():
         numéro du joueur
     ressource : darray
         ressources que possède le joueur
-    carteDev :
+    carteDev : list(Plateau.CartesDeveloppement)
         cartes développement que possède le joueur
     pointsVictoire : int
         points de victoire que posséde le joueur
@@ -172,8 +173,8 @@ class Joueur():
         """
 
         n = 0
-        for cartes in self.carteDev:
-            if type==DevPV:
+        for carte in self.carteDev:
+            if type(carte)==Plateau.DevPV:
                 n+=1
         for colonie in self.colonies:
             n+=1

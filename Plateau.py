@@ -478,7 +478,6 @@ class Plateau():
                     return True
         return False
 
-# à modifier
     def routeAdjacenteColonieExiste(self, joueur, coords):
         """
         Vérifie qu'un joueur possède une route adjacente à une colonie ou une ville.

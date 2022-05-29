@@ -6,9 +6,7 @@
       <change beforePath="$PROJECT_DIR$/Catan.py" beforeDir="false" afterPath="$PROJECT_DIR$/Catan.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Joueur.py" beforeDir="false" afterPath="$PROJECT_DIR$/Joueur.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Plateau.py" beforeDir="false" afterPath="$PROJECT_DIR$/Plateau.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/accueil.py" beforeDir="false" afterPath="$PROJECT_DIR$/accueil.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ecran_jeu.py" beforeDir="false" afterPath="$PROJECT_DIR$/ecran_jeu.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fonctions.py" beforeDir="false" afterPath="$PROJECT_DIR$/fonctions.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Tests.py" beforeDir="false" afterPath="$PROJECT_DIR$/Tests.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,7 +28,7 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
-  <component name="RunManager" selected="Python.main">
+  <component name="RunManager" selected="Python.Tests">
     <configuration name="Joueur" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -67,6 +65,28 @@
       <module name="" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$USER_HOME$/Desktop/Plateau.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Tests" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="C:\APPLIS\WPy64-3760\python-3.7.6.amd64\python.exe" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Tests.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -124,9 +144,11 @@
       <item itemvalue="Python.Joueur" />
       <item itemvalue="Python.main" />
       <item itemvalue="Python.Plateau" />
+      <item itemvalue="Python.Tests" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.Tests" />
         <item itemvalue="Python.main" />
         <item itemvalue="Python.Plateau" />
         <item itemvalue="Python.Joueur" />
@@ -164,7 +186,7 @@
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/Catan$image_process.coverage" NAME="image_process Coverage Results" MODIFIED="1651086263731" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$USER_HOME$/OneDrive - Ecole Nationale Supérieure de Techniques Avancées Bretagne/Projets_pycharm/UE 1.1 Info/TD6_images" />
     <SUITE FILE_PATH="coverage/Catan$TD9.coverage" NAME="TD9 Coverage Results" MODIFIED="1653651700551" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$USER_HOME$/OneDrive - Ecole Nationale Supérieure de Techniques Avancées Bretagne/Projets_pycharm/UE 1.1 Info/TD9_graphe" />
-    <SUITE FILE_PATH="coverage/Catan$Tests.coverage" NAME="Tests Coverage Results" MODIFIED="1653642155076" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Catan$Tests.coverage" NAME="Tests Coverage Results" MODIFIED="1653821693379" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Catan$Joueur.coverage" NAME="Joueur Coverage Results" MODIFIED="1652601791320" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Catan$ex_3_données.coverage" NAME="ex 3 données Coverage Results" MODIFIED="1653651632348" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$USER_HOME$/OneDrive - Ecole Nationale Supérieure de Techniques Avancées Bretagne/Projets_pycharm/UE 1.1 Info/TD4_ fichiers" />
     <SUITE FILE_PATH="coverage/Catan$Plateau.coverage" NAME="Plateau Coverage Results" MODIFIED="1653733583818" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$USER_HOME$/Desktop" />

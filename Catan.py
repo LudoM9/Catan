@@ -19,7 +19,7 @@ class Catan():
         plateau sur le quel le jeu évolue
     joueurs : list(Joueur)
         liste des joueurs participant au jeu
-    valeurDes : bool
+    valeurDes : int
         résultat de la somme de deux lancers de dés à six faces réguliers
     numeroJoueurActuel : int
         numéro du joueur actif, attribué automatiquement au remplissage de self.joueurs
@@ -384,7 +384,7 @@ class Catan():
         aucun
         """
 
-        print("Tour Suivant")
+        #print("Tour Suivant")
         self.calculPlusGrandeArmee()
         self.numeroJoueurActuel += 1
         if self.numeroJoueurActuel >= len(self.joueurs):
@@ -407,7 +407,7 @@ class Catan():
         True si tous les joueurs ont placé leurs premières colonies et routes
         """
 
-        print("Joueur Suivant")
+        #print("Joueur Suivant")
         ordre = [0,1,2,2,1,0]
         if len(self.joueurs) == 4:
             ordre = [0,1,2,3,3,2,1,0]
