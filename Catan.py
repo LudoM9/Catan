@@ -392,7 +392,7 @@ class Catan():
         self.calculPlusGrandeRoute()
         self.joueurActuel.calculPV()
         if self.joueurActuel.victoire(): #TODO
-            print("C'est fini")
+            return True
         self.numeroJoueurActuel += 1
         if self.numeroJoueurActuel >= len(self.joueurs):
             self.numeroJoueurActuel = 0   
@@ -404,6 +404,7 @@ class Catan():
         self.joueurActuel.calculValeurEchange()
         self.lancerDes()
         self.donRessource()
+        return False
 
     def tourSuivantDebut(self):
         """

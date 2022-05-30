@@ -214,8 +214,10 @@ def main():
                         RECT_DEMARRER = fct.rectDrawImage((cst.w//2, 7*cst.h//8), DEMARRER, 0.15)
 
         pygame.display.update()
-
-    return plateau_aleatoire, [textJ1, textJ2, textJ3, textJ4]
+    if n == 3:
+        return plateau_aleatoire, [textJ1, textJ2, textJ3]
+    elif n == 4:
+        return plateau_aleatoire, [textJ1, textJ2, textJ3, textJ4]
 
 
 def resetRect():

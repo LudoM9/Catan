@@ -7,9 +7,9 @@ import constantes as cst
 import fonctions as fct
 import accueil
 import ecran_jeu
+import ecran_victoire
 import Catan
 import Plateau
-import ecran_jeu
 from pygame.locals import *
 
 ecranAccueil = True
@@ -41,6 +41,13 @@ while True:
         ecranJeu = True
 
     if ecranJeu:
-        ecran_jeu.main(catan)
+        vainqueur, numero = ecran_jeu.main(catan)
+        ecranJeu = False
+        ecranVictoire = True
+
+    if ecranVictoire:
+        ecran_victoire.main(vainqueur, numero)
+        ecranVictoire = False
+        ecranAccueil = True
 
     pygame.display.flip()
