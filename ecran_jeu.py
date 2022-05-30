@@ -16,7 +16,6 @@ WHEAT = pygame.image.load(os.path.join('images', 'Wheat Image.png'))
 WOOD = pygame.image.load(os.path.join('images', 'Wood Image.png'))
 WOOL = pygame.image.load(os.path.join('images', 'Wool Image.png'))
 PV = pygame.image.load(os.path.join('images', 'PV Image.png'))
-BACKGROUNDUI = pygame.image.load(os.path.join('images', 'BackgroundUI.jpg'))
 CERCLE = pygame.image.load(os.path.join('images','cercle.png'))
 
 COLONIE = pygame.image.load(os.path.join('images', 'Colonie.png'))
@@ -704,12 +703,12 @@ def main(catan):
                     choixEchangeJoueurs = False
                     echangeJoueurs = False
                     indicText = False
-                    catan.tourSuivant()
+                    if catan.tourSuivant():
+                        run = False
                     if catan.valeurDes == 7:
                         deplacerVoleur = True
                 elif RECT_COLONIE.collidepoint(event.pos):
                     if joueurActuel.ressourceSuffisante(np.array([1,1,1,1,0])):
-                        print("Colonie")
                         constructionColonie = True
                         constructionVille = False
                         constructionRoute = False
@@ -725,12 +724,10 @@ def main(catan):
                                 if catan.plateau.routeAdjacenteColonieExiste(joueurActuel, coord):
                                     vertices_available[i] = True
                     else:
-                        print("Impossible de construire")
                         indicText = True
                         IndicTextsurface = basefont.render("Pas assez de ressource", False, (255,0,0))
                 elif RECT_VILLE.collidepoint(event.pos):
                     if joueurActuel.ressourceSuffisante(np.array([0,0,0,2,3])):
-                        print("Ville")
                         constructionColonie = False
                         constructionVille = True
                         constructionRoute = False
@@ -740,12 +737,10 @@ def main(catan):
                         echangeJoueurs = False
                         indicText = False
                     else:
-                        print("Impossible de construire")
                         indicText = True
                         IndicTextsurface = basefont.render("Pas assez de ressource", False, (255,0,0))
                 elif RECT_ROUTE.collidepoint(event.pos):
                     if joueurActuel.ressourceSuffisante(np.array([1,1,0,0,0])):
-                        print("Route")
                         constructionColonie = False
                         constructionVille = False
                         constructionRoute = True
@@ -756,12 +751,10 @@ def main(catan):
                         indicText = False
                         edges_available = [False for i in range(len(edges))]
                     else:
-                        print("Impossible de construire")
                         indicText = True
                         IndicTextsurface = basefont.render("Pas assez de ressource", False, (255,0,0))
                 elif RECT_CARTEDEV.collidepoint(event.pos):
                     if catan.achatCarteDev(joueurActuel):
-                        print("CarteDev")
                         constructionColonie = False
                         constructionVille = False
                         constructionRoute = False
@@ -771,11 +764,9 @@ def main(catan):
                         echangeJoueurs = False
                         indicText = False
                     else:
-                        print("Impossible de construire")
                         indicText = True
                         IndicTextsurface = basefont.render("Pas assez de ressource", False, (255,0,0))
                 elif RECT_ECHANGEBANQUE.collidepoint(event.pos):
-                    print("Echange Banque")
                     constructionColonie = False
                     constructionVille = False
                     constructionRoute = False
@@ -796,7 +787,6 @@ def main(catan):
                     textWool2 = '0'
                     textInfo = ''
                 elif RECT_ECHANGEJOUEURS.collidepoint(event.pos):
-                    print("Echange Joueurs")
                     constructionColonie = False
                     constructionVille = False
                     constructionRoute = False
@@ -806,7 +796,6 @@ def main(catan):
                     echangeJoueurs = False
                     indicText = False
                 elif RECT_ANNULER.collidepoint(event.pos):
-                    print("Annuler")
                     constructionColonie = False
                     constructionVille = False
                     constructionRoute = False
@@ -1018,19 +1007,15 @@ def main(catan):
                         else:
                             textInfo = 'Transaction Impossible!'
                 elif RECT_CARTEDEV_ROUTES.collidepoint(event.pos):
-                    print("CARTEDEV_ROUTES")
                     carteDevConstructionRoute = True
                     joueurActuel.removeRoutes()
                 elif RECT_CARTEDEV_INVENTION.collidepoint(event.pos):
-                    print("CARTEDEV_INVENTION")
                     carteDevInvention = True
                     joueurActuel.removeInvention()
                 elif RECT_CARTEDEV_MONOPOLE.collidepoint(event.pos):
-                    print("CARTEDEV_MONOPOLE")
                     carteDevMonopole = True
                     joueurActuel.removeMonopole()
                 elif RECT_CARTEDEV_CHEVALIER.collidepoint(event.pos):
-                    print("CARTEDEV_CHEVALIER")
                     deplacerVoleur = True
                     joueurActuel.removeChevalier()
                 elif RECT_CARTEDEV_BRICK.collidepoint(event.pos):
@@ -1216,6 +1201,7 @@ def main(catan):
                         textWool2 += event.unicode
 
         pygame.display.update()
+    return joueurActuel.nom, joueurActuel.numero
 
 def resetRect():
     """
