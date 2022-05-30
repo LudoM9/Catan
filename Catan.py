@@ -103,10 +103,15 @@ class Catan():
         Paramètres
         ----------
         joueurVoleur : Joueur
-            Joueur qui déplace le voleur et vole une carte à un adversaire un poss-de une
-            colonie adjacente à la nouvelle position du voleur.
+            Joueur qui déplace le voleur et vole une carte à un adversaire qui possède
+            une colonie adjacente à la nouvelle position du voleur.
         coords : ndarray
             Coordonnées anciennes du voleur
+
+        Renvoie
+        -------
+        True si la position du voleur est changée
+        False sinon
         """
 
         ancienneCoords = self.plateau.voleur.coords
@@ -428,6 +433,17 @@ class Catan():
         
 
     def carteDevMonopole(self, joueurActuel, ressource):
+        """
+        Donne au joueur utilisant une carte monopole toutes les ressources de ses adversaires d'un type de son choix.
+
+        Paramètres
+        ----------
+        joueurActuel : Joueur
+            Joueur dont c'est le tour qui utilise sa carte monopole
+        ressource : int
+            Numéro de la ressource choisi par le joueur
+        """
+
         ajout = 0
         for joueur in self.joueurs:
             if joueur.numero != joueurActuel.numero:
@@ -462,6 +478,15 @@ class Catan():
             self.joueurs[numeroJoueur].plusGrandeArmee = True
     
     def calculPlusGrandeRoute(self):
+        """
+        Calcule quel joueur dans la partie possède la plus grande route
+        et si elle est composée d'au moins 5 routes adjacentes.
+
+        Paramètres
+        ----------
+        aucun
+        """
+
         m = 0
         n = 0
         numeroJoueur = 0
@@ -479,6 +504,19 @@ class Catan():
             self.joueurs[numeroJoueur].plusGrandeRoute = True
     
     def calculValeurPlusGrandeRoute(self, joueur):
+        """
+        Calcule la longueur de la plus grande route d'un joueur.
+
+        Paramètres
+        ----------
+        joueur : Joueur
+            Joueur dont la valeur de la plus grande route est testée
+
+        Renvoie
+        -------
+        Un entier correspondant à la longueur de la route la plus longue du joueur
+        """
+
         routes_coords = [route.coords for route in joueur.routes]
         longueur = []
         while len(routes_coords) != 0:
@@ -495,6 +533,22 @@ class Catan():
         return max(longueur)
 
     def addElemToSet(self, joueur, road):
+        """
+        Ajoute une suite de routes adjacentes dans un ensemble
+
+        Paramètres
+        ----------
+        joueur : Joueur
+            Joueur dont on teste une suite de routes adjacentes
+        road : set(list)
+            Ensemble de routes adjacentes à compléter
+
+        Renvoie
+        -------
+        road : set(list)
+            Ensemble de routes adjacentes mis à jour
+        """
+
         GoOn = False
         autreRoad = set([])
         for elem in road:

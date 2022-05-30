@@ -76,9 +76,21 @@ class TestCatan(unittest.TestCase):
             self.assertEqual(catan.numeroJoueurActuelDebut,i+1)
         self.assertTrue(catan.tourSuivantDebut())
 
+    def test_carteDevMonopole(self):
+        pass
+
     def test_calculPlusGrandeArmee(self):
         joueurs = ["Jeep", "Luka", "Nico"]
         catan = Catan.Catan(joueurs)
+
+    def test_calculPlusGrandeRoute(self):
+        pass
+
+    def test_calculValeurPlusGrandeRoute(self):
+        pass
+
+    def test_addElemToSet(self):
+        pass
 
 class TestJoueur(unittest.TestCase):
     def test_init(self):
@@ -100,15 +112,23 @@ class TestJoueur(unittest.TestCase):
         pass
 
     def test_calculPV(self):
-        pass
+        plateau = Plateau.Plateau()
+        nom, numero = "Guido", 0
+        joueur = Joueur.Joueur(nom, numero, plateau)
+        joueur.carteDev=[Plateau.DevPV(),Plateau.DevPV()]
+        joueur.colonies=[Plateau.Colonie(joueur,(1,-1)),Plateau.Colonie(joueur,(0,2))]
+        joueur.villes=[Plateau.Colonie(joueur,(1,0)),Plateau.Colonie(joueur,(0,-1))]
+        joueur.plusGrandeArmee=True
+        joueur.plusGrandeRoute=True
+        joueur.calculPV()
+        self.assertEqual(joueur.pointsVictoire,12)
 
     def test_victoire(self):
         plateau = Plateau.Plateau()
-        nom1, numero1 = "Guido", 0
-        joueur = Joueur.Joueur(nom1, numero1, plateau)
+        nom, numero = "Guido", 0
+        joueur = Joueur.Joueur(nom, numero, plateau)
         self.assertFalse(joueur.victoire())
-        pioche=Plateau.Pioche()
-        joueur.carteDev=[Plateau.DevPV(joueur),Plateau.DevPV(joueur),Plateau.DevPV(joueur),Plateau.DevPV(joueur),Plateau.DevPV(joueur),Plateau.DevPV(joueur),Plateau.DevPV(joueur),Plateau.DevPV(joueur),Plateau.DevPV(joueur),Plateau.DevPV(joueur)]
+        joueur.pointsVictoire=10
         self.assertTrue(joueur.victoire())
 
 class TestPlateau(unittest.TestCase):

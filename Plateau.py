@@ -866,17 +866,19 @@ class Port():
 
     Attributs
     ---------
-    coords : ndarray
+    coords : tuple(int)
         coordonnées du port
     echange : ndarray
         echanges de ressources possibles pour ce type de port
+    type : string
+        type d'échange que fournit le port
     """
 
     def __init__(self, coords, echange, type):
         """
         Parametres
         ----------
-        coords : ndarray
+        coords : tuple(int)
             Coordonnées du port
         echange : ndarray
             Echanges de ressources possibles pour ce type de port

@@ -33,6 +33,9 @@ class Joueur():
         ports que possède le joueur
     valeurEchange : ndarray
         taux des échanges de ressources avec la banque variant selon le nombre et type de ports possédés par le joueur
+    nbChevalier : int
+        nombre de chevaliers que possède le joueur
+    nbRoutes :
     plusGrandeRoute : bool
         vrai si le joueur possède la plus grande suite d'au moins 5 routes
     plusGrandeArmee : bool
@@ -147,11 +150,6 @@ class Joueur():
         Paramètres
         ----------
         aucun
-
-        Renvoie
-        -------
-        n : int
-            Nombre de points de victoire du joueur
         """
 
         n = 0
