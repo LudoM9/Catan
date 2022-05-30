@@ -1,8 +1,6 @@
 # Catan
 Projet Informatique de Ludovic Mustière et Tom Laurent sur le jeu de société Les Colons de Catan.
 
-![Uploading image.png…]()
-
 ## Initialisation
 Utilisation en python 3 avec pygame 1.9.2 ou pygame 2.0.1.
 Il faut télécharger le dossier Catan pouis l'ouvrir avec votre IDE. Ensuite, vous pouvez executer le fichier main.py.
