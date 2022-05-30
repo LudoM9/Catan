@@ -133,6 +133,19 @@ class Catan():
                 else:
                     elems[i].joueur.ressource -= np.array([0,0,0,0,1])
                     joueurVoleur.ressource += np.array([0,0,0,0,1])
+            for joueur in self.joueurs:
+                while sum(joueur.ressource)>7:
+                    e = rd.randint(1, sum(joueur.ressource))
+                    if e <= joueur.ressource[0]:
+                        joueur.ressource -= np.array([1,0,0,0,0])
+                    elif e <= joueur.ressource[0]+joueur.ressource[1]:
+                        joueur.ressource -= np.array([0,1,0,0,0])
+                    elif e <= joueur.ressource[0]+joueur.ressource[1]+joueur.ressource[2]:
+                        joueur.ressource -= np.array([0,0,1,0,0])
+                    elif e <= joueur.ressource[0]+joueur.ressource[1]+joueur.ressource[2]+joueur.ressource[3]:
+                        joueur.ressource -= np.array([0,0,0,1,0])
+                    else:
+                        joueur.ressource -= np.array([0,0,0,0,1])
             return True
         return False
 
@@ -434,7 +447,7 @@ class Catan():
             if joueur.numero != joueurActuel.numero:
                 ajout += joueur.ressource[ressource]
                 joueur.ressource[ressource] = 0
-        joueurActuel.ressource += ajout
+        joueurActuel.ressource[ressource] += ajout
 
     def calculPlusGrandeArmee(self):
         """

@@ -807,7 +807,7 @@ class Ville(Colonie):
             Coordonnées de la ville
         """
 
-        super().__init__(self, joueur, coords)
+        super().__init__(joueur, coords)
         self.multiplicateur = 2
         self.coût = np.array([0,0,0,2,3])
 

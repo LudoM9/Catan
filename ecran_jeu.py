@@ -315,6 +315,15 @@ def main(catan):
                     rect.center = (vertices[i][0]+cst.xoff,vertices[i][1]+cst.yoff)
                     pygame.draw.rect(cst.fenetre, (255,102,255), rect)
                     RECTS_VERTICES[i] = rect
+        
+        if constructionVille:
+            for i, vertice_coord in enumerate(vertices_coords):
+                for colonie in joueurActuel.colonies:
+                    if vertice_coord == colonie.coords:
+                        rect = Rect((vertices[i][0]+cst.xoff,vertices[i][1]+cst.yoff),(20,20))
+                        rect.center = (vertices[i][0]+cst.xoff,vertices[i][1]+cst.yoff)
+                        pygame.draw.rect(cst.fenetre, (255,102,255), rect)
+                        RECTS_VERTICES[i] = rect
 
         if startingRoute or constructionRoute or carteDevConstructionRoute:
             if startingRoute:
@@ -965,6 +974,8 @@ def main(catan):
                     if validerJ1 and validerJ2:
                         if catan.echangeJoueur(joueurActuel, catan.joueurs[numeroJoueurEchange], np.array([int(textWood), int(textBrick), int(textWool), int(textWheat), int(textStone)]), np.array([int(textWood2), int(textBrick2), int(textWool2), int(textWheat2), int(textStone2)])):
                             echangeJoueurs = False
+                            validerJ1 = False
+                            validerJ2 = False
                             textStone = '0'
                             textBrick = '0'
                             textWheat = '0'
@@ -993,6 +1004,8 @@ def main(catan):
                     if validerJ1 and validerJ2:
                         if catan.echangeJoueur(joueurActuel, catan.joueurs[numeroJoueurEchange], np.array([int(textWood), int(textBrick), int(textWool), int(textWheat), int(textStone)]), np.array([int(textWood2), int(textBrick2), int(textWool2), int(textWheat2), int(textStone2)])):
                             echangeJoueurs = False
+                            validerJ1 = False
+                            validerJ2 = False
                             textStone = '0'
                             textBrick = '0'
                             textWheat = '0'
