@@ -33,6 +33,10 @@ class Joueur():
         ports que possède le joueur
     valeurEchange : ndarray
         taux des échanges de ressources avec la banque variant selon le nombre et type de ports possédés par le joueur
+    nbChevalier : int
+        Nombre de chevalier que le joueur à jouer
+    nbRoutes : int
+        Nombre de tronçons de la plus grande route du joueur
     plusGrandeRoute : bool
         vrai si le joueur possède la plus grande suite d'au moins 5 routes
     plusGrandeArmee : bool
@@ -147,11 +151,6 @@ class Joueur():
         Paramètres
         ----------
         aucun
-
-        Renvoie
-        -------
-        n : int
-            Nombre de points de victoire du joueur
         """
 
         n = 0
@@ -169,6 +168,13 @@ class Joueur():
         self.pointsVictoire = n
     
     def removeRoutes(self):
+        """
+        Supprime une carte développement de type route après qu'elle soit jouée
+
+        Paramètres
+        ----------
+        aucun
+        """
         c = 0
         for i, carte in enumerate(self.carteDev):
             if carte.type == "Routes":
@@ -176,6 +182,13 @@ class Joueur():
         del self.carteDev[c]
     
     def removeChevalier(self):
+        """
+        Supprime une carte développement de type chevalier après qu'elle soit jouée
+
+        Paramètres
+        ----------
+        aucun
+        """
         c = 0
         for i, carte in enumerate(self.carteDev):
             if carte.type == "Chevalier":
@@ -184,6 +197,13 @@ class Joueur():
         del self.carteDev[c]
 
     def removeInvention(self):
+        """
+        Supprime une carte développement de type invention après qu'elle soit jouée
+
+        Paramètres
+        ----------
+        aucun
+        """
         c = 0
         for i, carte in enumerate(self.carteDev):
             if carte.type == "Invention":
@@ -191,6 +211,13 @@ class Joueur():
         del self.carteDev[c]
     
     def removeMonopole(self):
+        """
+        Supprime une carte développement de type monopole après qu'elle soit jouée
+
+        Paramètres
+        ----------
+        aucun
+        """
         c = 0
         for i, carte in enumerate(self.carteDev):
             if carte.type == "Monopole":

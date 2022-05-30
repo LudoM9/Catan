@@ -394,6 +394,11 @@ class Catan():
         Paramètres
         ----------
         aucun
+
+        Renvoie
+        -------
+        True si un joueur à gagné la partie à la fin de son tour
+        False sinon
         """
         self.calculPlusGrandeArmee()
         self.calculValeurPlusGrandeRoute(self.joueurActuel)
@@ -442,6 +447,16 @@ class Catan():
         
 
     def carteDevMonopole(self, joueurActuel, ressource):
+        """
+        Jouer une carte developpement monopole
+
+        Paramètres
+        ----------
+        joueurActuel : Joueur
+            Joueur qui joue la carte Monopole
+        ressource : int
+            Int qui indique quelle ressource le joueur à choisi pour le monopole
+        """
         ajout = 0
         for joueur in self.joueurs:
             if joueur.numero != joueurActuel.numero:
@@ -476,6 +491,15 @@ class Catan():
             self.joueurs[numeroJoueur].plusGrandeArmee = True
     
     def calculPlusGrandeRoute(self):
+        """
+        Calcule quel joueur dans la partie possède la plus grande route
+        et si elle est composée d'au moins 5 tronçons.
+
+        Paramètres
+        ----------
+        aucun
+        """
+
         m = 0
         n = 0
         numeroJoueur = 0
@@ -493,6 +517,14 @@ class Catan():
             self.joueurs[numeroJoueur].plusGrandeRoute = True
     
     def calculValeurPlusGrandeRoute(self, joueur):
+        """
+        Calcule la longueur de la plus grande route d'un joueur
+
+        Paramètres
+        ----------
+        joueur : Joueur
+            Joueur dont on calcule la plus grande route
+        """
         routes_coords = [route.coords for route in joueur.routes]
         longueur = []
         while len(routes_coords) != 0:
@@ -509,6 +541,21 @@ class Catan():
         return max(longueur)
 
     def addElemToSet(self, joueur, road):
+        """
+        Fonction récursive qui ajoute des tronçons de route
+        à un set
+
+        Paramètres
+        ----------
+        joueur : Joueur
+            Joueur dont on calcule la plus grande route
+        road : Set
+            Stocke les tronçons déjà calculé de la route
+
+        Renvoie
+        -------
+        Tous les tronçons d'une même route
+        """
         GoOn = False
         autreRoad = set([])
         for elem in road:

@@ -10,6 +10,3 @@ Chevaliers : 14
 Max colonies : 5
 Max villes : 4
 Max routes : 16
-
-Décocher échange joueur après échange
-Construction ville impossible

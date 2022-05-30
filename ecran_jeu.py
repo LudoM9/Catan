@@ -1,3 +1,7 @@
+"""
+Module contenant l'affichage de l'écran du jeu.
+"""
+
 import pygame, os
 from pygame.locals import *
 import constantes as cst

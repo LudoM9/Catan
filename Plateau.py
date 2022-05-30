@@ -896,6 +896,8 @@ class CarteDeveloppement():
     ---------
     coût : ndarray
         prix d'une carte développement
+    type : String
+        type de carte developpement
     """
 
     def __init__(self):
@@ -903,26 +905,76 @@ class CarteDeveloppement():
         self.type = ""
 
 class DevConstructionDeRoutes(CarteDeveloppement):
+    """
+    Classe représentant une carte développement.
+
+    Attributs
+    ---------
+    coût : ndarray
+        prix d'une carte développement
+    type : String
+        type de carte developpement
+    """
     def __init__(self):
         super().__init__()
         self.type = "Routes"
     
 class DevMonopole(CarteDeveloppement):
+    """
+    Classe représentant une carte développement.
+
+    Attributs
+    ---------
+    coût : ndarray
+        prix d'une carte développement
+    type : String
+        type de carte developpement
+    """
     def __init__(self):
         super().__init__()
         self.type = "Monopole"
 
 class DevInvention(CarteDeveloppement):
+    """
+    Classe représentant une carte développement.
+
+    Attributs
+    ---------
+    coût : ndarray
+        prix d'une carte développement
+    type : String
+        type de carte developpement
+    """
     def __init__(self):
         super().__init__()
         self.type = "Invention"
 
 class DevPV(CarteDeveloppement):
+    """
+    Classe représentant une carte développement.
+
+    Attributs
+    ---------
+    coût : ndarray
+        prix d'une carte développement
+    type : String
+        type de carte developpement
+    """
     def __init__(self):
         super().__init__()
         self.type = "PV"
 
 class DevChevalier(CarteDeveloppement):
+    """
+    Classe représentant une carte développement.
+
+    Attributs
+    ---------
+    coût : ndarray
+        prix d'une carte développement
+    type : String
+        type de carte developpement
+    """
     def __init__(self):
         super().__init__()
         self.type = "Chevalier"
