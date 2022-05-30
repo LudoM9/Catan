@@ -993,6 +993,8 @@ def main(catan):
                             textInfo = ''
                         else:
                             textInfo = 'Transaction Impossible!'
+                            validerJ1 = False
+                            validerJ2 = False
                 elif RECT_ECHANGE_VALIDERJ2.collidepoint(event.pos):
                     validerJ2 = not(validerJ2)
                     activeTextBrick = False
@@ -1023,6 +1025,8 @@ def main(catan):
                             textInfo = ''
                         else:
                             textInfo = 'Transaction Impossible!'
+                            validerJ1 = False
+                            validerJ2 = False
                 elif RECT_CARTEDEV_ROUTES.collidepoint(event.pos):
                     carteDevConstructionRoute = True
                     joueurActuel.removeRoutes()
