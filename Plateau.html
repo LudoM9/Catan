@@ -1,0 +1,1073 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: module Plateau</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>Plateau</strong></big></big></font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:c%3A%5Cusers%5Ctom%5Cdocuments%5Cgithub%5Ccatan%5Cplateau.py">c:\users\tom\documents\github\catan\plateau.py</a></font></td></tr></table>
+    <p><tt>Module&nbsp;contenant&nbsp;toutes&nbsp;les&nbsp;informations&nbsp;relatives&nbsp;au&nbsp;plateau&nbsp;de&nbsp;jeu&nbsp;et&nbsp;aux&nbsp;déplacments&nbsp;sur&nbsp;celui-ci.</tt></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#aa55cc">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Modules</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="numpy.html">numpy</a><br>
+</td><td width="25%" valign=top><a href="random.html">random</a><br>
+</td><td width="25%" valign=top></td><td width="25%" valign=top></td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ee77aa">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Classes</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#ee77aa"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl>
+<dt><font face="helvetica, arial"><a href="builtins.html#object">builtins.object</a>
+</font></dt><dd>
+<dl>
+<dt><font face="helvetica, arial"><a href="Plateau.html#CarteDeveloppement">CarteDeveloppement</a>
+</font></dt><dd>
+<dl>
+<dt><font face="helvetica, arial"><a href="Plateau.html#DevChevalier">DevChevalier</a>
+</font></dt><dt><font face="helvetica, arial"><a href="Plateau.html#DevConstructionDeRoutes">DevConstructionDeRoutes</a>
+</font></dt><dt><font face="helvetica, arial"><a href="Plateau.html#DevInvention">DevInvention</a>
+</font></dt><dt><font face="helvetica, arial"><a href="Plateau.html#DevMonopole">DevMonopole</a>
+</font></dt><dt><font face="helvetica, arial"><a href="Plateau.html#DevPV">DevPV</a>
+</font></dt></dl>
+</dd>
+<dt><font face="helvetica, arial"><a href="Plateau.html#Colonie">Colonie</a>
+</font></dt><dd>
+<dl>
+<dt><font face="helvetica, arial"><a href="Plateau.html#Ville">Ville</a>
+</font></dt></dl>
+</dd>
+<dt><font face="helvetica, arial"><a href="Plateau.html#Pioche">Pioche</a>
+</font></dt><dt><font face="helvetica, arial"><a href="Plateau.html#Plateau">Plateau</a>
+</font></dt><dt><font face="helvetica, arial"><a href="Plateau.html#Port">Port</a>
+</font></dt><dt><font face="helvetica, arial"><a href="Plateau.html#Route">Route</a>
+</font></dt><dt><font face="helvetica, arial"><a href="Plateau.html#Tile">Tile</a>
+</font></dt><dd>
+<dl>
+<dt><font face="helvetica, arial"><a href="Plateau.html#ClayTile">ClayTile</a>
+</font></dt><dt><font face="helvetica, arial"><a href="Plateau.html#DesertTile">DesertTile</a>
+</font></dt><dt><font face="helvetica, arial"><a href="Plateau.html#StoneTile">StoneTile</a>
+</font></dt><dt><font face="helvetica, arial"><a href="Plateau.html#WheatTile">WheatTile</a>
+</font></dt><dt><font face="helvetica, arial"><a href="Plateau.html#WoodTile">WoodTile</a>
+</font></dt><dt><font face="helvetica, arial"><a href="Plateau.html#WoolTile">WoolTile</a>
+</font></dt></dl>
+</dd>
+<dt><font face="helvetica, arial"><a href="Plateau.html#Voleur">Voleur</a>
+</font></dt></dl>
+</dd>
+</dl>
+ <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="CarteDeveloppement">class <strong>CarteDeveloppement</strong></a>(<a href="builtins.html#object">builtins.object</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>Classe&nbsp;représentant&nbsp;une&nbsp;carte&nbsp;développement.<br>
+&nbsp;<br>
+Attributs<br>
+---------<br>
+coût&nbsp;:&nbsp;ndarray<br>
+&nbsp;&nbsp;&nbsp;&nbsp;prix&nbsp;d'une&nbsp;carte&nbsp;développement<br>
+type&nbsp;:&nbsp;String<br>
+&nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;de&nbsp;carte&nbsp;developpement<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="CarteDeveloppement-__init__"><strong>__init__</strong></a>(self)</dt><dd><tt>Initialize&nbsp;self.&nbsp;&nbsp;See&nbsp;help(type(self))&nbsp;for&nbsp;accurate&nbsp;signature.</tt></dd></dl>
+
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="ClayTile">class <strong>ClayTile</strong></a>(<a href="Plateau.html#Tile">Tile</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt><a href="#ClayTile">ClayTile</a>(plateau,&nbsp;coords,&nbsp;value)<br>
+&nbsp;<br>
+Classe&nbsp;représentant&nbsp;les&nbsp;tuiles&nbsp;produisant&nbsp;de&nbsp;l'argile,&nbsp;fille&nbsp;de&nbsp;la&nbsp;classe&nbsp;<a href="#Tile">Tile</a>.<br>
+&nbsp;<br>
+Attributs<br>
+---------<br>
+ressource&nbsp;:&nbsp;ndarray<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ressource&nbsp;liée&nbsp;à&nbsp;la&nbsp;case<br>
+color&nbsp;:&nbsp;string<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Nom&nbsp;de&nbsp;la&nbsp;ressource&nbsp;correspondant&nbsp;à&nbsp;la&nbsp;couleur&nbsp;de&nbsp;la&nbsp;case<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%"><dl><dt>Method resolution order:</dt>
+<dd><a href="Plateau.html#ClayTile">ClayTile</a></dd>
+<dd><a href="Plateau.html#Tile">Tile</a></dd>
+<dd><a href="builtins.html#object">builtins.object</a></dd>
+</dl>
+<hr>
+Methods defined here:<br>
+<dl><dt><a name="ClayTile-__init__"><strong>__init__</strong></a>(self, plateau, coords, value)</dt><dd><tt>Parametres<br>
+----------<br>
+plateau&nbsp;:&nbsp;<a href="#Plateau">Plateau</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Plateau">Plateau</a>&nbsp;dans&nbsp;lequel&nbsp;la&nbsp;tuile&nbsp;se&nbsp;trouve<br>
+coords&nbsp;:&nbsp;ndarray<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Coordonnées&nbsp;la&nbsp;la&nbsp;tuile<br>
+value&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Valeur&nbsp;du&nbsp;numéro&nbsp;de&nbsp;la&nbsp;case&nbsp;correspondant&nbsp;au&nbsp;résultat&nbsp;des&nbsp;dés</tt></dd></dl>
+
+<hr>
+Data and other attributes defined here:<br>
+<dl><dt><strong>__abstractmethods__</strong> = frozenset()</dl>
+
+<hr>
+Data descriptors inherited from <a href="Plateau.html#Tile">Tile</a>:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="Colonie">class <strong>Colonie</strong></a>(<a href="builtins.html#object">builtins.object</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt><a href="#Colonie">Colonie</a>(joueur,&nbsp;coords)<br>
+&nbsp;<br>
+Classe&nbsp;représentant&nbsp;une&nbsp;colonie,&nbsp;mère&nbsp;de&nbsp;<a href="#Ville">Ville</a>.<br>
+&nbsp;<br>
+Attributs<br>
+---------<br>
+joueur&nbsp;:&nbsp;Joueur<br>
+&nbsp;&nbsp;&nbsp;&nbsp;joueur&nbsp;possédant&nbsp;la&nbsp;colonie<br>
+coords&nbsp;:&nbsp;ndarray<br>
+&nbsp;&nbsp;&nbsp;&nbsp;coordonnées&nbsp;de&nbsp;la&nbsp;colonie<br>
+adjacent&nbsp;:&nbsp;list<br>
+&nbsp;&nbsp;&nbsp;&nbsp;liste&nbsp;des&nbsp;sommets&nbsp;adjacents,&nbsp;qui&nbsp;ne&nbsp;doivent&nbsp;pas&nbsp;contenir&nbsp;d'autres&nbsp;colonies&nbsp;ou&nbsp;villes.<br>
+multiplicateur&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;nombre&nbsp;de&nbsp;points&nbsp;de&nbsp;victoire&nbsp;conférés&nbsp;à&nbsp;la&nbsp;construction&nbsp;d'une&nbsp;colonie<br>
+coût&nbsp;:&nbsp;ndarray<br>
+&nbsp;&nbsp;&nbsp;&nbsp;prix&nbsp;de&nbsp;la&nbsp;construction&nbsp;d'une&nbsp;colonie<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="Colonie-__init__"><strong>__init__</strong></a>(self, joueur, coords)</dt><dd><tt>Parametres<br>
+----------<br>
+joueur&nbsp;:&nbsp;Joueur<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Joueur&nbsp;possédant&nbsp;la&nbsp;colonie<br>
+coords&nbsp;:&nbsp;ndarray<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Coordonnées&nbsp;de&nbsp;la&nbsp;colonie</tt></dd></dl>
+
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="DesertTile">class <strong>DesertTile</strong></a>(<a href="Plateau.html#Tile">Tile</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt><a href="#DesertTile">DesertTile</a>(plateau,&nbsp;coords,&nbsp;value)<br>
+&nbsp;<br>
+Classe&nbsp;représentant&nbsp;la&nbsp;tuile&nbsp;fixe&nbsp;au&nbsp;centre,&nbsp;position&nbsp;initiale&nbsp;du&nbsp;voleur&nbsp;et&nbsp;ne&nbsp;produisant&nbsp;rien.<br>
+&nbsp;<br>
+Attributs<br>
+---------<br>
+ressource&nbsp;:&nbsp;ndarray<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ressource&nbsp;liée&nbsp;à&nbsp;la&nbsp;case<br>
+color&nbsp;:&nbsp;string<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Nom&nbsp;de&nbsp;la&nbsp;case&nbsp;correspondant&nbsp;à&nbsp;sa&nbsp;couleur<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%"><dl><dt>Method resolution order:</dt>
+<dd><a href="Plateau.html#DesertTile">DesertTile</a></dd>
+<dd><a href="Plateau.html#Tile">Tile</a></dd>
+<dd><a href="builtins.html#object">builtins.object</a></dd>
+</dl>
+<hr>
+Methods defined here:<br>
+<dl><dt><a name="DesertTile-__init__"><strong>__init__</strong></a>(self, plateau, coords, value)</dt><dd><tt>Parametres<br>
+----------<br>
+plateau&nbsp;:&nbsp;<a href="#Plateau">Plateau</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Plateau">Plateau</a>&nbsp;dans&nbsp;lequel&nbsp;la&nbsp;tuile&nbsp;se&nbsp;trouve<br>
+coords&nbsp;:&nbsp;ndarray<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Coordonnées&nbsp;la&nbsp;la&nbsp;tuile<br>
+value&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Valeur&nbsp;du&nbsp;numéro&nbsp;de&nbsp;la&nbsp;case&nbsp;correspondant&nbsp;au&nbsp;résultat&nbsp;des&nbsp;dés</tt></dd></dl>
+
+<hr>
+Data and other attributes defined here:<br>
+<dl><dt><strong>__abstractmethods__</strong> = frozenset()</dl>
+
+<hr>
+Data descriptors inherited from <a href="Plateau.html#Tile">Tile</a>:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="DevChevalier">class <strong>DevChevalier</strong></a>(<a href="Plateau.html#CarteDeveloppement">CarteDeveloppement</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>Classe&nbsp;représentant&nbsp;une&nbsp;carte&nbsp;développement.<br>
+&nbsp;<br>
+Attributs<br>
+---------<br>
+coût&nbsp;:&nbsp;ndarray<br>
+&nbsp;&nbsp;&nbsp;&nbsp;prix&nbsp;d'une&nbsp;carte&nbsp;développement<br>
+type&nbsp;:&nbsp;String<br>
+&nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;de&nbsp;carte&nbsp;developpement<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%"><dl><dt>Method resolution order:</dt>
+<dd><a href="Plateau.html#DevChevalier">DevChevalier</a></dd>
+<dd><a href="Plateau.html#CarteDeveloppement">CarteDeveloppement</a></dd>
+<dd><a href="builtins.html#object">builtins.object</a></dd>
+</dl>
+<hr>
+Methods defined here:<br>
+<dl><dt><a name="DevChevalier-__init__"><strong>__init__</strong></a>(self)</dt><dd><tt>Initialize&nbsp;self.&nbsp;&nbsp;See&nbsp;help(type(self))&nbsp;for&nbsp;accurate&nbsp;signature.</tt></dd></dl>
+
+<hr>
+Data descriptors inherited from <a href="Plateau.html#CarteDeveloppement">CarteDeveloppement</a>:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="DevConstructionDeRoutes">class <strong>DevConstructionDeRoutes</strong></a>(<a href="Plateau.html#CarteDeveloppement">CarteDeveloppement</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>Classe&nbsp;représentant&nbsp;une&nbsp;carte&nbsp;développement.<br>
+&nbsp;<br>
+Attributs<br>
+---------<br>
+coût&nbsp;:&nbsp;ndarray<br>
+&nbsp;&nbsp;&nbsp;&nbsp;prix&nbsp;d'une&nbsp;carte&nbsp;développement<br>
+type&nbsp;:&nbsp;String<br>
+&nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;de&nbsp;carte&nbsp;developpement<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%"><dl><dt>Method resolution order:</dt>
+<dd><a href="Plateau.html#DevConstructionDeRoutes">DevConstructionDeRoutes</a></dd>
+<dd><a href="Plateau.html#CarteDeveloppement">CarteDeveloppement</a></dd>
+<dd><a href="builtins.html#object">builtins.object</a></dd>
+</dl>
+<hr>
+Methods defined here:<br>
+<dl><dt><a name="DevConstructionDeRoutes-__init__"><strong>__init__</strong></a>(self)</dt><dd><tt>Initialize&nbsp;self.&nbsp;&nbsp;See&nbsp;help(type(self))&nbsp;for&nbsp;accurate&nbsp;signature.</tt></dd></dl>
+
+<hr>
+Data descriptors inherited from <a href="Plateau.html#CarteDeveloppement">CarteDeveloppement</a>:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="DevInvention">class <strong>DevInvention</strong></a>(<a href="Plateau.html#CarteDeveloppement">CarteDeveloppement</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>Classe&nbsp;représentant&nbsp;une&nbsp;carte&nbsp;développement.<br>
+&nbsp;<br>
+Attributs<br>
+---------<br>
+coût&nbsp;:&nbsp;ndarray<br>
+&nbsp;&nbsp;&nbsp;&nbsp;prix&nbsp;d'une&nbsp;carte&nbsp;développement<br>
+type&nbsp;:&nbsp;String<br>
+&nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;de&nbsp;carte&nbsp;developpement<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%"><dl><dt>Method resolution order:</dt>
+<dd><a href="Plateau.html#DevInvention">DevInvention</a></dd>
+<dd><a href="Plateau.html#CarteDeveloppement">CarteDeveloppement</a></dd>
+<dd><a href="builtins.html#object">builtins.object</a></dd>
+</dl>
+<hr>
+Methods defined here:<br>
+<dl><dt><a name="DevInvention-__init__"><strong>__init__</strong></a>(self)</dt><dd><tt>Initialize&nbsp;self.&nbsp;&nbsp;See&nbsp;help(type(self))&nbsp;for&nbsp;accurate&nbsp;signature.</tt></dd></dl>
+
+<hr>
+Data descriptors inherited from <a href="Plateau.html#CarteDeveloppement">CarteDeveloppement</a>:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="DevMonopole">class <strong>DevMonopole</strong></a>(<a href="Plateau.html#CarteDeveloppement">CarteDeveloppement</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>Classe&nbsp;représentant&nbsp;une&nbsp;carte&nbsp;développement.<br>
+&nbsp;<br>
+Attributs<br>
+---------<br>
+coût&nbsp;:&nbsp;ndarray<br>
+&nbsp;&nbsp;&nbsp;&nbsp;prix&nbsp;d'une&nbsp;carte&nbsp;développement<br>
+type&nbsp;:&nbsp;String<br>
+&nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;de&nbsp;carte&nbsp;developpement<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%"><dl><dt>Method resolution order:</dt>
+<dd><a href="Plateau.html#DevMonopole">DevMonopole</a></dd>
+<dd><a href="Plateau.html#CarteDeveloppement">CarteDeveloppement</a></dd>
+<dd><a href="builtins.html#object">builtins.object</a></dd>
+</dl>
+<hr>
+Methods defined here:<br>
+<dl><dt><a name="DevMonopole-__init__"><strong>__init__</strong></a>(self)</dt><dd><tt>Initialize&nbsp;self.&nbsp;&nbsp;See&nbsp;help(type(self))&nbsp;for&nbsp;accurate&nbsp;signature.</tt></dd></dl>
+
+<hr>
+Data descriptors inherited from <a href="Plateau.html#CarteDeveloppement">CarteDeveloppement</a>:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="DevPV">class <strong>DevPV</strong></a>(<a href="Plateau.html#CarteDeveloppement">CarteDeveloppement</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>Classe&nbsp;représentant&nbsp;une&nbsp;carte&nbsp;développement.<br>
+&nbsp;<br>
+Attributs<br>
+---------<br>
+coût&nbsp;:&nbsp;ndarray<br>
+&nbsp;&nbsp;&nbsp;&nbsp;prix&nbsp;d'une&nbsp;carte&nbsp;développement<br>
+type&nbsp;:&nbsp;String<br>
+&nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;de&nbsp;carte&nbsp;developpement<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%"><dl><dt>Method resolution order:</dt>
+<dd><a href="Plateau.html#DevPV">DevPV</a></dd>
+<dd><a href="Plateau.html#CarteDeveloppement">CarteDeveloppement</a></dd>
+<dd><a href="builtins.html#object">builtins.object</a></dd>
+</dl>
+<hr>
+Methods defined here:<br>
+<dl><dt><a name="DevPV-__init__"><strong>__init__</strong></a>(self)</dt><dd><tt>Initialize&nbsp;self.&nbsp;&nbsp;See&nbsp;help(type(self))&nbsp;for&nbsp;accurate&nbsp;signature.</tt></dd></dl>
+
+<hr>
+Data descriptors inherited from <a href="Plateau.html#CarteDeveloppement">CarteDeveloppement</a>:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="Pioche">class <strong>Pioche</strong></a>(<a href="builtins.html#object">builtins.object</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>Classe&nbsp;représentant&nbsp;la&nbsp;pioche.<br>
+&nbsp;<br>
+Attributs<br>
+---------<br>
+devCards&nbsp;:&nbsp;list<br>
+&nbsp;&nbsp;&nbsp;&nbsp;liste&nbsp;des&nbsp;cartes&nbsp;développement&nbsp;dans&nbsp;la&nbsp;pioche,&nbsp;remplie&nbsp;aléatoirement<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="Pioche-__init__"><strong>__init__</strong></a>(self)</dt><dd><tt>Parametres<br>
+----------<br>
+aucun</tt></dd></dl>
+
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="Plateau">class <strong>Plateau</strong></a>(<a href="builtins.html#object">builtins.object</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt><a href="#Plateau">Plateau</a>(rdPlateau=False)<br>
+&nbsp;<br>
+Classe&nbsp;représentant&nbsp;le&nbsp;plateau&nbsp;de&nbsp;jeu&nbsp;:&nbsp;son&nbsp;caractère&nbsp;aléatoire&nbsp;et&nbsp;des&nbsp;calculs&nbsp;pour&nbsp;pouvoir&nbsp;interagir&nbsp;avec&nbsp;lui.<br>
+Si&nbsp;le&nbsp;plateau&nbsp;n'est&nbsp;pas&nbsp;aléatoire&nbsp;(rdPlateau==False),&nbsp;le&nbsp;plateau&nbsp;alors&nbsp;créé&nbsp;est&nbsp;prédéfini&nbsp;et&nbsp;équilibré.<br>
+&nbsp;<br>
+Attributs<br>
+---------<br>
+tiles&nbsp;:&nbsp;list(<a href="#Tile">Tile</a>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;liste&nbsp;des&nbsp;tuiles&nbsp;du&nbsp;plateau<br>
+intersections&nbsp;:&nbsp;list<br>
+&nbsp;&nbsp;&nbsp;&nbsp;liste&nbsp;des&nbsp;intersections&nbsp;ou&nbsp;sommets&nbsp;du&nbsp;plateau<br>
+routes&nbsp;:&nbsp;list<br>
+&nbsp;&nbsp;&nbsp;&nbsp;liste&nbsp;des&nbsp;routes&nbsp;ou&nbsp;chemin&nbsp;du&nbsp;plateau<br>
+ports&nbsp;:&nbsp;list(<a href="#Port">Port</a>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;liste&nbsp;des&nbsp;ports&nbsp;du&nbsp;plateau<br>
+voleur&nbsp;:&nbsp;<a href="#Voleur">Voleur</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;voleur&nbsp;présent&nbsp;sur&nbsp;le&nbsp;plateau<br>
+pioche&nbsp;:&nbsp;<a href="#Pioche">Pioche</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;pioche&nbsp;de&nbsp;cartes&nbsp;développement<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="Plateau-__init__"><strong>__init__</strong></a>(self, rdPlateau=False)</dt><dd><tt>Parametres<br>
+----------<br>
+rdPlateau&nbsp;:&nbsp;bool,&nbsp;optionnel,&nbsp;False&nbsp;par&nbsp;défaut<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Booléen&nbsp;pour&nbsp;savoir&nbsp;si&nbsp;le&nbsp;plateau&nbsp;est&nbsp;aléatoire</tt></dd></dl>
+
+<dl><dt><a name="Plateau-colonieAdjacenteRouteExiste"><strong>colonieAdjacenteRouteExiste</strong></a>(self, joueur, coords)</dt><dd><tt>Vérifie&nbsp;si&nbsp;un&nbsp;joueur&nbsp;possède&nbsp;une&nbsp;colonie&nbsp;ou&nbsp;une&nbsp;ville&nbsp;adjacente&nbsp;à&nbsp;un&nbsp;chemin&nbsp;testé.<br>
+&nbsp;<br>
+Parametres<br>
+----------<br>
+joueur&nbsp;:&nbsp;Joueur<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Joueur&nbsp;dont&nbsp;la&nbsp;présence&nbsp;d'une&nbsp;colonie&nbsp;adjacente&nbsp;est&nbsp;testée<br>
+coords&nbsp;:&nbsp;ndarray<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Coordonnées&nbsp;du&nbsp;chelin&nbsp;à&nbsp;tester<br>
+Renvoie<br>
+-------<br>
+True&nbsp;si&nbsp;la&nbsp;condition&nbsp;est&nbsp;vérifiée<br>
+False&nbsp;sinon</tt></dd></dl>
+
+<dl><dt><a name="Plateau-colonieAdjacenteTile"><strong>colonieAdjacenteTile</strong></a>(self, coords)</dt><dd><tt>Trouve&nbsp;les&nbsp;colonies&nbsp;ou&nbsp;villes&nbsp;adjacentes&nbsp;à&nbsp;une&nbsp;tuile.<br>
+&nbsp;<br>
+Parametres<br>
+----------<br>
+coords&nbsp;:&nbsp;ndarray<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Coordonnées&nbsp;de&nbsp;la&nbsp;tuile&nbsp;à&nbsp;tester<br>
+Renvoie<br>
+-------<br>
+elems&nbsp;:&nbsp;liste(array)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Liste&nbsp;de&nbsp;colonies&nbsp;ou&nbsp;villes&nbsp;adjacentes&nbsp;à&nbsp;la&nbsp;tuile&nbsp;testée</tt></dd></dl>
+
+<dl><dt><a name="Plateau-getAdjacentEdgesFromEdge"><strong>getAdjacentEdgesFromEdge</strong></a>(self, edge)</dt><dd><tt>"<br>
+Parametres<br>
+----------<br>
+edge&nbsp;:&nbsp;ndarray<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Chemin&nbsp;dont&nbsp;on&nbsp;souhaite&nbsp;connaître&nbsp;les&nbsp;chemins&nbsp;adjacents<br>
+&nbsp;<br>
+Renvoie<br>
+-------<br>
+adjEdges&nbsp;:&nbsp;list(ndarray)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Liste&nbsp;des&nbsp;chemins&nbsp;adjacents&nbsp;au&nbsp;chemin&nbsp;en&nbsp;entrée</tt></dd></dl>
+
+<dl><dt><a name="Plateau-getAdjacentEdgesFromVertice"><strong>getAdjacentEdgesFromVertice</strong></a>(self, vertice)</dt><dd><tt>Parametres<br>
+----------<br>
+vertice&nbsp;:&nbsp;ndarray<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Coordonnées&nbsp;d'un&nbsp;sommet&nbsp;dont&nbsp;on&nbsp;souhaite&nbsp;connaître&nbsp;les&nbsp;chemins&nbsp;adjacents<br>
+&nbsp;<br>
+Renvoie<br>
+-------<br>
+adjEdges&nbsp;:&nbsp;list(ndarray)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Liste&nbsp;des&nbsp;chemins&nbsp;adjacentes&nbsp;au&nbsp;sommet&nbsp;en&nbsp;entrée</tt></dd></dl>
+
+<dl><dt><a name="Plateau-getAdjacentTilesFromTile"><strong>getAdjacentTilesFromTile</strong></a>(self, tile)</dt><dd><tt>Parametres<br>
+----------<br>
+tile&nbsp;:&nbsp;<a href="#Tile">Tile</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;Tuile&nbsp;dont&nbsp;on&nbsp;souhaite&nbsp;connaîntre&nbsp;les&nbsp;tuiles&nbsp;adjacentes<br>
+&nbsp;<br>
+Renvoie<br>
+-------<br>
+adjTiles&nbsp;:&nbsp;list(<a href="#Tile">Tile</a>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Liste&nbsp;des&nbsp;tuiles&nbsp;adjacentes&nbsp;à&nbsp;la&nbsp;tuile&nbsp;en&nbsp;entrée</tt></dd></dl>
+
+<dl><dt><a name="Plateau-getAdjacentTilesFromVertice"><strong>getAdjacentTilesFromVertice</strong></a>(self, vertice)</dt><dd><tt>Parametres<br>
+----------<br>
+vertice&nbsp;:&nbsp;ndarray<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Coordonnées&nbsp;d'un&nbsp;sommet&nbsp;dont&nbsp;on&nbsp;souhaite&nbsp;connaître&nbsp;les&nbsp;tuiles&nbsp;adjacents<br>
+&nbsp;<br>
+Renvoie<br>
+-------<br>
+adjTiles&nbsp;:&nbsp;list(<a href="#Tile">Tile</a>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Liste&nbsp;des&nbsp;tuiles&nbsp;adjacentes&nbsp;au&nbsp;sommet&nbsp;en&nbsp;entrée</tt></dd></dl>
+
+<dl><dt><a name="Plateau-getAdjacentVerticesFromVertice"><strong>getAdjacentVerticesFromVertice</strong></a>(self, vertice)</dt><dd><tt>Parametres<br>
+----------<br>
+vertice&nbsp;:&nbsp;ndarray<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Coordonnées&nbsp;d'un&nbsp;sommet&nbsp;dont&nbsp;on&nbsp;souhaite&nbsp;connaître&nbsp;les&nbsp;sommets&nbsp;adjacents<br>
+&nbsp;<br>
+Renvoie<br>
+-------<br>
+adjTiles&nbsp;:&nbsp;list(ndarray)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Liste&nbsp;des&nbsp;sommets&nbsp;adjacentes&nbsp;au&nbsp;sommet&nbsp;en&nbsp;entrée</tt></dd></dl>
+
+<dl><dt><a name="Plateau-getEdgesFromTile"><strong>getEdgesFromTile</strong></a>(self, tile)</dt><dd><tt>Parametres<br>
+----------<br>
+tile&nbsp;:&nbsp;<a href="#Tile">Tile</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;Tuile&nbsp;dont&nbsp;on&nbsp;souhaite&nbsp;connaître&nbsp;les&nbsp;chemins&nbsp;adjacents<br>
+&nbsp;<br>
+Renvoie<br>
+-------<br>
+edges&nbsp;:&nbsp;list(ndarray)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Liste&nbsp;des&nbsp;chemins&nbsp;adjacents&nbsp;à&nbsp;la&nbsp;tuile&nbsp;en&nbsp;entrée</tt></dd></dl>
+
+<dl><dt><a name="Plateau-getVerticesFromTile"><strong>getVerticesFromTile</strong></a>(self, tile)</dt><dd><tt>Parametres<br>
+----------<br>
+tile&nbsp;:&nbsp;<a href="#Tile">Tile</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;Tuile&nbsp;dont&nbsp;on&nbsp;souhaite&nbsp;connaîntre&nbsp;les&nbsp;sommets&nbsp;adjacents<br>
+&nbsp;<br>
+Renvoie<br>
+-------<br>
+vertices&nbsp;:&nbsp;list(ndarray)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Liste&nbsp;des&nbsp;sommets&nbsp;adjacents&nbsp;à&nbsp;la&nbsp;tuile&nbsp;en&nbsp;entrée</tt></dd></dl>
+
+<dl><dt><a name="Plateau-getVerticesOfEdge"><strong>getVerticesOfEdge</strong></a>(self, edge)</dt><dd><tt>Parametres<br>
+----------<br>
+edge&nbsp;:&nbsp;ndarray<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Chemin&nbsp;dont&nbsp;on&nbsp;souhaite&nbsp;connaître&nbsp;les&nbsp;sommets&nbsp;adjacents<br>
+&nbsp;<br>
+Renvoie<br>
+-------<br>
+vertices&nbsp;:&nbsp;list(ndarray)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Liste&nbsp;des&nbsp;sommets&nbsp;adjacents&nbsp;au&nbsp;chemin&nbsp;en&nbsp;entrée</tt></dd></dl>
+
+<dl><dt><a name="Plateau-intersectionDispoConstruction"><strong>intersectionDispoConstruction</strong></a>(self, coords)</dt><dd><tt>Vérifie&nbsp;que&nbsp;la&nbsp;construction&nbsp;d'une&nbsp;colonie&nbsp;est&nbsp;possible&nbsp;:&nbsp;le&nbsp;sommet&nbsp;et&nbsp;les&nbsp;sommets&nbsp;adjacents&nbsp;doivent&nbsp;être&nbsp;vides.<br>
+&nbsp;<br>
+Parametres<br>
+----------<br>
+coords&nbsp;:&nbsp;ndarray<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Coordonnées&nbsp;d'un&nbsp;sommet/d'une&nbsp;intersection&nbsp;que&nbsp;l'on&nbsp;souhaite&nbsp;tester<br>
+&nbsp;<br>
+Renvoie<br>
+-------<br>
+True&nbsp;si&nbsp;les&nbsp;conditions&nbsp;sont&nbsp;véfifiées<br>
+False&nbsp;sinon</tt></dd></dl>
+
+<dl><dt><a name="Plateau-routeAdjacenteColonieExiste"><strong>routeAdjacenteColonieExiste</strong></a>(self, joueur, coords)</dt><dd><tt>Vérifie&nbsp;qu'un&nbsp;joueur&nbsp;possède&nbsp;une&nbsp;route&nbsp;adjacente&nbsp;à&nbsp;une&nbsp;colonie&nbsp;ou&nbsp;une&nbsp;ville.<br>
+&nbsp;<br>
+Parametres<br>
+----------<br>
+joueur&nbsp;:&nbsp;Joueur<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Joueur&nbsp;dont&nbsp;la&nbsp;présence&nbsp;de&nbsp;route&nbsp;adjacente&nbsp;est&nbsp;testée<br>
+coords&nbsp;:&nbsp;ndarray<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Coordonnées&nbsp;de&nbsp;la&nbsp;colonie&nbsp;ou&nbsp;de&nbsp;la&nbsp;ville&nbsp;à&nbsp;tester<br>
+Renvoie<br>
+-------<br>
+True&nbsp;si&nbsp;la&nbsp;condition&nbsp;est&nbsp;vérifiée<br>
+False&nbsp;sinon</tt></dd></dl>
+
+<dl><dt><a name="Plateau-routeAdjacenteRouteExiste"><strong>routeAdjacenteRouteExiste</strong></a>(self, joueur, coords)</dt><dd><tt>Vérifie&nbsp;qu'un&nbsp;joueur&nbsp;possède&nbsp;une&nbsp;route&nbsp;adjacente&nbsp;à&nbsp;un&nbsp;chemin&nbsp;avant&nbsp;de&nbsp;construire&nbsp;une&nbsp;route&nbsp;sur&nbsp;ce&nbsp;chemin.<br>
+&nbsp;<br>
+Parametres<br>
+----------<br>
+joueur&nbsp;:&nbsp;Joueur<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Joueur&nbsp;dont&nbsp;la&nbsp;présence&nbsp;d'une&nbsp;route&nbsp;adjacente&nbsp;est&nbsp;testée<br>
+coords&nbsp;:&nbsp;ndarray<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Coordonnées&nbsp;du&nbsp;chemin&nbsp;à&nbsp;tester<br>
+Renvoie<br>
+-------<br>
+True&nbsp;si&nbsp;la&nbsp;condition&nbsp;est&nbsp;vérifiée<br>
+False&nbsp;sinon</tt></dd></dl>
+
+<dl><dt><a name="Plateau-routeDispoConstruction"><strong>routeDispoConstruction</strong></a>(self, coords)</dt><dd><tt>Vérifie&nbsp;que&nbsp;la&nbsp;construction&nbsp;d'une&nbsp;route&nbsp;est&nbsp;possible&nbsp;:&nbsp;le&nbsp;chemin<br>
+est&nbsp;vide&nbsp;et&nbsp;relié&nbsp;à&nbsp;une&nbsp;autre&nbsp;infrastructure&nbsp;du&nbsp;joueur.<br>
+&nbsp;<br>
+Parametres<br>
+----------<br>
+coords&nbsp;:&nbsp;ndarray<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Coordonnées&nbsp;d'un&nbsp;chemin&nbsp;l'on&nbsp;souhaite&nbsp;tester<br>
+&nbsp;<br>
+Renvoie<br>
+-------<br>
+True&nbsp;si&nbsp;les&nbsp;conditions&nbsp;sont&nbsp;véfifiées<br>
+False&nbsp;sinon</tt></dd></dl>
+
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="Port">class <strong>Port</strong></a>(<a href="builtins.html#object">builtins.object</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt><a href="#Port">Port</a>(coords,&nbsp;echange,&nbsp;type)<br>
+&nbsp;<br>
+Classe&nbsp;représentant&nbsp;un&nbsp;port.<br>
+&nbsp;<br>
+Attributs<br>
+---------<br>
+coords&nbsp;:&nbsp;ndarray<br>
+&nbsp;&nbsp;&nbsp;&nbsp;coordonnées&nbsp;du&nbsp;port<br>
+echange&nbsp;:&nbsp;ndarray<br>
+&nbsp;&nbsp;&nbsp;&nbsp;echanges&nbsp;de&nbsp;ressources&nbsp;possibles&nbsp;pour&nbsp;ce&nbsp;type&nbsp;de&nbsp;port<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="Port-__init__"><strong>__init__</strong></a>(self, coords, echange, type)</dt><dd><tt>Parametres<br>
+----------<br>
+coords&nbsp;:&nbsp;ndarray<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Coordonnées&nbsp;du&nbsp;port<br>
+echange&nbsp;:&nbsp;ndarray<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Echanges&nbsp;de&nbsp;ressources&nbsp;possibles&nbsp;pour&nbsp;ce&nbsp;type&nbsp;de&nbsp;port<br>
+type&nbsp;:&nbsp;string<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Type&nbsp;d'échange&nbsp;que&nbsp;fournit&nbsp;le&nbsp;port</tt></dd></dl>
+
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="Route">class <strong>Route</strong></a>(<a href="builtins.html#object">builtins.object</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt><a href="#Route">Route</a>(joueur,&nbsp;coords)<br>
+&nbsp;<br>
+Classe&nbsp;représentant&nbsp;une&nbsp;route.<br>
+&nbsp;<br>
+Attributs<br>
+---------<br>
+joueur&nbsp;:&nbsp;Joueur<br>
+&nbsp;&nbsp;&nbsp;&nbsp;joueur&nbsp;possédant&nbsp;la&nbsp;route<br>
+coords&nbsp;:&nbsp;ndarray<br>
+&nbsp;&nbsp;&nbsp;&nbsp;coordonnées&nbsp;de&nbsp;la&nbsp;route<br>
+coût&nbsp;:&nbsp;ndarray<br>
+&nbsp;&nbsp;&nbsp;&nbsp;prix&nbsp;de&nbsp;la&nbsp;construction&nbsp;d'une&nbsp;route<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="Route-__init__"><strong>__init__</strong></a>(self, joueur, coords)</dt><dd><tt>Parametres<br>
+----------<br>
+joueur&nbsp;:&nbsp;Joueur<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Joueur&nbsp;possédant&nbsp;la&nbsp;route<br>
+coords&nbsp;:&nbsp;ndarray<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Coordonnées&nbsp;de&nbsp;la&nbsp;route</tt></dd></dl>
+
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="StoneTile">class <strong>StoneTile</strong></a>(<a href="Plateau.html#Tile">Tile</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt><a href="#StoneTile">StoneTile</a>(plateau,&nbsp;coords,&nbsp;value)<br>
+&nbsp;<br>
+Classe&nbsp;représentant&nbsp;les&nbsp;tuiles&nbsp;produisant&nbsp;de&nbsp;la&nbsp;pierre,&nbsp;fille&nbsp;de&nbsp;la&nbsp;classe&nbsp;<a href="#Tile">Tile</a>.<br>
+&nbsp;<br>
+Attributs<br>
+---------<br>
+ressource&nbsp;:&nbsp;ndarray<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ressource&nbsp;liée&nbsp;à&nbsp;la&nbsp;case<br>
+color&nbsp;:&nbsp;string<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Nom&nbsp;de&nbsp;la&nbsp;ressource&nbsp;correspondant&nbsp;à&nbsp;la&nbsp;couleur&nbsp;de&nbsp;la&nbsp;case<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%"><dl><dt>Method resolution order:</dt>
+<dd><a href="Plateau.html#StoneTile">StoneTile</a></dd>
+<dd><a href="Plateau.html#Tile">Tile</a></dd>
+<dd><a href="builtins.html#object">builtins.object</a></dd>
+</dl>
+<hr>
+Methods defined here:<br>
+<dl><dt><a name="StoneTile-__init__"><strong>__init__</strong></a>(self, plateau, coords, value)</dt><dd><tt>Parametres<br>
+----------<br>
+plateau&nbsp;:&nbsp;<a href="#Plateau">Plateau</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Plateau">Plateau</a>&nbsp;dans&nbsp;lequel&nbsp;la&nbsp;tuile&nbsp;se&nbsp;trouve<br>
+coords&nbsp;:&nbsp;ndarray<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Coordonnées&nbsp;la&nbsp;la&nbsp;tuile<br>
+value&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Valeur&nbsp;du&nbsp;numéro&nbsp;de&nbsp;la&nbsp;case&nbsp;correspondant&nbsp;au&nbsp;résultat&nbsp;des&nbsp;dés</tt></dd></dl>
+
+<hr>
+Data and other attributes defined here:<br>
+<dl><dt><strong>__abstractmethods__</strong> = frozenset()</dl>
+
+<hr>
+Data descriptors inherited from <a href="Plateau.html#Tile">Tile</a>:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="Tile">class <strong>Tile</strong></a>(<a href="builtins.html#object">builtins.object</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt><a href="#Tile">Tile</a>(plateau,&nbsp;coords,&nbsp;value)<br>
+&nbsp;<br>
+Classe&nbsp;représentant&nbsp;les&nbsp;tuiles&nbsp;hexagonales&nbsp;du&nbsp;plateau&nbsp;de&nbsp;jeu,<br>
+mère&nbsp;des&nbsp;classes&nbsp;représentant&nbsp;chaque&nbsp;type&nbsp;de&nbsp;tuiles.<br>
+&nbsp;<br>
+Attributs<br>
+---------<br>
+plateau&nbsp;:&nbsp;<a href="#Plateau">Plateau</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;plateau&nbsp;dans&nbsp;lequel&nbsp;la&nbsp;tuile&nbsp;se&nbsp;trouve<br>
+coords&nbsp;:&nbsp;ndarray<br>
+&nbsp;&nbsp;&nbsp;&nbsp;coordonnées&nbsp;la&nbsp;la&nbsp;tuile<br>
+value&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;valeur&nbsp;du&nbsp;numéro&nbsp;de&nbsp;la&nbsp;case&nbsp;correspondant&nbsp;au&nbsp;résultat&nbsp;des&nbsp;dés<br>
+ressource&nbsp;:&nbsp;ndarray<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ressource&nbsp;liée&nbsp;à&nbsp;la&nbsp;case<br>
+color&nbsp;:&nbsp;string<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Nom&nbsp;de&nbsp;la&nbsp;ressource&nbsp;correspondant&nbsp;à&nbsp;la&nbsp;couleur&nbsp;de&nbsp;la&nbsp;case<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="Tile-__init__"><strong>__init__</strong></a>(self, plateau, coords, value)</dt><dd><tt>Parametres<br>
+----------<br>
+plateau&nbsp;:&nbsp;<a href="#Plateau">Plateau</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Plateau">Plateau</a>&nbsp;dans&nbsp;lequel&nbsp;la&nbsp;tuile&nbsp;se&nbsp;trouve<br>
+coords&nbsp;:&nbsp;ndarray<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Coordonnées&nbsp;la&nbsp;la&nbsp;tuile<br>
+value&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Valeur&nbsp;du&nbsp;numéro&nbsp;de&nbsp;la&nbsp;case&nbsp;correspondant&nbsp;au&nbsp;résultat&nbsp;des&nbsp;dés</tt></dd></dl>
+
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<hr>
+Data and other attributes defined here:<br>
+<dl><dt><strong>__abstractmethods__</strong> = frozenset()</dl>
+
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="Ville">class <strong>Ville</strong></a>(<a href="Plateau.html#Colonie">Colonie</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt><a href="#Ville">Ville</a>(joueur,&nbsp;coords)<br>
+&nbsp;<br>
+Classe&nbsp;représentant&nbsp;une&nbsp;<a href="#Ville">Ville</a>,&nbsp;fille&nbsp;de&nbsp;<a href="#Colonie">Colonie</a>.<br>
+&nbsp;<br>
+Attributs<br>
+---------<br>
+joueur&nbsp;:&nbsp;Joueur<br>
+&nbsp;&nbsp;&nbsp;&nbsp;joueur&nbsp;possédant&nbsp;la&nbsp;ville<br>
+coords&nbsp;:&nbsp;ndarray<br>
+&nbsp;&nbsp;&nbsp;&nbsp;coordonnées&nbsp;de&nbsp;la&nbsp;ville<br>
+adjacent&nbsp;:&nbsp;list<br>
+&nbsp;&nbsp;&nbsp;&nbsp;liste&nbsp;des&nbsp;sommets&nbsp;adjacents,&nbsp;qui&nbsp;ne&nbsp;doivent&nbsp;pas&nbsp;contenir&nbsp;d'autres&nbsp;colonies&nbsp;ou&nbsp;villes.<br>
+multiplicateur&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;nombre&nbsp;de&nbsp;points&nbsp;de&nbsp;victoire&nbsp;conférés&nbsp;à&nbsp;la&nbsp;construction&nbsp;d'une&nbsp;ville<br>
+coût&nbsp;:&nbsp;ndarray<br>
+&nbsp;&nbsp;&nbsp;&nbsp;prix&nbsp;de&nbsp;la&nbsp;construction&nbsp;d'une&nbsp;ville<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%"><dl><dt>Method resolution order:</dt>
+<dd><a href="Plateau.html#Ville">Ville</a></dd>
+<dd><a href="Plateau.html#Colonie">Colonie</a></dd>
+<dd><a href="builtins.html#object">builtins.object</a></dd>
+</dl>
+<hr>
+Methods defined here:<br>
+<dl><dt><a name="Ville-__init__"><strong>__init__</strong></a>(self, joueur, coords)</dt><dd><tt>Parametres<br>
+----------<br>
+joueur&nbsp;:&nbsp;Joueur<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Joueur&nbsp;possédant&nbsp;la&nbsp;ville<br>
+coords&nbsp;:&nbsp;ndarray<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Coordonnées&nbsp;de&nbsp;la&nbsp;ville</tt></dd></dl>
+
+<hr>
+Data descriptors inherited from <a href="Plateau.html#Colonie">Colonie</a>:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="Voleur">class <strong>Voleur</strong></a>(<a href="builtins.html#object">builtins.object</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt><a href="#Voleur">Voleur</a>(coords)<br>
+&nbsp;<br>
+Classe&nbsp;représentant&nbsp;le&nbsp;voleur.<br>
+&nbsp;<br>
+Attributs<br>
+---------<br>
+coords&nbsp;:&nbsp;ndarray<br>
+&nbsp;&nbsp;&nbsp;&nbsp;position&nbsp;du&nbsp;voleur,&nbsp;initialement&nbsp;placé&nbsp;au&nbsp;centre&nbsp;sur&nbsp;la&nbsp;case&nbsp;de&nbsp;type&nbsp;désert<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="Voleur-__init__"><strong>__init__</strong></a>(self, coords)</dt><dd><tt>Parametres<br>
+----------<br>
+coords&nbsp;:&nbsp;ndarray<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Coordonnées&nbsp;du&nbsp;voleur</tt></dd></dl>
+
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="WheatTile">class <strong>WheatTile</strong></a>(<a href="Plateau.html#Tile">Tile</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt><a href="#WheatTile">WheatTile</a>(plateau,&nbsp;coords,&nbsp;value)<br>
+&nbsp;<br>
+Classe&nbsp;représentant&nbsp;les&nbsp;tuiles&nbsp;produisant&nbsp;du&nbsp;blé,&nbsp;fille&nbsp;de&nbsp;la&nbsp;classe&nbsp;<a href="#Tile">Tile</a>.<br>
+&nbsp;<br>
+Attributs<br>
+---------<br>
+ressource&nbsp;:&nbsp;ndarray<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ressource&nbsp;liée&nbsp;à&nbsp;la&nbsp;case<br>
+color&nbsp;:&nbsp;string<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Nom&nbsp;de&nbsp;la&nbsp;ressource&nbsp;correspondant&nbsp;à&nbsp;la&nbsp;couleur&nbsp;de&nbsp;la&nbsp;case<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%"><dl><dt>Method resolution order:</dt>
+<dd><a href="Plateau.html#WheatTile">WheatTile</a></dd>
+<dd><a href="Plateau.html#Tile">Tile</a></dd>
+<dd><a href="builtins.html#object">builtins.object</a></dd>
+</dl>
+<hr>
+Methods defined here:<br>
+<dl><dt><a name="WheatTile-__init__"><strong>__init__</strong></a>(self, plateau, coords, value)</dt><dd><tt>Parametres<br>
+----------<br>
+plateau&nbsp;:&nbsp;<a href="#Plateau">Plateau</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Plateau">Plateau</a>&nbsp;dans&nbsp;lequel&nbsp;la&nbsp;tuile&nbsp;se&nbsp;trouve<br>
+coords&nbsp;:&nbsp;ndarray<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Coordonnées&nbsp;la&nbsp;la&nbsp;tuile<br>
+value&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Valeur&nbsp;du&nbsp;numéro&nbsp;de&nbsp;la&nbsp;case&nbsp;correspondant&nbsp;au&nbsp;résultat&nbsp;des&nbsp;dés</tt></dd></dl>
+
+<hr>
+Data and other attributes defined here:<br>
+<dl><dt><strong>__abstractmethods__</strong> = frozenset()</dl>
+
+<hr>
+Data descriptors inherited from <a href="Plateau.html#Tile">Tile</a>:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="WoodTile">class <strong>WoodTile</strong></a>(<a href="Plateau.html#Tile">Tile</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt><a href="#WoodTile">WoodTile</a>(plateau,&nbsp;coords,&nbsp;value)<br>
+&nbsp;<br>
+Classe&nbsp;représentant&nbsp;les&nbsp;tuiles&nbsp;produisant&nbsp;du&nbsp;bois,&nbsp;fille&nbsp;de&nbsp;la&nbsp;classe&nbsp;<a href="#Tile">Tile</a>.<br>
+&nbsp;<br>
+Attributs<br>
+---------<br>
+ressource&nbsp;:&nbsp;ndarray<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ressource&nbsp;liée&nbsp;à&nbsp;la&nbsp;case<br>
+color&nbsp;:&nbsp;string<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Nom&nbsp;de&nbsp;la&nbsp;ressource&nbsp;correspondant&nbsp;à&nbsp;la&nbsp;couleur&nbsp;de&nbsp;la&nbsp;case<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%"><dl><dt>Method resolution order:</dt>
+<dd><a href="Plateau.html#WoodTile">WoodTile</a></dd>
+<dd><a href="Plateau.html#Tile">Tile</a></dd>
+<dd><a href="builtins.html#object">builtins.object</a></dd>
+</dl>
+<hr>
+Methods defined here:<br>
+<dl><dt><a name="WoodTile-__init__"><strong>__init__</strong></a>(self, plateau, coords, value)</dt><dd><tt>Parametres<br>
+----------<br>
+plateau&nbsp;:&nbsp;<a href="#Plateau">Plateau</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Plateau">Plateau</a>&nbsp;dans&nbsp;lequel&nbsp;la&nbsp;tuile&nbsp;se&nbsp;trouve<br>
+coords&nbsp;:&nbsp;ndarray<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Coordonnées&nbsp;la&nbsp;la&nbsp;tuile<br>
+value&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Valeur&nbsp;du&nbsp;numéro&nbsp;de&nbsp;la&nbsp;case&nbsp;correspondant&nbsp;au&nbsp;résultat&nbsp;des&nbsp;dés</tt></dd></dl>
+
+<hr>
+Data and other attributes defined here:<br>
+<dl><dt><strong>__abstractmethods__</strong> = frozenset()</dl>
+
+<hr>
+Data descriptors inherited from <a href="Plateau.html#Tile">Tile</a>:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="WoolTile">class <strong>WoolTile</strong></a>(<a href="Plateau.html#Tile">Tile</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt><a href="#WoolTile">WoolTile</a>(plateau,&nbsp;coords,&nbsp;value)<br>
+&nbsp;<br>
+Classe&nbsp;représentant&nbsp;les&nbsp;tuiles&nbsp;produisant&nbsp;de&nbsp;la&nbsp;laine,&nbsp;fille&nbsp;de&nbsp;la&nbsp;classe&nbsp;<a href="#Tile">Tile</a>.<br>
+&nbsp;<br>
+Attributs<br>
+---------<br>
+ressource&nbsp;:&nbsp;ndarray<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ressource&nbsp;liée&nbsp;à&nbsp;la&nbsp;case<br>
+color&nbsp;:&nbsp;string<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Nom&nbsp;de&nbsp;la&nbsp;ressource&nbsp;correspondant&nbsp;à&nbsp;la&nbsp;couleur&nbsp;de&nbsp;la&nbsp;case<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%"><dl><dt>Method resolution order:</dt>
+<dd><a href="Plateau.html#WoolTile">WoolTile</a></dd>
+<dd><a href="Plateau.html#Tile">Tile</a></dd>
+<dd><a href="builtins.html#object">builtins.object</a></dd>
+</dl>
+<hr>
+Methods defined here:<br>
+<dl><dt><a name="WoolTile-__init__"><strong>__init__</strong></a>(self, plateau, coords, value)</dt><dd><tt>Parametres<br>
+----------<br>
+plateau&nbsp;:&nbsp;<a href="#Plateau">Plateau</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Plateau">Plateau</a>&nbsp;dans&nbsp;lequel&nbsp;la&nbsp;tuile&nbsp;se&nbsp;trouve<br>
+coords&nbsp;:&nbsp;ndarray<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Coordonnées&nbsp;la&nbsp;la&nbsp;tuile<br>
+value&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Valeur&nbsp;du&nbsp;numéro&nbsp;de&nbsp;la&nbsp;case&nbsp;correspondant&nbsp;au&nbsp;résultat&nbsp;des&nbsp;dés</tt></dd></dl>
+
+<hr>
+Data and other attributes defined here:<br>
+<dl><dt><strong>__abstractmethods__</strong> = frozenset()</dl>
+
+<hr>
+Data descriptors inherited from <a href="Plateau.html#Tile">Tile</a>:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+</td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#eeaa77">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Functions</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#eeaa77"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl><dt><a name="-randint"><strong>randint</strong></a>(...)<font color="#909090"><font face="helvetica, arial"> method of <a href="numpy.random.mtrand.html#RandomState">numpy.random.mtrand.RandomState</a> instance</font></font></dt><dd><tt><a href="#-randint">randint</a>(low,&nbsp;high=None,&nbsp;size=None,&nbsp;dtype='l')<br>
+&nbsp;<br>
+Return&nbsp;random&nbsp;integers&nbsp;from&nbsp;`low`&nbsp;(inclusive)&nbsp;to&nbsp;`high`&nbsp;(exclusive).<br>
+&nbsp;<br>
+Return&nbsp;random&nbsp;integers&nbsp;from&nbsp;the&nbsp;"discrete&nbsp;uniform"&nbsp;distribution&nbsp;of<br>
+the&nbsp;specified&nbsp;dtype&nbsp;in&nbsp;the&nbsp;"half-open"&nbsp;interval&nbsp;[`low`,&nbsp;`high`).&nbsp;If<br>
+`high`&nbsp;is&nbsp;None&nbsp;(the&nbsp;default),&nbsp;then&nbsp;results&nbsp;are&nbsp;from&nbsp;[0,&nbsp;`low`).<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+low&nbsp;:&nbsp;int&nbsp;or&nbsp;array-like&nbsp;of&nbsp;ints<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Lowest&nbsp;(signed)&nbsp;integers&nbsp;to&nbsp;be&nbsp;drawn&nbsp;from&nbsp;the&nbsp;distribution&nbsp;(unless<br>
+&nbsp;&nbsp;&nbsp;&nbsp;``high=None``,&nbsp;in&nbsp;which&nbsp;case&nbsp;this&nbsp;parameter&nbsp;is&nbsp;one&nbsp;above&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;*highest*&nbsp;such&nbsp;integer).<br>
+high&nbsp;:&nbsp;int&nbsp;or&nbsp;array-like&nbsp;of&nbsp;ints,&nbsp;optional<br>
+&nbsp;&nbsp;&nbsp;&nbsp;If&nbsp;provided,&nbsp;one&nbsp;above&nbsp;the&nbsp;largest&nbsp;(signed)&nbsp;integer&nbsp;to&nbsp;be&nbsp;drawn<br>
+&nbsp;&nbsp;&nbsp;&nbsp;from&nbsp;the&nbsp;distribution&nbsp;(see&nbsp;above&nbsp;for&nbsp;behavior&nbsp;if&nbsp;``high=None``).<br>
+&nbsp;&nbsp;&nbsp;&nbsp;If&nbsp;array-like,&nbsp;must&nbsp;contain&nbsp;integer&nbsp;values<br>
+size&nbsp;:&nbsp;int&nbsp;or&nbsp;tuple&nbsp;of&nbsp;ints,&nbsp;optional<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Output&nbsp;shape.&nbsp;&nbsp;If&nbsp;the&nbsp;given&nbsp;shape&nbsp;is,&nbsp;e.g.,&nbsp;``(m,&nbsp;n,&nbsp;k)``,&nbsp;then<br>
+&nbsp;&nbsp;&nbsp;&nbsp;``m&nbsp;*&nbsp;n&nbsp;*&nbsp;k``&nbsp;samples&nbsp;are&nbsp;drawn.&nbsp;&nbsp;Default&nbsp;is&nbsp;None,&nbsp;in&nbsp;which&nbsp;case&nbsp;a<br>
+&nbsp;&nbsp;&nbsp;&nbsp;single&nbsp;value&nbsp;is&nbsp;returned.<br>
+dtype&nbsp;:&nbsp;dtype,&nbsp;optional<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Desired&nbsp;dtype&nbsp;of&nbsp;the&nbsp;result.&nbsp;All&nbsp;dtypes&nbsp;are&nbsp;determined&nbsp;by&nbsp;their<br>
+&nbsp;&nbsp;&nbsp;&nbsp;name,&nbsp;i.e.,&nbsp;'int64',&nbsp;'int',&nbsp;etc,&nbsp;so&nbsp;byteorder&nbsp;is&nbsp;not&nbsp;available<br>
+&nbsp;&nbsp;&nbsp;&nbsp;and&nbsp;a&nbsp;specific&nbsp;precision&nbsp;may&nbsp;have&nbsp;different&nbsp;C&nbsp;types&nbsp;depending<br>
+&nbsp;&nbsp;&nbsp;&nbsp;on&nbsp;the&nbsp;platform.&nbsp;The&nbsp;default&nbsp;value&nbsp;is&nbsp;'np.int'.<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;..&nbsp;versionadded::&nbsp;1.11.0<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+out&nbsp;:&nbsp;int&nbsp;or&nbsp;ndarray&nbsp;of&nbsp;ints<br>
+&nbsp;&nbsp;&nbsp;&nbsp;`size`-shaped&nbsp;array&nbsp;of&nbsp;random&nbsp;integers&nbsp;from&nbsp;the&nbsp;appropriate<br>
+&nbsp;&nbsp;&nbsp;&nbsp;distribution,&nbsp;or&nbsp;a&nbsp;single&nbsp;such&nbsp;random&nbsp;int&nbsp;if&nbsp;`size`&nbsp;not&nbsp;provided.<br>
+&nbsp;<br>
+See&nbsp;Also<br>
+--------<br>
+random.random_integers&nbsp;:&nbsp;similar&nbsp;to&nbsp;`randint`,&nbsp;only&nbsp;for&nbsp;the&nbsp;closed<br>
+&nbsp;&nbsp;&nbsp;&nbsp;interval&nbsp;[`low`,&nbsp;`high`],&nbsp;and&nbsp;1&nbsp;is&nbsp;the&nbsp;lowest&nbsp;value&nbsp;if&nbsp;`high`&nbsp;is<br>
+&nbsp;&nbsp;&nbsp;&nbsp;omitted.<br>
+&nbsp;<br>
+Examples<br>
+--------<br>
+&gt;&gt;&gt;&nbsp;np.random.<a href="#-randint">randint</a>(2,&nbsp;size=10)<br>
+array([1,&nbsp;0,&nbsp;0,&nbsp;0,&nbsp;1,&nbsp;1,&nbsp;0,&nbsp;0,&nbsp;1,&nbsp;0])&nbsp;#&nbsp;random<br>
+&gt;&gt;&gt;&nbsp;np.random.<a href="#-randint">randint</a>(1,&nbsp;size=10)<br>
+array([0,&nbsp;0,&nbsp;0,&nbsp;0,&nbsp;0,&nbsp;0,&nbsp;0,&nbsp;0,&nbsp;0,&nbsp;0])<br>
+&nbsp;<br>
+Generate&nbsp;a&nbsp;2&nbsp;x&nbsp;4&nbsp;array&nbsp;of&nbsp;ints&nbsp;between&nbsp;0&nbsp;and&nbsp;4,&nbsp;inclusive:<br>
+&nbsp;<br>
+&gt;&gt;&gt;&nbsp;np.random.<a href="#-randint">randint</a>(5,&nbsp;size=(2,&nbsp;4))<br>
+array([[4,&nbsp;0,&nbsp;2,&nbsp;1],&nbsp;#&nbsp;random<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[3,&nbsp;2,&nbsp;2,&nbsp;0]])<br>
+&nbsp;<br>
+Generate&nbsp;a&nbsp;1&nbsp;x&nbsp;3&nbsp;array&nbsp;with&nbsp;3&nbsp;different&nbsp;upper&nbsp;bounds<br>
+&nbsp;<br>
+&gt;&gt;&gt;&nbsp;np.random.<a href="#-randint">randint</a>(1,&nbsp;[3,&nbsp;5,&nbsp;10])<br>
+array([2,&nbsp;2,&nbsp;9])&nbsp;#&nbsp;random<br>
+&nbsp;<br>
+Generate&nbsp;a&nbsp;1&nbsp;by&nbsp;3&nbsp;array&nbsp;with&nbsp;3&nbsp;different&nbsp;lower&nbsp;bounds<br>
+&nbsp;<br>
+&gt;&gt;&gt;&nbsp;np.random.<a href="#-randint">randint</a>([1,&nbsp;5,&nbsp;7],&nbsp;10)<br>
+array([9,&nbsp;8,&nbsp;7])&nbsp;#&nbsp;random<br>
+&nbsp;<br>
+Generate&nbsp;a&nbsp;2&nbsp;by&nbsp;4&nbsp;array&nbsp;using&nbsp;broadcasting&nbsp;with&nbsp;dtype&nbsp;of&nbsp;uint8<br>
+&nbsp;<br>
+&gt;&gt;&gt;&nbsp;np.random.<a href="#-randint">randint</a>([1,&nbsp;3,&nbsp;5,&nbsp;7],&nbsp;[[10],&nbsp;[20]],&nbsp;dtype=np.uint8)<br>
+array([[&nbsp;8,&nbsp;&nbsp;6,&nbsp;&nbsp;9,&nbsp;&nbsp;7],&nbsp;#&nbsp;random<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[&nbsp;1,&nbsp;16,&nbsp;&nbsp;9,&nbsp;12]],&nbsp;dtype=uint8)</tt></dd></dl>
+</td></tr></table>
+</body></html>

@@ -1,0 +1,313 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: module Catan</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>Catan</strong></big></big></font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:c%3A%5Cusers%5Ctom%5Cdocuments%5Cgithub%5Ccatan%5Ccatan.py">c:\users\tom\documents\github\catan\catan.py</a></font></td></tr></table>
+    <p><tt>Module&nbsp;contenant&nbsp;tous&nbsp;les&nbsp;éléments&nbsp;qui&nbsp;apparaissent&nbsp;dans&nbsp;une&nbsp;partie&nbsp;de&nbsp;jeu.</tt></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#aa55cc">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Modules</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="Joueur.html">Joueur</a><br>
+<a href="Plateau.html">Plateau</a><br>
+</td><td width="25%" valign=top><a href="numpy.html">numpy</a><br>
+<a href="pygame.html">pygame</a><br>
+</td><td width="25%" valign=top><a href="random.html">random</a><br>
+</td><td width="25%" valign=top></td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ee77aa">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Classes</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#ee77aa"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl>
+<dt><font face="helvetica, arial"><a href="builtins.html#object">builtins.object</a>
+</font></dt><dd>
+<dl>
+<dt><font face="helvetica, arial"><a href="Catan.html#Catan">Catan</a>
+</font></dt></dl>
+</dd>
+</dl>
+ <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="Catan">class <strong>Catan</strong></a>(<a href="builtins.html#object">builtins.object</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt><a href="#Catan">Catan</a>(joueurs,&nbsp;rdPlateau=False)<br>
+&nbsp;<br>
+Classe&nbsp;représentant&nbsp;une&nbsp;partie&nbsp;de&nbsp;jeu&nbsp;:&nbsp;le&nbsp;lancer&nbsp;dés,&nbsp;le&nbsp;voleur,&nbsp;les&nbsp;échanges,&nbsp;la<br>
+construction,&nbsp;les&nbsp;achats&nbsp;et&nbsp;divers&nbsp;autres&nbsp;calculs&nbsp;nécéssaires&nbsp;au&nbsp;déroulement&nbsp;du&nbsp;jeu.<br>
+&nbsp;<br>
+Attributs<br>
+---------<br>
+plateau&nbsp;:&nbsp;Plateau<br>
+&nbsp;&nbsp;&nbsp;&nbsp;plateau&nbsp;sur&nbsp;le&nbsp;quel&nbsp;le&nbsp;jeu&nbsp;évolue<br>
+joueurs&nbsp;:&nbsp;list(Joueur)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;liste&nbsp;des&nbsp;joueurs&nbsp;participant&nbsp;au&nbsp;jeu<br>
+valeurDes&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;résultat&nbsp;de&nbsp;la&nbsp;somme&nbsp;de&nbsp;deux&nbsp;lancers&nbsp;de&nbsp;dés&nbsp;à&nbsp;six&nbsp;faces&nbsp;réguliers<br>
+numeroJoueurActuel&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;numéro&nbsp;du&nbsp;joueur&nbsp;actif,&nbsp;attribué&nbsp;automatiquement&nbsp;au&nbsp;remplissage&nbsp;de&nbsp;self.<strong>joueurs</strong><br>
+joueurActuel&nbsp;:&nbsp;Joueur<br>
+&nbsp;&nbsp;&nbsp;&nbsp;joueur&nbsp;actif<br>
+numeroJoueurActuelDebut&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;numéro&nbsp;du&nbsp;joueur&nbsp;actif&nbsp;lors&nbsp;du&nbsp;placement&nbsp;des&nbsp;premières&nbsp;colonies<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="Catan-__init__"><strong>__init__</strong></a>(self, joueurs, rdPlateau=False)</dt><dd><tt>Paramètres<br>
+----------<br>
+joueurs&nbsp;:&nbsp;list(string)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Liste&nbsp;des&nbsp;joueurs<br>
+rdPlateau&nbsp;:&nbsp;bool,&nbsp;optionnel,&nbsp;False&nbsp;par&nbsp;défaut<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Booléen&nbsp;pour&nbsp;savoir&nbsp;si&nbsp;le&nbsp;plateau&nbsp;est&nbsp;aléatoire</tt></dd></dl>
+
+<dl><dt><a name="Catan-achatCarteDev"><strong>achatCarteDev</strong></a>(self, joueur)</dt><dd><tt>Donne&nbsp;au&nbsp;joueur&nbsp;une&nbsp;carte&nbsp;développement&nbsp;de&nbsp;la&nbsp;pioche&nbsp;contre&nbsp;son&nbsp;coût.<br>
+&nbsp;<br>
+Paramètres<br>
+----------<br>
+joueur&nbsp;:&nbsp;Joueur<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Joueur&nbsp;qui&nbsp;achète&nbsp;la&nbsp;carte&nbsp;développement<br>
+&nbsp;<br>
+Renvoie<br>
+-------<br>
+True&nbsp;si&nbsp;la&nbsp;carte&nbsp;est&nbsp;achetée<br>
+False&nbsp;sinon</tt></dd></dl>
+
+<dl><dt><a name="Catan-addElemToSet"><strong>addElemToSet</strong></a>(self, joueur, road)</dt><dd><tt>Fonction&nbsp;récursive&nbsp;qui&nbsp;ajoute&nbsp;des&nbsp;tronçons&nbsp;de&nbsp;route<br>
+à&nbsp;un&nbsp;set<br>
+&nbsp;<br>
+Paramètres<br>
+----------<br>
+joueur&nbsp;:&nbsp;Joueur<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Joueur&nbsp;dont&nbsp;on&nbsp;calcule&nbsp;la&nbsp;plus&nbsp;grande&nbsp;route<br>
+road&nbsp;:&nbsp;Set<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Stocke&nbsp;les&nbsp;tronçons&nbsp;déjà&nbsp;calculé&nbsp;de&nbsp;la&nbsp;route<br>
+&nbsp;<br>
+Renvoie<br>
+-------<br>
+Tous&nbsp;les&nbsp;tronçons&nbsp;d'une&nbsp;même&nbsp;route</tt></dd></dl>
+
+<dl><dt><a name="Catan-ajoutPort"><strong>ajoutPort</strong></a>(self, joueur, coords)</dt><dd><tt>Ajoute&nbsp;à&nbsp;la&nbsp;liste&nbsp;des&nbsp;ports&nbsp;du&nbsp;joueur&nbsp;un&nbsp;port&nbsp;qu'il&nbsp;a&nbsp;atteint&nbsp;grâce&nbsp;à&nbsp;la&nbsp;construction&nbsp;d'une&nbsp;colonie.<br>
+&nbsp;<br>
+Paramètres<br>
+----------<br>
+joueur&nbsp;:&nbsp;Joueur<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Joueur&nbsp;qui&nbsp;a&nbsp;construit&nbsp;une&nbsp;colonie&nbsp;liée&nbsp;à&nbsp;un&nbsp;port<br>
+coords&nbsp;:&nbsp;ndarray<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Coordonnées&nbsp;du&nbsp;port</tt></dd></dl>
+
+<dl><dt><a name="Catan-calculPlusGrandeArmee"><strong>calculPlusGrandeArmee</strong></a>(self)</dt><dd><tt>Calcule&nbsp;quel&nbsp;joueur&nbsp;dans&nbsp;la&nbsp;partie&nbsp;possède&nbsp;la&nbsp;plus&nbsp;grande&nbsp;armée<br>
+et&nbsp;si&nbsp;elle&nbsp;est&nbsp;composée&nbsp;d'au&nbsp;moins&nbsp;3&nbsp;chevaliers.<br>
+&nbsp;<br>
+Paramètres<br>
+----------<br>
+aucun</tt></dd></dl>
+
+<dl><dt><a name="Catan-calculPlusGrandeRoute"><strong>calculPlusGrandeRoute</strong></a>(self)</dt><dd><tt>Calcule&nbsp;quel&nbsp;joueur&nbsp;dans&nbsp;la&nbsp;partie&nbsp;possède&nbsp;la&nbsp;plus&nbsp;grande&nbsp;route<br>
+et&nbsp;si&nbsp;elle&nbsp;est&nbsp;composée&nbsp;d'au&nbsp;moins&nbsp;5&nbsp;tronçons.<br>
+&nbsp;<br>
+Paramètres<br>
+----------<br>
+aucun</tt></dd></dl>
+
+<dl><dt><a name="Catan-calculValeurPlusGrandeRoute"><strong>calculValeurPlusGrandeRoute</strong></a>(self, joueur)</dt><dd><tt>Calcule&nbsp;la&nbsp;longueur&nbsp;de&nbsp;la&nbsp;plus&nbsp;grande&nbsp;route&nbsp;d'un&nbsp;joueur<br>
+&nbsp;<br>
+Paramètres<br>
+----------<br>
+joueur&nbsp;:&nbsp;Joueur<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Joueur&nbsp;dont&nbsp;on&nbsp;calcule&nbsp;la&nbsp;plus&nbsp;grande&nbsp;route</tt></dd></dl>
+
+<dl><dt><a name="Catan-carteDevMonopole"><strong>carteDevMonopole</strong></a>(self, joueurActuel, ressource)</dt><dd><tt>Jouer&nbsp;une&nbsp;carte&nbsp;developpement&nbsp;monopole<br>
+&nbsp;<br>
+Paramètres<br>
+----------<br>
+joueurActuel&nbsp;:&nbsp;Joueur<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Joueur&nbsp;qui&nbsp;joue&nbsp;la&nbsp;carte&nbsp;Monopole<br>
+ressource&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Int&nbsp;qui&nbsp;indique&nbsp;quelle&nbsp;ressource&nbsp;le&nbsp;joueur&nbsp;à&nbsp;choisi&nbsp;pour&nbsp;le&nbsp;monopole</tt></dd></dl>
+
+<dl><dt><a name="Catan-construireColonie"><strong>construireColonie</strong></a>(self, joueur, coords)</dt><dd><tt>Construit&nbsp;une&nbsp;colonie&nbsp;à&nbsp;trois&nbsp;conditions&nbsp;:&nbsp;l'intersection&nbsp;ou&nbsp;sommet&nbsp;est&nbsp;libre,&nbsp;il<br>
+n'y&nbsp;a&nbsp;pas&nbsp;d'infrastructure&nbsp;adjacente&nbsp;et&nbsp;le&nbsp;joueur&nbsp;possède&nbsp;suffisamment&nbsp;de&nbsp;ressources.<br>
+Le&nbsp;coût&nbsp;de&nbsp;la&nbsp;colonie&nbsp;est&nbsp;prélevé&nbsp;au&nbsp;joueur.<br>
+&nbsp;<br>
+Paramètres<br>
+----------<br>
+joueur&nbsp;:&nbsp;Joueur<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Joueur&nbsp;qui&nbsp;construit&nbsp;la&nbsp;colonie<br>
+coords&nbsp;:&nbsp;ndarray<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Coordonnées&nbsp;de&nbsp;la&nbsp;nouvelle&nbsp;colonie<br>
+&nbsp;<br>
+Renvoie<br>
+-------<br>
+True&nbsp;si&nbsp;la&nbsp;colonie&nbsp;est&nbsp;construite<br>
+False&nbsp;sinon</tt></dd></dl>
+
+<dl><dt><a name="Catan-construireColonieGratuit"><strong>construireColonieGratuit</strong></a>(self, joueur, coords)</dt><dd><tt>Construit&nbsp;une&nbsp;colonie&nbsp;à&nbsp;deux&nbsp;conditions&nbsp;:&nbsp;l'intersection&nbsp;ou&nbsp;sommet&nbsp;est&nbsp;libre&nbsp;et&nbsp;il<br>
+n'y&nbsp;a&nbsp;pas&nbsp;d'infrastructure&nbsp;adjacente.<br>
+Le&nbsp;coût&nbsp;de&nbsp;la&nbsp;colonie&nbsp;n'est&nbsp;pas&nbsp;prélevé&nbsp;au&nbsp;joueur.<br>
+&nbsp;<br>
+Paramètres<br>
+----------<br>
+joueur&nbsp;:&nbsp;Joueur<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Joueur&nbsp;qui&nbsp;construit&nbsp;la&nbsp;colonie<br>
+coords&nbsp;:&nbsp;ndarray<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Coordonnées&nbsp;de&nbsp;la&nbsp;nouvelle&nbsp;colonie<br>
+&nbsp;<br>
+Renvoie<br>
+-------<br>
+True&nbsp;si&nbsp;la&nbsp;colonie&nbsp;est&nbsp;construite<br>
+False&nbsp;sinon</tt></dd></dl>
+
+<dl><dt><a name="Catan-construireRoute"><strong>construireRoute</strong></a>(self, joueur, coords)</dt><dd><tt>Construit&nbsp;une&nbsp;route&nbsp;à&nbsp;deux&nbsp;conditions&nbsp;:&nbsp;l'emplacement&nbsp;choisi&nbsp;est&nbsp;vide<br>
+et&nbsp;le&nbsp;joueur&nbsp;possède&nbsp;suffisamment&nbsp;de&nbsp;ressources.<br>
+Le&nbsp;coût&nbsp;de&nbsp;la&nbsp;route&nbsp;est&nbsp;prélevé&nbsp;au&nbsp;joueur.<br>
+&nbsp;<br>
+Paramètres<br>
+----------<br>
+joueur&nbsp;:&nbsp;Joueur<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Joueur&nbsp;qui&nbsp;construit&nbsp;la&nbsp;route<br>
+coords&nbsp;:&nbsp;ndarray<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Coordonnées&nbsp;de&nbsp;la&nbsp;nouvelle&nbsp;route<br>
+&nbsp;<br>
+Renvoie<br>
+-------<br>
+True&nbsp;si&nbsp;la&nbsp;route&nbsp;est&nbsp;construite<br>
+False&nbsp;sinon</tt></dd></dl>
+
+<dl><dt><a name="Catan-construireRouteGratuit"><strong>construireRouteGratuit</strong></a>(self, joueur, coords)</dt><dd><tt>Construit&nbsp;une&nbsp;route&nbsp;à&nbsp;l'emplacement&nbsp;choisi&nbsp;s'il&nbsp;est&nbsp;vide.<br>
+Le&nbsp;coût&nbsp;de&nbsp;la&nbsp;route&nbsp;n'est&nbsp;pas&nbsp;prélevé&nbsp;au&nbsp;joueur.<br>
+&nbsp;<br>
+Paramètres<br>
+----------<br>
+joueur&nbsp;:&nbsp;Joueur<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Joueur&nbsp;qui&nbsp;construit&nbsp;la&nbsp;route<br>
+coords&nbsp;:&nbsp;ndarray<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Coordonnées&nbsp;de&nbsp;la&nbsp;nouvelle&nbsp;route<br>
+&nbsp;<br>
+Renvoie<br>
+-------<br>
+True&nbsp;si&nbsp;la&nbsp;route&nbsp;est&nbsp;construite<br>
+False&nbsp;sinon</tt></dd></dl>
+
+<dl><dt><a name="Catan-construireVille"><strong>construireVille</strong></a>(self, joueur, coords)</dt><dd><tt>Construit&nbsp;une&nbsp;ville&nbsp;à&nbsp;trois&nbsp;conditions&nbsp;:&nbsp;l'intersection&nbsp;ou&nbsp;sommet&nbsp;est&nbsp;libre,&nbsp;il<br>
+n'y&nbsp;a&nbsp;pas&nbsp;d'infrastructure&nbsp;adjacente&nbsp;et&nbsp;le&nbsp;joueur&nbsp;possède&nbsp;suffisamment&nbsp;de&nbsp;ressources.<br>
+Le&nbsp;coût&nbsp;de&nbsp;la&nbsp;ville&nbsp;est&nbsp;prélevé&nbsp;au&nbsp;joueur.<br>
+&nbsp;<br>
+Paramètres<br>
+----------<br>
+joueur&nbsp;:&nbsp;Joueur<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Joueur&nbsp;qui&nbsp;construit&nbsp;la&nbsp;ville<br>
+coords&nbsp;:&nbsp;ndarray<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Coordonnées&nbsp;de&nbsp;la&nbsp;nouvelle&nbsp;ville<br>
+&nbsp;<br>
+Renvoie<br>
+-------<br>
+True&nbsp;si&nbsp;la&nbsp;ville&nbsp;est&nbsp;construite<br>
+False&nbsp;sinon</tt></dd></dl>
+
+<dl><dt><a name="Catan-deplacerVoleur"><strong>deplacerVoleur</strong></a>(self, joueurVoleur, coords)</dt><dd><tt>Déplace&nbsp;le&nbsp;voleur&nbsp;selon&nbsp;le&nbsp;choix&nbsp;du&nbsp;joueur&nbsp;ayant&nbsp;obtenu&nbsp;7&nbsp;au&nbsp;lancer&nbsp;de&nbsp;dés.<br>
+&nbsp;<br>
+Paramètres<br>
+----------<br>
+joueurVoleur&nbsp;:&nbsp;Joueur<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Joueur&nbsp;qui&nbsp;déplace&nbsp;le&nbsp;voleur&nbsp;et&nbsp;vole&nbsp;une&nbsp;carte&nbsp;à&nbsp;un&nbsp;adversaire&nbsp;un&nbsp;poss-de&nbsp;une<br>
+&nbsp;&nbsp;&nbsp;&nbsp;colonie&nbsp;adjacente&nbsp;à&nbsp;la&nbsp;nouvelle&nbsp;position&nbsp;du&nbsp;voleur.<br>
+coords&nbsp;:&nbsp;ndarray<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Coordonnées&nbsp;anciennes&nbsp;du&nbsp;voleur</tt></dd></dl>
+
+<dl><dt><a name="Catan-donRessource"><strong>donRessource</strong></a>(self)</dt><dd><tt>Distribue&nbsp;aux&nbsp;joueurs&nbsp;les&nbsp;ressources&nbsp;des&nbsp;cases&nbsp;définies&nbsp;par&nbsp;le&nbsp;lancer&nbsp;de&nbsp;dés&nbsp;dont&nbsp;les<br>
+joueurs&nbsp;ont&nbsp;une&nbsp;colonie&nbsp;ou&nbsp;ville&nbsp;adjacente&nbsp;et&nbsp;si&nbsp;le&nbsp;voleur&nbsp;n'est&nbsp;pas&nbsp;sur&nbsp;la&nbsp;case.<br>
+&nbsp;<br>
+Paramètres<br>
+----------<br>
+aucun</tt></dd></dl>
+
+<dl><dt><a name="Catan-echangeBanque"><strong>echangeBanque</strong></a>(self, joueur, don, recu)</dt><dd><tt>Procède&nbsp;à&nbsp;un&nbsp;échange&nbsp;de&nbsp;ressources&nbsp;entre&nbsp;le&nbsp;joueur&nbsp;et&nbsp;la&nbsp;banque&nbsp;à&nbsp;un&nbsp;taux&nbsp;déterminé&nbsp;par&nbsp;ses&nbsp;ports.<br>
+&nbsp;<br>
+Paramètres<br>
+----------<br>
+joueur&nbsp;:&nbsp;Joueur<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Joueur&nbsp;qui&nbsp;échange&nbsp;avec&nbsp;la&nbsp;banque<br>
+don&nbsp;:&nbsp;ndarray<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Ressources&nbsp;que&nbsp;le&nbsp;joueur&nbsp;perd<br>
+recu&nbsp;:&nbsp;ndarray<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Ressources&nbsp;que&nbsp;le&nbsp;joueur&nbsp;gagne<br>
+&nbsp;<br>
+Renvoie<br>
+-------<br>
+True&nbsp;si&nbsp;l'échange&nbsp;est&nbsp;effectué<br>
+False&nbsp;sinon</tt></dd></dl>
+
+<dl><dt><a name="Catan-echangeJoueur"><strong>echangeJoueur</strong></a>(self, joueur1, joueur2, don, recu)</dt><dd><tt>Procède&nbsp;à&nbsp;un&nbsp;échange&nbsp;entre&nbsp;le&nbsp;joueur&nbsp;actif&nbsp;et&nbsp;un&nbsp;autre&nbsp;joueur<br>
+qui&nbsp;choisissent&nbsp;ce&nbsp;qu'ils&nbsp;veulent&nbsp;donner&nbsp;et&nbsp;recevoir.<br>
+&nbsp;<br>
+Paramètres<br>
+----------<br>
+joueur1&nbsp;:&nbsp;Joueur<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Premier&nbsp;joueur&nbsp;participant&nbsp;à&nbsp;l'échange,&nbsp;dont&nbsp;c'est&nbsp;le&nbsp;tour<br>
+joueur2&nbsp;:&nbsp;Joueur<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Second&nbsp;jour&nbsp;participant&nbsp;à&nbsp;l'échange&nbsp;dont&nbsp;ce&nbsp;n'est&nbsp;pas&nbsp;le&nbsp;tour<br>
+don&nbsp;:&nbsp;ndarray<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Ressources&nbsp;que&nbsp;le&nbsp;joueur1&nbsp;perd&nbsp;et&nbsp;que&nbsp;le&nbsp;joueur2&nbsp;gagne<br>
+recu&nbsp;:&nbsp;ndarray<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Ressources&nbsp;que&nbsp;le&nbsp;joueur2&nbsp;perd&nbsp;et&nbsp;que&nbsp;le&nbsp;joueur1&nbsp;gagne<br>
+&nbsp;<br>
+Renvoie<br>
+-------<br>
+True&nbsp;si&nbsp;l'échange&nbsp;est&nbsp;effectué<br>
+False&nbsp;sinon</tt></dd></dl>
+
+<dl><dt><a name="Catan-lancerDes"><strong>lancerDes</strong></a>(self)</dt><dd><tt>Lance&nbsp;deux&nbsp;dés&nbsp;réguliers&nbsp;à&nbsp;six&nbsp;faces&nbsp;et&nbsp;somme&nbsp;les&nbsp;deux&nbsp;résultats.<br>
+&nbsp;<br>
+Paramètres<br>
+----------<br>
+aucun</tt></dd></dl>
+
+<dl><dt><a name="Catan-ressourceDebut"><strong>ressourceDebut</strong></a>(self)</dt><dd><tt>Distribue&nbsp;aux&nbsp;joueurs&nbsp;les&nbsp;ressources&nbsp;des&nbsp;tuiles&nbsp;adjacentes&nbsp;à&nbsp;leurs&nbsp;premières&nbsp;colonies&nbsp;en&nbsp;début&nbsp;de&nbsp;partie.<br>
+&nbsp;<br>
+Paramètres<br>
+----------<br>
+aucun</tt></dd></dl>
+
+<dl><dt><a name="Catan-tourSuivant"><strong>tourSuivant</strong></a>(self)</dt><dd><tt>Passe&nbsp;au&nbsp;tour&nbsp;du&nbsp;joueur&nbsp;suivant&nbsp;qui&nbsp;lance&nbsp;les&nbsp;dés&nbsp;et&nbsp;donne&nbsp;ainsi&nbsp;des&nbsp;ressources&nbsp;aux&nbsp;joueurs.<br>
+&nbsp;<br>
+Paramètres<br>
+----------<br>
+aucun<br>
+&nbsp;<br>
+Renvoie<br>
+-------<br>
+True&nbsp;si&nbsp;un&nbsp;joueur&nbsp;à&nbsp;gagné&nbsp;la&nbsp;partie&nbsp;à&nbsp;la&nbsp;fin&nbsp;de&nbsp;son&nbsp;tour<br>
+False&nbsp;sinon</tt></dd></dl>
+
+<dl><dt><a name="Catan-tourSuivantDebut"><strong>tourSuivantDebut</strong></a>(self)</dt><dd><tt>Passe&nbsp;au&nbsp;tour&nbsp;du&nbsp;joueur&nbsp;suivant&nbsp;lors&nbsp;du&nbsp;placement&nbsp;des&nbsp;premières&nbsp;colonies&nbsp;et&nbsp;premières&nbsp;routes.<br>
+&nbsp;<br>
+Paramètres<br>
+----------<br>
+aucun<br>
+&nbsp;<br>
+Renvoie<br>
+-------<br>
+True&nbsp;si&nbsp;tous&nbsp;les&nbsp;joueurs&nbsp;ont&nbsp;placé&nbsp;leurs&nbsp;premières&nbsp;colonies&nbsp;et&nbsp;routes</tt></dd></dl>
+
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+</td></tr></table></td></tr></table>
+</body></html>
